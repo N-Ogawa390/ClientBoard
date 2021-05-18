@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>アカウント作成フォーム</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<div class="row">
+<div class="col">
+<form th:action="@{''}" th:object="${tmpAccount}" method="post">
+	<table class="table">
+		<tr>
+			<td>ユーザID　※変更できません</td>
+			<td><input type="text" th:field="*{username}"></td>
+		</tr>
+		<tr>
+			<td>メールアドレス</td>
+			<td><input type="text" th:field="*{email}"></td>
+		</tr>
+		<tr>
+			<td>パスワード（8文字以上）</td>
+			<td><input type="password" th:field="*{password}"></td>
+		</tr>
+		<tr>
+			<td>サイトURL</td>
+			<td><input type="text" th:field="*{site}"></td>
+		</tr>
+	</table>
+
+	<div><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></div>
+	<div><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></div>
+	<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></div>
+	<input type="submit" value="登録" class="btn btn-primary">
+</form>
+</div>
+</div>
+
+</div>
+</body>
+</html>

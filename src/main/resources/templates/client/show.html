@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>スクール情報</title>
+<script type="text/javascript" src="/js/carousel.js"></script>
+</head>
+<body>
+<div layout:fragment="contents" th:object="${client}">
+
+<h2 class="lead" style="font-weight: bold; margin-bottom: 0;">
+	<span th:text="*{clientName}"></span><br>
+</h2>
+<p>～<span th:text="*{clientSubName}"></span>～</p>
+
+<th:block th:each="topImg : ${topImages}">
+	<div class="show-top-media">
+		<img th:src="${'data:image/png;base64,' + topImg.base64}">
+	</div>
+</th:block>
+	
+<div th:if="${#lists.size(topImages)}<1" class="show-top-media">
+	<img src="../static/img/no_image.png" class="show-no-img">
+</div>
+
+<h3>スクール風景</h3>
+<div th:if="${#lists.size(subImages)}>1" class="carousel" id="carousel">
+	<figure>
+		<th:block th:each="subImg : ${subImages}">
+			<img th:src="${'data:image/png;base64,' + subImg.base64}">
+		</th:block>
+	</figure>
+	<nav>
+		<button class="prev">前へ</button>
+		<button class="next">次へ</button>
+	</nav>
+</div>
+
+<div th:if="${#lists.size(subImages)}<1" class="show-top-media">
+	<img src="../static/img/no_image.png" class="show-no-img">
+</div>
+
+<section>
+<h3>地域</h3>
+<div class="row">
+	<div class="col">
+		<p>
+			<span th:text="*{area.areaName}"></span>
+		</p>
+	</div>
+</div>
+</section>
+
+<section class="py-3">
+<h3>レッスン基本情報</h3>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<tr>
+				<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
+				<td><span th:text="*{lessonLevels}"></span></td>
+			</tr>
+			<tr>
+				<td>ダンスジャンル</td>
+				<td>
+					<th:block th:each="genre : *{genres}">
+						<span th:text="${genre.genreName}"></span><br>
+					</th:block>
+					</td>
+			</tr>
+			<tr>
+				<td>レッスン時間単位</td>
+				<td><span th:text="*{duration}"></span></td>
+			</tr>
+			<tr>
+				<td>対応時間帯</td>
+				<td><span th:text="*{supporteTime}"></span></td>
+			</tr>
+		</table>
+	</div>
+</div>
+<div>
+	<span th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}"></span>
+	<span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
+	<span th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}"></span>
+</div>
+</section>
+
+<section class="py-3">
+<h3>プラン情報</h3>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<tr>
+				<th>プラン名</th>
+				<th>プランタイプ</th>
+				<th>年齢制限</th>
+				<th>料金</th>
+			</tr>
+			<tr th:each="plan : *{plans}">
+				<td th:text="${plan.planName}"></td>
+				<td th:text="${plan.planType.PlanTypeName}"></td>
+				<td th:text="${plan.ageGroup}"></td>
+				<td th:text="${plan.price} + '円'"></td>
+			</tr>
+		</table>
+		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
+	</div>
+</div>
+</section>
+
+<section>
+<h3 style="text-align: center;">スクールからひとこと！</h3>
+<div class="row">
+	<div class="col balloon">
+		<p th:text="*{appeal}"></p>
+	</div>
+</div>
+</section>
+
+<section class="py-3">
+<h3>スクール基本情報</h3>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<tr>
+				<td>スクール正式名称</td>
+				<td><span th:text="*{formalName}"></span></td>
+			</tr>
+			<tr>
+				<td>サイトURL</td>
+				<td><span th:text="*{siteURL}"></span></td>
+			</tr>
+			<tr>
+				<td>発表会の有無</td>
+				<td><span th:text="*{presentation}"></span></td>
+			</tr>
+			<tr>
+				<td>特徴</td>
+				<td><span th:text="*{appeal}"></span></td>
+			</tr>
+			<tr>
+				<td>アクセス</td>
+				<td><span th:text="*{access}"></span></td>
+			</tr>
+			<tr>
+				<td>運営会社名</td>
+				<td><span th:text="*{company}"></span></td>
+			</tr>
+			<tr>
+				<td>本社所在地</td>
+				<td><span th:text="*{headOffice}"></span></td>
+			</tr>
+			<tr>
+				<td>設立</td>
+				<td><span th:text="*{establishment}"></span></td>
+			</tr>
+			<tr>
+				<td>資本金</td>
+				<td><span th:text="*{capital}"></span></td>
+			</tr>
+			<tr>
+				<td>閉店</td>
+				<td><span th:if="*{active}">閉店</span></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+</section>
+
+<a th:href="@{|/client/*{id}/edit|}" class="btn btn-primary m-3">編集</a>
+<div onclick="history.back()" class="btn btn-primary m-3">戻る</div>
+
+</div>
+
+</body>
+</html>

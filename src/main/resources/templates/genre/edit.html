@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>ジャンル新規登録</title>
+</head>
+<body>
+<div layout:fragment="contents">
+<h2 class="py-3 lead" style="margin-bottom: 40px">ダンスジャンル編集</h2>
+<form th:action="@{/genre/edit}" method="post">
+<input type="hidden" th:value="${genreNameEdit}" name="oldGenreName">
+
+	<th:block th:each="categorymap : ${categoriesGenresClientsMap}">
+	<h3 th:text="${categorymap.getKey()}"></h3>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>ジャンル名</th>
+				<th><span th:text="${categoryNameEdit}"></span></th>
+				<th></th>
+				<th></th>
+			</tr>
+		</thead>
+			<tr th:each="genremap : ${categorymap.getValue()}">
+				<td>
+					<span th:if="${genremap.getKey()} != ${genreNameEdit}" th:text="${genremap.getKey()}"></span>
+					<input th:if="${genremap.getKey()} == ${genreNameEdit}" type="text" name="newGenreName" th:value="${genreNameEdit}">
+				</td>
+				<td>
+					<select th:if="${genremap.getKey()} == ${genreNameEdit}" name="newCategoryName">
+						<option value="ヒップホップ系" th:selected="${categoryNameEdit} == 'ヒップホップ系'">ヒップホップ系</option>
+						<option value="ジャズ系" th:selected="${categoryNameEdit} == 'ジャズ系'">ジャズ系</option>
+						<option value="その他（ストリートダンス）" th:selected="${categoryNameEdit} == 'その他（ストリートダンス）'">その他（ストリートダンス）</option>
+						<option value="その他" th:selected="${categoryNameEdit} == 'その他'">その他</option>
+					</select>
+				</td>
+				<td>
+					<span th:if="${genremap.getKey()} != ${genreNameEdit}"><a th:href="@{|/genre/${genremap.getKey()}/edit|}">編集</a></span>
+					<input th:if="${genremap.getKey()} == ${genreNameEdit}"　type="submit" value="確定" class="btn btn-primary">
+				</td>
+				<td>
+					<a th:href="@{|/genre/${genremap.getKey()}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="text-danger">削除</a>
+				</td>
+			</tr>
+		<tbody>
+		</tbody>
+	</table>
+	</th:block>
+</form>
+
+</div>
+</body>
+</html>

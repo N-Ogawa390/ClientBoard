@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initianl-scale=1, shrink-to-fit=no">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+<link rel="stylesheet" href="/css/style.css">
+
+<!-- jQuery読み込み -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+
+<title>共通レイアウト</title>
+
+</head>
+<body class="mb-5">
+
+<header>
+
+<div class="cover fadein-topimg"></div>
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <a href="/" class="navbar-brand">HOME</a>
+  <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#Navber" aria-controls="Navber" aria-expanded="false" aria-label="ナビゲーションの切替">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="Navber">
+    <ul class="navbar-nav mr-auto">
+    		<li class="nav-item">
+    			<a href="/search" class="nav-link">スクール検索</a>
+    		</li>
+			<li class="nav-item">
+				<a href="/area" class="nav-link">地域別</a> 
+			</li>
+			<li class="nav-item">
+				<a href="/genre" class="nav-link">ダンスジャンル別</a> 
+			</li>
+			<li class="nav-item" sec:authorize="hasRole('CLIENT')">
+				<a href="/data" class="nav-link">総合データ</a> 
+			</li>
+			<li class="nav-item" sec:authorize="hasRole('CLIENT')">
+				<a href="/manage" class="nav-link">管理画面</a> 
+			</li>
+			<li class="nav-item">
+				<a href="/" class="nav-link">ABOUT US</a> 
+			</li>
+			<li class="nav-item" sec:authorize="hasRole('ADMINISTRATOR')">
+				<a href="/account/admin" class="nav-link">アカウント管理</a>
+			</li>
+			<li class="nav-item" sec:authorize="!isAuthenticated()">
+				<a href="/account/tmp/create" class="nav-link">企業登録</a>
+			</li>
+			<li class="nav-item" sec:authorize="isAuthenticated()">
+				<div class="nav-link">
+					ユーザ：<span sec:authentication="name"></span>
+				</div>
+			</li>
+			<li class="nav-item" sec:authorize="!isAuthenticated()">
+				<a href="/login" class="nav-link">企業ログイン</a>
+			</li>
+			<li class="nav-item" sec:authorize="isAuthenticated()">
+				<form th:action="@{/logout}" method="post" class="form-inline">
+					<input type="submit" value="ログアウト" class="btn nav-link">
+				</form>
+			</li>
+    </ul>
+  </div><!-- /.navbar-collapse -->
+</nav>
+
+</header>
+
+<!-- 個別コンテンツを埋め込む場所を指定 -->
+<div class="container" layout:fragment="contents"></div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+</body>
+</html>

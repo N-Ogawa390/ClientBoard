@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>プラン登録フォーム</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<h2 class="lead py-4" style="font-weight: bold;">
+	<span th:text="${client.clientName}"></span>
+</h2>
+
+<form th:action="@{''}" method="post" th:object="${plan}">
+<input type="hidden" th:field="*{id}">
+<input type="hidden" th:field="*{client.id}">
+
+	<table class="table">
+		<tr>
+			<td>プラン名</td>
+			<td><input type="text" th:field="*{planName}"></td>
+		</tr>
+		<tr>
+			<td>プランタイプ</td>
+			<td>
+			<select name="planTypeName">
+				<option th:value="クラス4" th:selected="${planTypeForSelected == 'クラス4'}">クラス4</option>
+				<option th:value="クラス8" th:selected="${planTypeForSelected == 'クラス8'}">クラス8</option>
+				<option th:value="チケット4" th:selected="${planTypeForSelected == 'チケット4'}">チケット4</option>
+				<option th:value="チケット（その他）" th:selected="${planTypeForSelected == 'チケット（その他）'}">チケット（その他）</option>
+				<option th:value="フリーレッスン（ALL）" th:selected="${planTypeForSelected == 'フリーレッスン（ALL）'}">フリーレッスン（ALL）</option>
+				<option th:value="フリーレッスン（その他）" th:selected="${planTypeForSelected == 'フリーレッスン（その他）'}">フリーレッスン（その他）</option>
+				<option th:value="ビジター" th:selected="${planTypeForSelected == 'ビジター'}">ビジター</option>
+				<option th:value="体験レッスン" th:selected="${planTypeForSelected == '体験レッスン'}">体験レッスン</option>
+				<option th:value="入会金" th:selected="${planTypeForSelected == '入会金'}">入会金</option>
+				<option th:value="その他" th:selected="${planTypeForSelected == 'その他'}">その他</option>
+			</select>
+			</td>
+		</tr>
+		<tr>
+			<td>年齢制限</td>
+			<td>
+				<select th:field="*{ageGroup}">
+					<option th:value="ALL">ALL</option>
+					<option th:value="キッズ">キッズ</option>
+					<option th:value="ジュニア">ジュニア</option>
+					<option th:value="その他">その他</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>価格</td>
+			<td><input type="text" th:field="*{price}"><span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="my-3"></span></td>
+		</tr>
+		<tr>
+			<td>備考 ※ユーザには公開されません</td>
+			<td><textarea th:field="*{planNote}" rows="8" cols="40"></textarea></td>
+		</tr>
+	</table>
+	<input type="submit" class="btn btn-primary" value="登録">
+	<span th:if="*{id}"><a th:href="@{|/client/${client.id}/plan/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-5">削除</a></span>
+</form>
+
+</div>
+</body>
+</html>

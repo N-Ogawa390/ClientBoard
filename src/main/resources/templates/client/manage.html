@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>管理画面</title>
+</head>
+<body>
+<div layout:fragment="contents" th:object="${currentAccount}">
+
+<h2 class="lead py-4" style="font-weight: bold;">
+	ユーザ：<span sec:authentication="name"></span>
+</h2>
+
+<section>
+<h3 class="py-3">登録スクール情報</h3>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>スクール名</th>
+				<th></th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="client : *{clients}">
+				<td th:text="${client.clientName}"></td>
+				<td><a th:href="@{|/client/${client.id}|}">詳細</a></td>
+				<td><a th:href="@{|/client/${client.id}/edit|}">編集する</a></td>
+			</tr>
+			</tbody>
+		</table>
+		<div th:if="${#lists.isEmpty(currentAccount.clients)}" class="my-3">※スクール情報が登録されていません</div>
+		<a href="/client/create" class="btn btn-primary">新規登録</a>
+	</div>
+</div>
+</section>
+
+<section style="margin-top: 60px;">
+<h3 class="py-3">アカウント情報</h3>
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<tr>
+				<td>メールアドレス</td>
+				<td th:text="*{email}"></td>
+			</tr>
+			<tr>
+				<td>登録サイト</td>
+				<td th:text="*{site}"></td>
+			</tr>
+		</table>
+		<a th:href="@{|/account/*{username}/edit|}" class="btn btn-primary">編集</a>
+	</div>
+</div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>データ分析</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<h2 class="lead py-4" style="font-weight: bold;">データ分析</h2>
+<section class="py-3">
+<h3 class="py-3">校舎数</h3>
+<div class="row">
+	<div class="col">
+		<table class="table" style="table-layout: fixed">
+			<tr>
+				<th style="width: 70%;">項目</th>
+				<th style="width: 30%;">集計結果</th>
+			</tr>
+			<tr>
+				<td>都内スクール数</td>
+				<td th:text="${numClient + '校'}"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</section>
+
+<section class="py-3">
+<h3 class="py-3">料金</h3>
+<h4 class="py-3">一般料金</h4>
+<div class="row">
+	<div class="col">
+		<table class="table" style="table-layout: fixed">
+			<tr>
+				<th style="width: 70%;">項目</th>
+				<th style="width: 30%;">集計結果</th>
+			</tr>
+			<tr>
+				<td>チケット制4回レッスン平均料金</td>
+				<td th:text="${ticketAll + '円'}"></td>
+			</tr>
+			<tr>
+				<td>フリーレッスン平均料金</td>
+				<td th:text="${freeAll + '円'}"></td>
+			</tr>
+			<tr>
+				<td>週4クラスレッスン平均料金</td>
+				<td th:text="${classAll + '円'}"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<h4 class="py-3">キッズ料金</h4>
+<div class="row">
+	<div class="col">
+		<table class="table" style="table-layout: fixed">
+			<tr>
+				<th style="width: 70%;">項目</th>
+				<th style="width: 30%;">集計結果</th>
+			</tr>
+			<tr>
+				<td>チケット制4回レッスン平均料金</td>
+				<td th:text="${ticketKids + '円'}"></td>
+			</tr>
+			<tr>
+				<td>フリーレッスン平均料金</td>
+				<td th:text="${freeKids + '円'}"></td>
+			</tr>
+			<tr>
+				<td>週4クラスレッスン平均料金</td>
+				<td th:text="${classKids + '円'}"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</section>
+
+</div>
+</body>
+</html>

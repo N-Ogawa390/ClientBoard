@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>スクールサーチWeb</title>
+</head>
+
+<body>
+
+<!-- 個別コンテンツここから -->
+<div layout:fragment="contents">
+
+
+
+<section th:if="${targetClients} != null" class="py-3">
+<div class="row">
+	<div class="col">
+	
+		<h2 class="lead py-4" style="font-weight: bold;">検索結果</h2>
+		<div><span th:text=${#lists.size(targetClients)}></span>件HITしました！</div>
+		
+		<table class="table" style="table-layout: fixed">
+			<tr>
+				<th style="width: 40%;">スクール名</th>
+				<th style="width: 30%;">地域</th>
+				<th style="width: 20%;">チケット4料金</th>
+				<th style="width: 10%;"></th>
+			</tr>
+			<tr th:each="client : ${targetClients}">
+				<td th:text="${client.clientName}"></td>
+				<td>
+					<span th:text="${client.area.areaName}"></span>
+				</td>
+				<td>
+					<span th:each="plan : ${client.plans}">
+						<span th:if="${plan.planType.planTypeName == 'チケット4'}" th:text="${plan.price + '円'}"></span>
+					</span>
+				</td>
+				<td><a th:href="@{|/client/${client.id}|}">詳細</a></td>
+			</tr>
+		</table>
+		
+	</div>
+</div>
+
+<div class="row">
+<th:block th:each="client : ${targetClients}">
+<div class="col-lg-4 col-md-5 col-sm-6 container fadein-scroll">
+	
+	<div class="bg-light blogcard-outline">
+	<a th:href="@{|/client/${client.id}|}" class="blogcard-link-child"></a>
+		<div class="blogcard-photo">
+			<img src="../img/dkt_search_top.png" class="blogcard-img">
+		</div>
+		<p th:text="${client.Area.AreaName}" class="blogcard-area slidein-scroll"></p>
+		<div class="description">
+			<div class="desc-headline">
+				<h3 th:text="${client.clientName}"></h3>
+			</div>
+			<div class="appeal">
+				<p th:text="${client.appeal}"></p>
+			</div>
+			<div class="budget">
+				<p th:if="${client.budget}" class="budget-text">予算(月4回)：
+					<span th:text="${client.budget} + '円'"></span>
+				</p>
+			</div>
+		</div>
+	</div>
+</div>
+</th:block>
+</div>
+
+</section>
+
+<section class="py-3">
+<form action="/search/searchSchool" method="get">
+
+<div class="row mb-3">
+	<div class="col">
+		<h2 class="lead p-3 icon-search-headline">条件検索</h2>
+			<label class="mr-3">
+				スクール名検索
+				<input type="text" name="word" class="form-control">
+			</label>
+			<label class="mr-3">
+				都道府県
+				<select name="areaName" class="form-control">
+					<option value="選択してください">選択してください</option>
+					<option
+						th:each="areaName : ${areaNameList}"
+						th:value="${areaName}"
+						th:text="${areaName}"
+					>
+					</option>
+				</select>
+			</label>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<h2 class="lead p-3">ダンスジャンルも選択する</h2>
+		
+			<h4 class="lead mt-5">ヒップホップ系</h4>
+			<table class="table">
+				<tr>
+					<th style="width: 55%;">ジャンル名</th>
+					<th style="width: 25%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('ヒップホップ系')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead mt-5">ジャズ系</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 55%;">ジャンル名</th>
+					<th style="width: 25%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('ジャズ系')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead mt-5">その他（ストリートダンス）</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 55%;">ジャンル名</th>
+					<th style="width: 25%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('その他（ストリートダンス）')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead mt-5">その他</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 55%;">ジャンル名</th>
+					<th style="width: 25%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('その他')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>			
+			
+			<input type="submit" value="検索" class="btn btn-primary">
+	</div>
+</div>
+
+</form>
+</section>
+
+</div>
+<!-- 個別コンテンツここまで -->
+
+</body>
+</html>

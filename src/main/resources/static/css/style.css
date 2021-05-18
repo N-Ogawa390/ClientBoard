@@ -1,0 +1,336 @@
+@charset "UTF-8";
+/** ベース **/
+h2 {
+	margin: 20% 0 4% 0;
+}
+
+h3 {
+	margin: 20% 0 4% 0;
+}
+
+
+/************* サイトトップ画像 *************/
+.cover {
+	background: url(../img/dkt_search_top.png) no-repeat center center;
+	background-size: cover;
+	height:360px;
+}
+
+/************* スクールカード一覧表示用 *************/
+.fadein-scroll {
+  opacity : 0;
+  transform: translateY(20px);
+  transition: all 1s;
+}
+.fadein-topimg {
+  animation: fadein-topimg 2s ease 0s 1 normal;
+  transition: all 1s;
+}
+.btn-shadow {
+	border-radius: 50%;
+	cursor: pointer;
+}
+.btn-shadow:hover {
+	opacity: 0.8;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	transition: 0.4s;
+}
+@keyframes fadein-topimg {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.icon-search-headline{
+	margin-top: 40px;
+}
+
+.icon-search-headline:before {
+  content: url('../img/icon-search-headline.png');
+  vertical-align: middle;
+  margin-right: 10px;
+}
+
+.blogcard-outline {
+	box-shadow: 0 0 12px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+    padding: 0;
+    line-height: 1.45em;
+}
+
+.blogcard-photo {
+	position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.blogcard-img {
+	position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 150%;
+}
+
+.blogcard-area {
+	position: absolute;
+    top: 0;
+    left: -100%;
+    padding: 6px 36px 6px 20px;
+    background: rgba(50,50,50, 0.6);
+    color: white;
+    transform: skew(-20deg);
+    transition: all 0.6s;
+}
+
+.blogcard-link-child {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	z-index: 1;
+}
+
+.description {
+	position: relative;
+    padding: 16px;
+}
+
+.desc-headline {
+	height: 60px;
+}
+
+.description h3 {
+	margin: 0 0 12px 0;
+    font-size: 20px;
+    color: #4cc48e;
+    font-weight: bold;
+}
+
+.description .budget-text {
+	text-align: right;
+    font-size: 0.8rem;
+    margin-bottom: 0;
+    color: gray;
+}
+
+.description .budget {
+	height: 20px;
+}
+
+.description .appeal {
+	height: 70px;
+	overflow: hidden;
+}
+
+/************* スクール詳細ページ *************/
+/*トップ画像*/
+.show-top-media {
+	width: 100%;
+	margin: 5% auto;
+}
+
+.show-top-media>img {
+	display: block;
+	margin: 0 auto;
+	width: 100%;
+}
+
+/*イメージ無しデフォルト画像*/
+.show-no-img {
+	width: 40%;
+}
+
+/*スクールからひとこと吹き出し*/
+.balloon {
+  position: relative;
+  display: inline-block;
+  margin: 1.5em;
+  padding: 7px 10px;
+  min-width: 120px;
+  max-width: 100%;
+  color: #555;
+  font-size: 16px;
+  background: #e0edff;
+  border-radius: 15px;	
+}
+
+.balloon>p {
+	margin: auto;
+	padding: 2%;
+	text-align: center;
+}
+
+.balloon:before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  margin-left: -15px;
+  border-bottom: 12px solid #FFF;
+  z-index: 2;	
+}
+
+.balloon:after {
+  content: "";
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  margin-left: -17px;
+  border: 14px solid transparent;
+  border-bottom: 14px solid #e0edff;
+  z-index: 1;	
+}
+
+
+
+/************* 3Dカルーセル *************/
+.carousel {
+	display: flex;
+	flex-direction:	column;
+	perspective: 1500px;
+	perspective-origin: center -100px;
+	height: 400px;
+}
+.carousel figure {
+	display: flex;
+	transform-style: preserve-3d;
+	margin: auto;
+	transition: 0.5s;
+}
+.carousel figure img {
+	width: 400px;
+	height: auto;
+	opacity: 0.9;
+
+}
+.carousel figure img:not(:first-of-type) {
+	position: absolute;
+}
+/*
+.carousel figure img:nth-child(2) {
+	transform: rotateY(120deg);
+}
+.carousel figure img:nth-child(3) {
+	transform-origin: center center -115px;
+	transform: rotateY(240deg);
+}
+*/
+.carousel nav {
+  display: -webkit-box;
+  display: flex;
+  justify-content: center;
+  margin: 20px 0 0;
+}
+.carousel nav button {
+  flex: 0 0 auto;
+  margin: 0 5px;
+  cursor: pointer;
+  color: #333;
+  background: none;
+  border: 1px solid gray;
+  letter-spacing: 1px;
+  padding: 5px 10px;
+}
+
+/************* 画像ポップアップ表示 *************/
+@keyframes show {
+	from{
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+	}
+}
+.disp-img {
+	z-index: 2;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 100%;
+	padding: 3%;
+}
+.disp-img.show {
+	display: block;
+	animation: show 0.5s forwards;
+}
+@keyframes fadeout {
+	from{
+		opacity: 1;
+	}
+	to{
+		opacity: 0;
+	}
+}
+.disp-img.display-none {
+	animation: fadeout 0.5s forwards;
+}
+/************* スクール編集＞トップ画像 *************/
+.form-top-medias>img {
+	margin: 5%;
+	box-shadow: 10px 10px 10px gray;
+}
+
+
+/************* スクール編集＞サブ画像一覧表示 *************/
+.form-sub-medias {
+	display: flex;
+    overflow-x: scroll;
+    background: #f8f9fa;
+}
+
+.form-sub-medias-child {
+	min-width: 60%;
+	padding: 6%;
+}
+
+.form-sub-medias-child>img {
+	width: 100%;
+	box-shadow: 10px 10px 10px gray;
+}
+
+/************* スクール編集＞サブ画像編集＞ 画像一覧表示 *************/
+.imgs-div {
+	display: flex;
+    flex-wrap: wrap;
+}
+.edit-img-frame {
+	width: 92%;
+	height: 92%;
+	margin: 4%;
+	padding: 4%;
+}
+.edit-img-frame>h4 {
+	
+}
+.edit-img-div {
+	width: 92%;
+	margin: 4%;
+}
+img.edit-img {
+	width: 100%;
+	box-shadow: 10px 10px 10px gray;
+}
+
+li.img-nav-item {
+	margin: 0 3%;
+}
+
+
+
+
+/************* 汎用 *************/
+/* 無効化 */
+.inactive {
+	opacity: 0.2;
+	pointer-events: none;
+}
+

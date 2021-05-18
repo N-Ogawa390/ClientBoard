@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>ジャンル検索</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<h2 class="lead py-4" style="font-weight: bold;">ジャンル検索</h2>
+
+<section class="py-3">
+<div class="row">
+	<div class="col">
+		<h3 class="lead p-3">検索結果：</h3>
+		
+		<th:block th:each="gwc : ${genreNamesWithClients}">
+		
+		<h4 class="lead">ジャンル：<span th:text="${gwc.getKey()}"></span></h4>
+		
+		<table class="table table-bordered" style="table-layout: fixed">
+			<tr>
+				<th style="width: 40%;">スクール名</th>
+				<th style="width: 20%;">地域</th>
+				<th style="width: 20%;">チケット4料金</th>
+				<th style="width: 10%;"></th>
+				<th style="width: 10%;"></th>
+			</tr>
+			<tr th:each="client : ${gwc.getValue()}">
+				<td th:text="${client.clientName}"></td>
+				<td>
+					<span th:each="area : ${client.areas}">
+						<span th:text="${area.areaName}"></span>
+					</span>
+				</td>
+				<td>
+					<span th:each="plan : ${client.plans}">
+						<span th:if="${plan.planType.planTypeName == 'チケット4'}" th:text="${plan.price + '円'}"></span>
+					</span>
+				</td>
+				<td><a th:href="@{|/client/${client.id}|}">詳細</a></td>
+				<td><a th:href="@{|/client/${client.id}/edit|}">編集</a></td>
+			</tr>
+		</table>
+		
+		</th:block>
+		
+	</div>
+</div>
+</section>
+
+<section class="py-3">
+<div class="row">
+	<div class="col">
+		<h3 class="lead p-3">～ダンスジャンル選択～</h3>
+		<form action="/genre/search" method="get">
+		
+			<h4 class="lead">ヒップホップ系</h4>
+			<table class="table">
+				<tr>
+					<th style="width: 60%;">ジャンル名</th>
+					<th style="width: 20%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('ヒップホップ系')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead">ジャズ系</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 60%;">ジャンル名</th>
+					<th style="width: 20%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('ジャズ系')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead">その他（ストリートダンス）</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 60%;">ジャンル名</th>
+					<th style="width: 20%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('その他（ストリートダンス）')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>
+			
+			<h4 class="lead">その他</h4>
+			<table class="table" style="table-layout: fixed">
+				<tr>
+					<th style="width: 60%;">ジャンル名</th>
+					<th style="width: 20%">登録数</th>
+					<th style="width: 20%;">選択</th>
+				</tr>
+				<th:block th:each="genremap : ${categoriesGenresClientsMap.get('その他')}" >
+				<tr th:if="${#lists.size(genremap.getValue())} != 0">
+					<td th:text="${genremap.getKey()}" class="col"></td>
+					<td><span th:text="${#lists.size(genremap.getValue())}"></span>校</td>
+					<td><input type="checkbox" name="genreNames" th:value="${genremap.getKey()}"></td>
+				</tr>
+				</th:block>
+			</table>			
+			
+			<input type="submit" value="検索" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+</section>
+
+<div class="row my-3" sec:authorize="hasRole('ADMINISTRATOR')">
+	<div class="col">
+		<a href="/genre/create" class="btn btn-warning mr-3">ジャンルを登録</a>
+		<a href="/genre/edit" class="btn btn-warning">ジャンルを編集</a>
+	</div>
+</div>
+
+</div>
+</body>
+</html>
