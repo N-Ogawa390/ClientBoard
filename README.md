@@ -28,7 +28,7 @@ The user can search school which match his desire from registered by client.
 
 ### ユーザの機能
 
-* クライアント検索
+* スクール検索
 
 ### クライアントの機能
 
@@ -42,7 +42,7 @@ The user can search school which match his desire from registered by client.
 
 ### User features
 
-* Search for client
+* Search for school
 
 ### Client features
 
