@@ -46,9 +46,21 @@ The user search school as desired in registered school.
 
 * Register for information of schools
 
-* Upload some photos(displayed by 3D carousel)
+* Upload some photos(displayed by 3D_carousel)
 
-## Tools
+## 進捗・課題
+
+3Dカルーセル：	モバイルフレンドリー未対応
+
+テスト：	ブラックボックステストのみ
+
+## Progress・Task
+
+3D_carousel：		Not compatible with mobile
+
+Test：	Only black mox test
+
+## ～Tools～
 
 View：	HTML, CSS, javascript, thymeleaf, bootstrap
 
