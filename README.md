@@ -24,29 +24,29 @@ The user search school as desired in registered school.
 
 ### ユーザの機能
 
-クライアント検索
+* クライアント検索
 
 ### クライアントの機能
 
-アカウント作成(メール認証)
+* アカウント作成(メール認証)
 
-スクール情報登録
+* スクール情報登録
 
-画像投稿(3Dカルーセル表示)
+* 画像投稿(3Dカルーセル表示)
 
 ## Features
 
 ### User features
 
-Search for client
+* Search for client
 
 ### Client features
 
-Get Account(authentication by mail)
+* Get Account(authentication by mail)
 
-Register for information of schools
+* Register for information of schools
 
-Upload some photos(displayed by 3D carousel)
+* Upload some photos(displayed by 3D carousel)
 
 ## Tools
 
