@@ -37,23 +37,14 @@
 			<li class="nav-item">
 				<a href="/area" class="nav-link">地域別</a> 
 			</li>
-			<li class="nav-item">
-				<a href="/genre" class="nav-link">ダンスジャンル別</a> 
-			</li>
-			<li class="nav-item" sec:authorize="hasRole('CLIENT')">
-				<a href="/data" class="nav-link">総合データ</a> 
-			</li>
 			<li class="nav-item" sec:authorize="hasRole('CLIENT')">
 				<a href="/manage" class="nav-link">管理画面</a> 
-			</li>
-			<li class="nav-item">
-				<a href="/" class="nav-link">ABOUT US</a> 
 			</li>
 			<li class="nav-item" sec:authorize="hasRole('ADMINISTRATOR')">
 				<a href="/account/admin" class="nav-link">アカウント管理</a>
 			</li>
 			<li class="nav-item" sec:authorize="!isAuthenticated()">
-				<a href="/account/tmp/create" class="nav-link">企業登録</a>
+				<a href="/account/tmp/create" class="nav-link inactive">企業登録</a>
 			</li>
 			<li class="nav-item" sec:authorize="isAuthenticated()">
 				<div class="nav-link">
