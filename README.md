@@ -6,17 +6,21 @@
 
 [＞公開サイト](https://dktsearch.herokuapp.com/)
 
+※Herokuのフリープランを使用しているため、スリープからの起動に少し時間がかかります
+
 ※クライアントの新規登録は現在無効化しています
 
 # What is this?
 
-This application matching user who want go culture school and client who introduce own school.
+This application connects user who want go culture school and client who introduced own school.
 
 The client can register own school, if get account.
 
-The user search school as desired in registered school.
+The user can search school which match his desire from registered by client.
 
 [＞Site](https://dktsearch.herokuapp.com/)
+
+※Since this application use free plan of heroku, it will take little time to wake up from sleep
 
 ※New client registration is currently disabled
 
@@ -60,7 +64,7 @@ The user search school as desired in registered school.
 
 Test：	Only black mox test
 
-## ～Tools～
+# ～Tools～
 
 View：	HTML, CSS, javascript, thymeleaf, bootstrap
 
