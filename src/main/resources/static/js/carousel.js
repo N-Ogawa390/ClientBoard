@@ -3,13 +3,14 @@
  */
 window.onload = function(){
 	
-	var carousel = document.querySelector('.carousel'),
+	var carousel = document.querySelector('.carousel3d'),
 		figure = carousel.querySelector('figure'),
 		nav = carousel.querySelector('nav'),
 		numImages = figure.childElementCount,
 		curImage = 0,
 		theta = 360 / numImages,
-		imgWidth = 400,
+		img = figure.children[0],
+		imgWidth = parseFloat(getComputedStyle(img).width),
 		disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180));	//画像から中心に垂線を引いた距離
 		
 	figure.style.transformOrigin = `center center -${disCenter}px`;
@@ -38,14 +39,11 @@ window.onload = function(){
 	//imgクリック時のイベント(画像をポップアップ)を追加
 	var images = figure.querySelectorAll('img');
 	var b = document.querySelector('body');
-//	var blockScr = document.createElement('div');
-//	blockScr.classList.add('block-screen');
 	
 	images.forEach(function(i){
 		i.addEventListener('click', function(e){
 			var dispImg = e.target.cloneNode();
 			
-//			b.prepend(blockScr);
 			dispImgFnc(dispImg);
 		});
 	});

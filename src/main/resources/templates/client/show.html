@@ -28,7 +28,7 @@
 </div>
 
 <h3>スクール風景</h3>
-<div th:if="${#lists.size(subImages)}>1" class="carousel" id="carousel">
+<div th:if="${#lists.size(subImages)}>1" class="carousel3d" id="carousel">
 	<figure>
 		<th:block th:each="subImg : ${subImages}">
 			<img th:src="${'data:image/png;base64,' + subImg.base64}">

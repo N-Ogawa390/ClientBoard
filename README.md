@@ -54,13 +54,9 @@ The user can search school which match his desire from registered by client.
 
 ## 進捗・課題
 
-3Dカルーセル：	モバイルフレンドリー未対応
-
 テスト：	ブラックボックステストのみ
 
 ## Progress・Task
-
-3D_carousel：		Not compatible with mobile
 
 Test：	Only black mox test
 

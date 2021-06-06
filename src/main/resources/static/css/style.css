@@ -192,44 +192,36 @@ h3 {
 
 
 /************* 3Dカルーセル *************/
-.carousel {
+.carousel3d {
 	display: flex;
 	flex-direction:	column;
 	perspective: 1500px;
 	perspective-origin: center -100px;
 	height: 400px;
 }
-.carousel figure {
+.carousel3d figure {
 	display: flex;
 	transform-style: preserve-3d;
 	margin: auto;
 	transition: 0.5s;
 }
-.carousel figure img {
-	width: 400px;
+.carousel3d figure img {
+	width: 100%;
 	height: auto;
 	opacity: 0.9;
 
 }
-.carousel figure img:not(:first-of-type) {
+.carousel3d figure img:not(:first-of-type) {
 	position: absolute;
 }
-/*
-.carousel figure img:nth-child(2) {
-	transform: rotateY(120deg);
-}
-.carousel figure img:nth-child(3) {
-	transform-origin: center center -115px;
-	transform: rotateY(240deg);
-}
-*/
-.carousel nav {
+
+.carousel3d nav {
   display: -webkit-box;
   display: flex;
   justify-content: center;
   margin: 20px 0 0;
 }
-.carousel nav button {
+.carousel3d nav button {
   flex: 0 0 auto;
   margin: 0 5px;
   cursor: pointer;
