@@ -10,7 +10,8 @@ window.onload = function(){
 		curImage = 0,
 		theta = 360 / numImages,
 		img = figure.children[0],
-		imgWidth = parseFloat(getComputedStyle(img).width),
+		imgWidth = 400,
+//		imgWidth = parseFloat(getComputedStyle(img).width),
 		disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180));	//画像から中心に垂線を引いた距離
 		
 	figure.style.transformOrigin = `center center -${disCenter}px`;
