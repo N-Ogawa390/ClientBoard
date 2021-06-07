@@ -198,6 +198,7 @@ h3 {
 	perspective: 1500px;
 	perspective-origin: center -100px;
 	height: 400px;
+	overflow: hidden;
 }
 .carousel3d figure {
 	display: flex;
