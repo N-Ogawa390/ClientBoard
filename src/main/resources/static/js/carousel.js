@@ -30,7 +30,7 @@ function carousel(root) {
 		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
 	}
 	
-	//カルーセル回転
+	//ナビゲーションにカルーセル回転イベントを追加
 	nav.addEventListener('click', navCarousel);
 	
 	//imgクリック時のイベント(画像をポップアップ)を追加
@@ -44,6 +44,11 @@ function carousel(root) {
 			dispImgFnc(dispImg);
 		});
 	});
+	
+	const sample = document.getElementById('sample');
+	const sample2 = document.getElementById('sample2');
+	sample.textContent = 'window幅：' + window.innerWidth;
+	sample2.textContent = '画像幅：' + imgWidth;
 	
 	//カルーセル回転
 	function navCarousel(e) {
