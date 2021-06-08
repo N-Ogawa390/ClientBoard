@@ -207,6 +207,7 @@ h3 {
 .carousel3d figure img {
 	width: 100%;
 	opacity: 0.9;
+	transform-style: preserve-3d;
 }
 .carousel3d figure img:not(:first-of-type) {
 	position: absolute;
