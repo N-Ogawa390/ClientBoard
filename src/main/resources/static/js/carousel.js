@@ -18,8 +18,8 @@ function carousel(root) {
 	img = figure.children[0],
 	computedStyle = window.getComputedStyle(img),
 //	computedStyle = img.currentStyle || document.defaultView.getComputedStyle(img, '');
-	imgWidth = 265,
-//	imgWidth = parseFloat(computedStyle.width),
+//	imgWidth = 265,
+	imgWidth = parseFloat(computedStyle.width),
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
 	nav = root.querySelector('nav');
 	console.log(imgWidth);
