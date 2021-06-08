@@ -201,10 +201,11 @@ h3 {
 .carousel3d figure {
 	display: flex;
 	transform-style: preserve-3d;
+	margin: auto;
 	transition: 0.5s;
 }
 .carousel3d figure img {
-	width: 100%;
+	width: 80%;
 	opacity: 0.9;
 }
 .carousel3d figure img:not(:first-of-type) {
