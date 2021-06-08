@@ -26,8 +26,10 @@ function carousel(root) {
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	for (i=1; i < numImages; i++) {
-		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
+		figure.children[i].style.transformOrigin = 'center center -182px';
 		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
+//		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
+//		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
 	}
 	
 	//ナビゲーションにカルーセル回転イベントを追加
