@@ -202,7 +202,7 @@ h3 {
 	display: flex;
 	transform-style: preserve-3d;
 	margin: auto;
-	transition: 0.5s;
+	transition: 3.5s;
 }
 .carousel3d figure img {
 	width: 100%;
