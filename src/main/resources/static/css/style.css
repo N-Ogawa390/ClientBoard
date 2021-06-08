@@ -197,14 +197,12 @@ h3 {
 	flex-direction:	column;
 	perspective: 1500px;
 	perspective-origin: center -100px;
-	position: relative;
 }
 .carousel3d figure {
 	display: flex;
 	transform-style: preserve-3d;
 	margin: auto;
 	transition: 0.5s;
-	position: relative;
 }
 .carousel3d figure img {
 	width: 100%;
