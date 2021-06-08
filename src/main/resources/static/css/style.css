@@ -205,7 +205,7 @@ h3 {
 	transition: 0.5s;
 }
 .carousel3d figure img {
-	width: 100px;
+	width: 100%;
 	opacity: 0.9;
 }
 .carousel3d figure img:not(:first-of-type) {
