@@ -18,18 +18,17 @@ function carousel(root) {
 	img = figure.children[0],
 	computedStyle = window.getComputedStyle(img),
 //	computedStyle = img.currentStyle || document.defaultView.getComputedStyle(img, '');
-	imgWidth = parseFloat(computedStyle.width),
-//	imgWidth = parseFloat(getComputedStyle(img).width) * 1.25,
+	imgWidth = 265,
+//	imgWidth = parseFloat(computedStyle.width),
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
 	nav = root.querySelector('nav');
 	console.log(imgWidth);
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	for (i=1; i < numImages; i++) {
-		figure.children[i].style.transformOrigin = '50% 50% -137px';
+//		figure.children[i].style.transformOrigin = 'center center -137px';
+		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
 		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
-//		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
-//		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
 	}
 	
 	//ナビゲーションにカルーセル回転イベントを追加
