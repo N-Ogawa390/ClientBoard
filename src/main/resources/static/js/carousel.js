@@ -16,7 +16,8 @@ function carousel(root) {
 	curImage = 0;
 	theta = 360 / numImages,
 	img = figure.children[0],
-	computedStyle = img.currentStyle || document.defaultView.getComputedStyle(img, '')
+	computedStyle = window.getComputedStyle(img);
+//	computedStyle = img.currentStyle || document.defaultView.getComputedStyle(img, '');
 	imgWidth = parseFloat(computedStyle.width),
 //	imgWidth = parseFloat(getComputedStyle(img).width) * 1.25,
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
