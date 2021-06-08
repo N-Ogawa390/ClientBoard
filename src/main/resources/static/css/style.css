@@ -201,7 +201,6 @@ h3 {
 .carousel3d figure {
 	display: flex;
 	transform-style: preserve-3d;
-	margin: auto;
 	transition: 0.5s;
 }
 .carousel3d figure img {
