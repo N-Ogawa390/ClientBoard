@@ -24,7 +24,7 @@ function carousel(root) {
 	nav = root.querySelector('nav');
 	console.log(imgWidth);
 	
-	figure.style.transformOrigin = 'center center -68px';
+	figure.style.transformOrigin = 'center center -34px';
 //	figure.style.transformOrigin = `center center -${disCenter}px`;
 	
 	for (i=1; i < numImages; i++) {
