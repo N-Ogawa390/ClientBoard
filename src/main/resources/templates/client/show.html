@@ -28,6 +28,7 @@
 </div>
 
 <h3>スクール風景</h3>
+<div style="padding: 40px">
 <div th:if="${#lists.size(subImages)}>1" class="carousel3d" id="carousel">
 	<figure>
 		<th:block th:each="subImg : ${subImages}">
@@ -38,6 +39,7 @@
 		<button class="prev">前へ</button>
 		<button class="next">次へ</button>
 	</nav>
+</div>
 </div>
 
 <div th:if="${#lists.size(subImages)}<1" class="show-top-media">
