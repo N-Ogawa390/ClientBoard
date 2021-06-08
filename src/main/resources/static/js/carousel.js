@@ -29,7 +29,7 @@ function carousel(root) {
 	
 	for (i=1; i < numImages; i++) {
 //		figure.children[i].style.transformOrigin = 'center center -137px';
-//		figure.children[i].style.transformOrigin = `center center -${disCenter}px`;
+		figure.children[i].style.transformOrigin = `center center ${-disCenter}px`;
 		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
 	}
 	
