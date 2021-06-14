@@ -84,7 +84,6 @@ public class ClientMediaService {
 
 		List<Integer> priorities = clientMedias.stream().map(a -> a.getPriority()).collect(Collectors.toList());	//登録されている画像の優先順位の一覧を取得
 		priorities.removeAll(Collections.singleton(null));
-		System.out.println(priorities);
 		
 		//優先順位を決定　※最低値で設定
 		Optional<Integer> maxPriority = priorities.stream().max(Comparator.naturalOrder());	//優先順位の最大値を取得
