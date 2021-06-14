@@ -44,13 +44,6 @@ function carousel(root) {
 		});
 	});
 	
-	const sample = document.getElementById('sample');
-	const sample2 = document.getElementById('sample2');
-	const sample3 = document.getElementById('sample3');
-	sample.textContent = 'window幅：' + window.innerWidth;
-	sample2.textContent = '画像幅：' + imgWidth;
-	sample3.textContent = '中心までの距離：' + disCenter;
-	
 	//カルーセル回転
 	function navCarousel(e) {
 		
@@ -74,12 +67,10 @@ function carousel(root) {
 		dispImg.classList.add('disp-img', 'show');
 		dispImg.addEventListener('click', function(e){
 			var t = e.target;
-//			var bs = document.getElementsByClassName('block-screen').item(0);
 			t.classList.remove('show');
 			t.classList.add('display-none');
 			t.addEventListener('animationend', function(){
 				t.parentNode.removeChild(t);
-//				bs.parentNode.removeChild(bs);
 			});
 		});
 		b.prepend(dispImg);
