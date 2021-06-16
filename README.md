@@ -38,11 +38,11 @@ The user can search school which match his desire from registered by client.
 
 ### Client features
 
-* Get Account(authentication by mail)
+* Get Account(authentication with mail)
 
 * Register for information of schools
 
-* Upload some photos(displayed by 3D_carousel)
+* Upload some photos(displayed with 3D_carousel)
 
 # ～Tools～
 
