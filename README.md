@@ -16,33 +16,33 @@ The user can search school which match his desire from registered by client.
 
 [＞Site](https://dktsearch.herokuapp.com/)
 
-## 機能
+## 主な機能
 
-### ユーザの機能
+* AWS S3を使用した画像ストレージ管理
 
-* スクール検索
+* base64を使用した画像処理
 
-### クライアントの機能
+* javascriptを使用した3Dカルーセル表示
 
-* アカウント作成(メール認証)
+* 検索機能
 
-* スクール情報登録
+* SpringSecurityを使用した認証機能
 
-* 画像投稿(3Dカルーセル表示)
+* アカウント作成時のメールレスポンス要求
 
-## Features
+## Main features
 
-### User features
+* Picture storage with AWS S3
 
-* Search for school
+* Image processing with base64
 
-### Client features
+* 3D carousel with javascript
 
-* Get Account(authentication with mail)
+* Searching
 
-* Register for information of schools
+* Authentication with SpringSecurity
 
-* Upload some photos(displayed with 3D_carousel)
+* Require mail response when create account
 
 # ～Tools～
 
