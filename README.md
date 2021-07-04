@@ -16,7 +16,7 @@ The user can search school which match his desire from registered by client.
 
 [＞Site](https://dktsearch.herokuapp.com/)
 
-## 主な機能
+### 主な機能
 
 * AWS S3を使用した画像ストレージ管理
 
@@ -30,7 +30,7 @@ The user can search school which match his desire from registered by client.
 
 * アカウント作成時のメールレスポンス要求
 
-## Main features
+### Main features
 
 * Picture storage with AWS S3
 

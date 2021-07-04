@@ -30,5 +30,4 @@ public class DktsearchApplication {
 		
 		return appConfig;
 	}
-
 }

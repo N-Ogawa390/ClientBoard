@@ -6,6 +6,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.dkt.dktsearch.MailHelper;
 import net.dkt.dktsearch.model.Account;
 import net.dkt.dktsearch.model.AccountForm;
 import net.dkt.dktsearch.model.TmpAccount;
@@ -57,6 +59,9 @@ public class AccountController {
 	@Autowired
 	SpringUserService springUserService;
 	
+	@Autowired
+	private MailHelper mailHelper; 
+	
 	//管理者画面を表示
 	@GetMapping("/admin")
 	public String account(Account account, Model model) {
@@ -92,7 +97,7 @@ public class AccountController {
 			return "account/tmp/form";
 		}
 		
-		accountService.createTmpAccount(tmpAccount.getUsername(), tmpAccount.getPassword(), tmpAccount.getEmail(), tmpAccount.getSite());
+		mailHelper.createTmpAccount(tmpAccount.getUsername(), tmpAccount.getPassword(), tmpAccount.getEmail(), tmpAccount.getSite());
 		return "account/tmp/mailsend";
 	}
 	
@@ -110,7 +115,6 @@ public class AccountController {
 
 		accountService.createAccount(username, password, email, site);
 
-		System.out.println(tmpAccount.getUsername());
 		return "account/tmp/confirmed";
 	}
 	
@@ -222,7 +226,7 @@ public class AccountController {
 		
 		accountService.deleteAccount(account);
 		
-		return "redirect:/account";
+		return "redirect:/";
 	}
 	
 	//パスワードリセット画面を表示

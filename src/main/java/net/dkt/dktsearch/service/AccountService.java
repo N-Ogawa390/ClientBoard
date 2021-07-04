@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -79,45 +80,44 @@ public class AccountService {
 		return accountRepository.findByType("client");
 	}
 	
-	//アカウント作成仮登録　※認証メール送信
-	//同じメールアドレスで登録が行われた場合は仮登録のデータを上書きする
-	@Transactional
-	public void createTmpAccount(String username, String password, String email, String site) {
-		
-		String tmpURL = UUID.randomUUID().toString();
-		System.out.println(tmpURL);
-		
-		TmpAccount tmpAccount = new TmpAccount();
-		tmpAccount.setUsername(username);
-		tmpAccount.setPassword(passwordEncoder.encode(password));
-		tmpAccount.setEmail(email);
-		tmpAccount.setSite(site);
-		tmpAccount.setTmpURL(tmpURL);
-		tmpAccount.setTimeStamp(LocalDateTime.now());
-		
-		tmpAccountRepository.save(tmpAccount);
-		
-		String ipAndPort = "localhost:8080";
-		
-		String from = "toratorahole2@gmail.com";
-		String to = email;
-		String title = "アカウント確認のお願い";
-		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + ipAndPort + "/account/tmp" + "?id=" + tmpURL;
-		
-		try {
-			
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setFrom(from);
-			msg.setTo(to);
-			msg.setSubject(title);
-			msg.setText(content);
-			mailSender.send(msg);
-			
-		} catch (MailException e) {
-			
-			e.printStackTrace();
-		}
-	}
+//	//アカウント作成仮登録　※認証メール送信
+//	//同じメールアドレスで登録が行われた場合は仮登録のデータを上書きする
+//	@Transactional
+//	public void createTmpAccount(String username, String password, String email, String site) {
+//		
+//		String tmpURL = UUID.randomUUID().toString();
+//		
+//		TmpAccount tmpAccount = new TmpAccount();
+//		tmpAccount.setUsername(username);
+//		tmpAccount.setPassword(passwordEncoder.encode(password));
+//		tmpAccount.setEmail(email);
+//		tmpAccount.setSite(site);
+//		tmpAccount.setTmpURL(tmpURL);
+//		tmpAccount.setTimeStamp(LocalDateTime.now());
+//		
+//		tmpAccountRepository.save(tmpAccount);
+//		
+//		String ipAndPort = "localhost:8080";
+//		
+//		String from = "toratorahole2@gmail.com";
+//		String to = email;
+//		String title = "アカウント確認のお願い";
+//		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + ipAndPort + "/account/tmp" + "?id=" + tmpURL;
+//		
+//		try {
+//			
+//			SimpleMailMessage msg = new SimpleMailMessage();
+//			msg.setFrom(from);
+//			msg.setTo(to);
+//			msg.setSubject(title);
+//			msg.setText(content);
+//			mailSender.send(msg);
+//			
+//		} catch (MailException e) {
+//			
+//			e.printStackTrace();
+//		}
+//	}
 	
 	//認証メールがクリックされた際に、該当のtmpURLを使用しているtmpAccountオブジェクトを取得
 	public TmpAccount getTmpAccount(String tmpURL) {

@@ -66,7 +66,6 @@ public class S3DownloadHelper {
 				e.printStackTrace();
 			}
 		}
-		System.out.println(System.getenv("BUCKET_NAME"));
 		return mediaList;
 	}
 }

@@ -19,31 +19,8 @@
 <section th:if="${targetClients} != null" class="py-3">
 <div class="row">
 	<div class="col">
-	
 		<h2 class="lead py-4" style="font-weight: bold;">検索結果</h2>
-		<div><span th:text=${#lists.size(targetClients)}></span>件HITしました！</div>
-		
-		<table class="table" style="table-layout: fixed">
-			<tr>
-				<th style="width: 40%;">スクール名</th>
-				<th style="width: 30%;">地域</th>
-				<th style="width: 20%;">チケット4料金</th>
-				<th style="width: 10%;"></th>
-			</tr>
-			<tr th:each="client : ${targetClients}">
-				<td th:text="${client.clientName}"></td>
-				<td>
-					<span th:text="${client.area.areaName}"></span>
-				</td>
-				<td>
-					<span th:each="plan : ${client.plans}">
-						<span th:if="${plan.planType.planTypeName == 'チケット4'}" th:text="${plan.price + '円'}"></span>
-					</span>
-				</td>
-				<td><a th:href="@{|/client/${client.id}|}">詳細</a></td>
-			</tr>
-		</table>
-		
+		<div><span th:text=${#lists.size(targetClients)}></span>件HITしました！</div>		
 	</div>
 </div>
 
