@@ -54,7 +54,6 @@ public class HomeController {
 	@GetMapping("/search")
 	public String search(Model model) {
 		
-//		List<Client> targetClients = new ArrayList<>();
 		model.addAttribute("targetClients", null);
 		return "search";
 	}

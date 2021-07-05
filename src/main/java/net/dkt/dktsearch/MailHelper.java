@@ -53,8 +53,6 @@ public class MailHelper {
 
 		tmpAccountRepository.save(tmpAccount);
 
-//		String ipAndPort = "localhost:8080";
-//		String from = "toratorahole2@gmail.com";
 		String to = email;
 		String title = "アカウント確認のお願い";
 		String content = username + "さん" + "\n" + "\n" + "以下のリンクにアクセスしてアカウントを認証してください" + "\n" + "http://" + domain + "/account/tmp" + "?id=" + tmpURL;

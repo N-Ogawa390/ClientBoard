@@ -135,6 +135,7 @@ h3 {
 .show-top-media {
 	width: 100%;
 	margin: 5% auto;
+	box-shadow: 4px 4px 4px lightgray;
 }
 
 .show-top-media>img {

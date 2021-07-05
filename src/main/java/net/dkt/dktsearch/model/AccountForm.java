@@ -1,5 +1,6 @@
 package net.dkt.dktsearch.model;
 
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
@@ -8,7 +9,7 @@ import lombok.Data;
 @Data
 public class AccountForm {
 	
-	private String type;
+	private String type;	//client or administrator
 	
 	@NotBlank(message = "※ユーザ名を入力してください")
 	private String username;
