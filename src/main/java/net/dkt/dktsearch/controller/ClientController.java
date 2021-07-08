@@ -1,5 +1,6 @@
 package net.dkt.dktsearch.controller;
 
+import java.awt.Graphics;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -39,8 +40,6 @@ import net.dkt.dktsearch.service.PlanService;
 import net.dkt.dktsearch.service.PlanTypeService;
 
 /*
-//使ってないかも
-	@GetMapping("")	client
 //クライアント詳細画面表示
 	@GetMapping("/{clientId}")	public String showClient
 //クライアント作成画面表示
@@ -256,7 +255,7 @@ public class ClientController {
 		return "redirect:/client/{clientId}/medias";
 	}
 	
-	//画像の優先度を上げる・下げる・削除する
+	//画像の優先度を上げる・下げる
 	@GetMapping("/{clientId}/medias/{priority}/{done}")
 	public String mediasEdit(
 			@PathVariable("clientId") Client client,
@@ -286,7 +285,7 @@ public class ClientController {
 
 		clientMediaService.deleteClientMedia(clientMedia);	//該当Idのメディアを削除
 
-		//サブ画像の場合は削除後に優先順位を詰める
+//		//サブ画像の場合は削除後に優先順位を詰める
 		if(clientMedia.getMediaType().equals("s")) {
 			
 			List<ClientMedia> clientMedias = client.getClientMedias();	//クライアントの画像一覧を取得
@@ -442,7 +441,9 @@ public class ClientController {
 		List<MediaFormat> mediaFormatList = new ArrayList<>();
 		
 		for(MediaFormat mf : mfList) {
+			
 			if(mf.getClientMedia().getMediaType().equals("t")) {
+				
 				mediaFormatList.add(mf);
 			}
 		}
@@ -455,7 +456,9 @@ public class ClientController {
 		List<MediaFormat> mediaFormatList = new ArrayList<>();
 		
 		for(MediaFormat mf : mfList) {
+			
 			if(mf.getClientMedia().getMediaType().equals("s")) {
+				
 				mediaFormatList.add(mf);
 			}
 		}

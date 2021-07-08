@@ -18,17 +18,12 @@ import net.dkt.dktsearch.repository.ClientRepository;
 @Service
 public class HomeService {
 	
-	@Autowired
-	private ClientRepository clientRepository;
-	
-	//すべてのクライアントobjを取得
-	public List<Client> getClientAll() {
-		return clientRepository.findAll();
-	}
-	
-	//検索ワードを含むすべてのクライアントobjを取得
-	public List<Client> searchClient(String word) {
-		return clientRepository.findByClientNameContains(word);
-	}
+//	@Autowired
+//	private ClientRepository clientRepository;
+//	
+//	//検索ワードを含むすべてのクライアントobjを取得
+//	public List<Client> searchClient(String word) {
+//		return clientRepository.findByClientNameContains(word);
+//	}
 	
 }

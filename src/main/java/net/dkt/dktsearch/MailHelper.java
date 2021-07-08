@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import javax.transaction.Transactional;
 
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import net.dkt.dktsearch.model.Account;
 import net.dkt.dktsearch.model.TmpAccount;
 import net.dkt.dktsearch.repository.TmpAccountRepository;
+import net.dkt.dktsearch.service.SpringUserService;
 
 @Component
 public class MailHelper {
@@ -33,8 +36,11 @@ public class MailHelper {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
+	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
+	private SpringUserService springUserService;
 	
 	//アカウント作成仮登録　※認証メール送信
 	//同じメールアドレスで登録が行われた場合は仮登録のデータを上書きする
@@ -45,7 +51,8 @@ public class MailHelper {
 
 		TmpAccount tmpAccount = new TmpAccount();
 		tmpAccount.setUsername(username);
-		tmpAccount.setPassword(passwordEncoder.encode(password));
+//		tmpAccount.setPassword(passwordEncoder.encode(password));
+		tmpAccount.setPassword(password);
 		tmpAccount.setEmail(email);
 		tmpAccount.setSite(site);
 		tmpAccount.setTmpURL(tmpURL);
@@ -70,5 +77,35 @@ public class MailHelper {
 		  
 		  e.printStackTrace();
 		}
+	}
+	
+	//パスワードリセット
+	public void passwordReset(Account account) {
+		
+		String password = RandomStringUtils.randomAlphanumeric(12);
+		
+		springUserService.updateSpringUser(
+				account.getUsername(),
+				password,
+				account.getActive());
+		
+		//メール送信
+		String to = account.getEmail();
+		String title = "パスワードリセットを行いました";
+		String content = "ユーザ名：" + account.getUsername() + "さん" + "\n" + "\n" + "新しいパスワードをお知らせします。" + "\n" + "パスワード：" + password;
+		
+		try {
+			
+			SimpleMailMessage msg = new SimpleMailMessage();
+			msg.setFrom(mailFrom);
+			msg.setTo(to);
+			msg.setSubject(title);
+			msg.setText(content);
+			mailSender.send(msg);
+			
+		} catch (MailException e) {
+			
+			e.printStackTrace();
+		}	
 	}
 }

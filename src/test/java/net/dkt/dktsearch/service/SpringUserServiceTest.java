@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.provisioning.UserDetailsManager;
@@ -40,7 +42,7 @@ public class SpringUserServiceTest {
 	@Test
 	public void testCreateSpringUser() {
 		
-		springUserService.createSpringUser("admin1", "admin1", "ADMINISTRTOR", true);
+		springUserService.createSpringUser("admin1", "admin1", "ADMINISTRATOR", true);
 		
 		UserDetails userDetails = userDetailsManager.loadUserByUsername("admin1");
 		assertThat(userDetails).isNotNull();
@@ -51,5 +53,32 @@ public class SpringUserServiceTest {
 			assertThat(auth.getAuthority()).isEqualTo("ROLE_ADMINISTRATOR");
 		}
 	}
-
+	
+	@Test
+	public void testUpdateSpringUserChangePassword() {
+		
+		UserBuilder builder = User.withDefaultPasswordEncoder();
+		UserDetails userDetails = builder.username("admin2").password("admin2").roles("ADMINISTRATOR").build();
+		userDetailsManager.createUser(userDetails);
+		
+		springUserService.updateSpringUser("admin2", "ADMIN2", true);
+		
+		UserDetails newUserDetails = userDetailsManager.loadUserByUsername("admin2");
+		
+		assertThat(newUserDetails.getPassword()).isNotEqualTo(userDetails.getPassword());
+	}
+	
+	@Test
+	public void testUpdateSpringUserNotChangePassword() {
+		
+		UserBuilder builder = User.withDefaultPasswordEncoder();
+		UserDetails userDetails = builder.username("admin3").password("admin3").roles("ADMINISTRATOR").build();
+		userDetailsManager.createUser(userDetails);
+		
+		springUserService.updateSpringUser("admin3", "dammypassword", true);	//パスワードを更新しない場合は"dammypassword"が送信される
+		
+		UserDetails newUserDetails = userDetailsManager.loadUserByUsername("admin3");
+		
+		assertThat(newUserDetails.getPassword()).isEqualTo(userDetails.getPassword());
+	}
 }

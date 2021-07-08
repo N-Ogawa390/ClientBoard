@@ -12,6 +12,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import javax.imageio.ImageIO;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -177,8 +178,9 @@ public class ClientMediaService {
 	}
 	
 	//画像を削除する
+	@Transactional
 	public void deleteClientMedia(ClientMedia clientMedia) {
-
+		
 		clientMediaRepository.delete(clientMedia);	//★消えねぇ あ、S3通してないからか…?いや、他のクラス見るとそんなこともないな…なぜ。
 	}
 	

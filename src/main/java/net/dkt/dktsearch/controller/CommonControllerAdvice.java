@@ -63,7 +63,6 @@ public class CommonControllerAdvice {
 			
 			model.addAttribute("currentAccount", currentAccount);
 		}
-		
 	}
 	
 	//チェックボックスデータ登録に使用するエリア名格納用リスト

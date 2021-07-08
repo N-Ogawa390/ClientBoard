@@ -31,7 +31,12 @@
 	<div class="bg-light blogcard-outline">
 	<a th:href="@{|/client/${client.id}|}" class="blogcard-link-child"></a>
 		<div class="blogcard-photo">
-			<img src="../img/dkt_search_top.png" class="blogcard-img">
+			<img th:if="${topImagesWithClientId.get(client.id)} != null"
+				th:src="${'data:image/png;base64,' + topImagesWithClientId.get(client.id).base64}"
+			 	class="blogcard-img">
+			<img th:unless="${topImagesWithClientId.get(client.id)} != null"
+				src="../static/img/no_image.png"
+				class="blogcard-img">
 		</div>
 		<p th:text="${client.Area.AreaName}" class="blogcard-area slidein-scroll"></p>
 		<div class="description">
@@ -60,28 +65,28 @@
 <div class="row mb-3">
 	<div class="col">
 		<h2 class="lead p-3 icon-search-headline">条件検索</h2>
-			<label class="mr-3">
-				スクール名検索
-				<input type="text" name="word" class="form-control">
-			</label>
-			<label class="mr-3">
-				都道府県
-				<select name="areaName" class="form-control">
-					<option value="選択してください">選択してください</option>
-					<option
-						th:each="areaName : ${areaNameList}"
-						th:value="${areaName}"
-						th:text="${areaName}"
-					>
-					</option>
-				</select>
-			</label>
+		<label class="mr-3">
+			スクール名検索
+			<input type="text" name="word" class="form-control">
+		</label>
+		<label class="mr-3">
+			都道府県
+			<select name="areaName" class="form-control">
+				<option value="選択してください">選択してください</option>
+				<option
+					th:each="areaName : ${areaNameList}"
+					th:value="${areaName}"
+					th:text="${areaName}"
+				>
+				</option>
+			</select>
+		</label>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col">
-		<h2 class="lead p-3">ダンスジャンルも選択する</h2>
+		<h2 class="lead p-3 icon-search-headline">ダンスジャンルを選択する</h2>
 		
 			<h4 class="lead mt-5">ヒップホップ系</h4>
 			<table class="table">
@@ -146,10 +151,10 @@
 				</tr>
 				</th:block>
 			</table>			
-			
-			<input type="submit" value="検索" class="btn btn-primary">
 	</div>
 </div>
+
+<input type="submit" value="検索" class="btn btn-primary">
 
 </form>
 </section>

@@ -7,5 +7,6 @@ import lombok.Data;
 @Data
 public class AppConfig {
 	
-	private File imageDir;	//絶対パスを保存しておくためのフィールド
+	private File imageDir;
+		//静的画像をアプリケーションのstaticフィールドに保存する際のパス格納用フィールド
 }

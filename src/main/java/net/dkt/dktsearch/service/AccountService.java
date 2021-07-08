@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 
 import org.apache.commons.lang3.RandomStringUtils;
@@ -53,11 +54,8 @@ public class AccountService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	@Autowired
-	private JavaMailSender mailSender;
-	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private AccountRepository accountRepository;
@@ -115,8 +113,6 @@ public class AccountService {
 	@Transactional
 	public Account createAccount(String username, String password, String email, String site) {
 		
-		springUserService.createSpringUser(username, password, "CLIENT", true);
-		
 		Account account = new Account();
 		account.setUsername(username);
 		account.setType("client");
@@ -124,6 +120,8 @@ public class AccountService {
 		account.setSite(site);
 		account.setActive(true);
 		accountRepository.save(account);
+		
+		springUserService.createSpringUser(username, password, "CLIENT", true);
 		
 		return account;
 	}
@@ -146,6 +144,8 @@ public class AccountService {
 	public void deleteAccount(Account account) {
 		
 		jdbcTemplate.update("DELETE FROM USERS WHERE username = ?", account.getUsername());
+				//account作成時に@Transactionalを用いてaccountテーブルとspringuserを更新している
+				//そのため、accountテーブルとusersテーブルの間に参照整合性制約を設定できないので個別にdeleteする
 		accountRepository.delete(account);
 	}
 	
@@ -154,37 +154,5 @@ public class AccountService {
 	public Account getAccountFromEmail(String email) {
 		
 		return accountRepository.findByEmail(email);
-	}
-	
-	//パスワードリセット
-	public void passwordReset(Account account) {
-		
-		String password = RandomStringUtils.randomAlphanumeric(12);
-		System.out.println(password);
-		
-		springUserService.updateSpringUser(
-				account.getUsername(),
-				password,
-				account.getActive());
-		
-		//メール送信
-		String from = "toratorahole2@gmail.com";
-		String to = account.getEmail();
-		String title = "パスワードリセットを行いました";
-		String content = "ユーザ名：" + account.getUsername() + "さん" + "\n" + "\n" + "新しいパスワードをお知らせします。" + "\n" + "パスワード：" + password;
-		
-		try {
-			
-			SimpleMailMessage msg = new SimpleMailMessage();
-			msg.setFrom(from);
-			msg.setTo(to);
-			msg.setSubject(title);
-			msg.setText(content);
-			mailSender.send(msg);
-			
-		} catch (MailException e) {
-			
-			e.printStackTrace();
-		}	
 	}
 }

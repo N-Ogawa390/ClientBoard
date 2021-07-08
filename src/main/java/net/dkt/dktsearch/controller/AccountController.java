@@ -7,6 +7,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -128,7 +129,7 @@ public class AccountController {
 		accountForm.setSite(account.getSite());
 		accountForm.setActive(account.getActive());
 		accountForm.setPassword("dammypassword");
-		//パスワードをどうやって入手するか…　ダミーを送信して内部では更新しないように設定するのが妥当か。
+		//パスワードを空で送信するとSizeのValidに引っかかるためダミーを送信
 		
 		return "account/edit";
 	}
@@ -198,25 +199,15 @@ public class AccountController {
 			@Valid AccountForm accountForm, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()) {
-			System.out.println(bindingResult);
 			return "account/passchange";
 		}
 		
 		String username = account.getUsername();
 		String password = accountForm.getPassword();
-//		String email = account.getEmail();
-//		String site = account.getSite();
 		boolean active = true;
 		
 		springUserService.updateSpringUser(username, password, active);
-//		accountService.updateAccount(username, password, email, site, active);
-		
-//		accountForm.setType(account.getType());
-//		accountForm.setUsername(account.getUsername());
-//		accountForm.setEmail(account.getEmail());
-//		accountForm.setSite(account.getSite());
-//		accountForm.setActive(account.getActive());
-		
+
 		return "redirect:/";
 	}
 	
@@ -225,6 +216,8 @@ public class AccountController {
 	public String deleteAccount(@PathVariable("username") Account account) {
 		
 		accountService.deleteAccount(account);
+		
+		SecurityContextHolder.clearContext();	//SpringSecurityで管理している認証情報を破棄
 		
 		return "redirect:/";
 	}
@@ -241,17 +234,10 @@ public class AccountController {
 	public String passwordReset(
 			@RequestParam("email") String email) {
 		
-		System.out.println("スルー");
-		
 		Account account = accountService.getAccountFromEmail(email);
 		
-		System.out.println(account.getEmail());
-		
-		accountService.passwordReset(account);
-		
-		System.out.println("スルー2");
+		mailHelper.passwordReset(account);
 		
 		return "account/passreset/mailsend";
 	}
-	
 }

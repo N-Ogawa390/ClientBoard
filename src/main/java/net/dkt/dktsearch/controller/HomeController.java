@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import net.dkt.dktsearch.S3DownloadHelper;
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.Genre;
 import net.dkt.dktsearch.service.ClientService;
@@ -30,16 +31,14 @@ import net.dkt.dktsearch.service.HomeService;
 public class HomeController {
 	
 	@Autowired
-	private HomeService homeService;
+	private ClientService clientService;
 	
 	@Autowired
-	private ClientService clientService;
+	private S3DownloadHelper s3DownloadHelper;
 		
 	@GetMapping("/")
 	public String home(Model model) {
 		
-		List<Client> clients = homeService.getClientAll();
-		model.addAttribute("clients", clients);
 		return "index";
 	}
 	
@@ -82,7 +81,7 @@ public class HomeController {
 			targetClients = targetClientsWithWord;
 		}
 		
-		//エリア検索します
+		//エリア検索
 		if(!areaName.equals("選択してください")) {
 			
 			List<Client> targetClientsWithAreaName = new ArrayList<>();
@@ -117,6 +116,8 @@ public class HomeController {
 			targetClients = targetClientsWithGenreName;
 		}
 		
+		model.addAttribute("topImagesWithClientId", s3DownloadHelper.getTopImagesWithClientId(targetClients));
+			//クライアントIDとトップ画像MediaFormatのマップ
 		model.addAttribute("targetClients", targetClients);
 		
 		return "search";

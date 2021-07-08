@@ -1,7 +1,12 @@
 package net.dkt.dktsearch.service;
 
+import java.awt.FlowLayout;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.JFrame;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,5 +68,4 @@ public class ClientService {
 		}
 		return clients;
 	}
-	
 }

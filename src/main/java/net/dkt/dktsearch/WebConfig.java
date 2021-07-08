@@ -26,12 +26,13 @@ public class WebConfig implements WebMvcConfigurer {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
-		String imageDirUri = appConfig.getImageDir().toURI().toString();
-		registry.addResourceHandler("/images/**").addResourceLocations(imageDirUri);
-		//aws設定用
+		//静的画像保存先パス設定
+//		String imageDirUri = appConfig.getImageDir().toURI().toString();
+//		registry.addResourceHandler("/images/**").addResourceLocations(imageDirUri);
+		
+		//静的画像保存先パス設定
 		registry.addResourceHandler("/static/**")
-        .addResourceLocations("classpath:/static/");
-		//aws設定用ここまで
+        	.addResourceLocations("classpath:/static/");
 	}
 	
 	//aws設定用............................................................

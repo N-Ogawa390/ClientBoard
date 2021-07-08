@@ -51,10 +51,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	//エンコーダを指定
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder() {
+//		
+//		return new BCryptPasswordEncoder();
+//	}
 
 }
