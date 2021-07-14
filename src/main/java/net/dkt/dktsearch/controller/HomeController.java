@@ -65,7 +65,7 @@ public class HomeController {
 			@RequestParam(name="areaName") String areaName
 			) {
 		
-		List<Client> targetClients = clientService.getClientAll();
+		List<Client> targetClients = clientService.getActiveClients();
 		
 		//スクール名検索
 		if (word != null) {

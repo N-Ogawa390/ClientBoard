@@ -17,19 +17,17 @@
 </h2>
 <p>～<span th:text="*{clientSubName}"></span>～</p>
 
-<th:block th:each="topImg : ${topImages}">
-	<div class="show-top-media">
-		<img th:src="${'data:image/png;base64,' + topImg.base64}">
-	</div>
-</th:block>
+<div th:if="${topImage} != null" class="show-top-media">
+	<img th:src="${'data:image/png;base64,' + topImage.base64}">
+</div>
 	
-<div th:if="${#lists.size(topImages)}<1" class="show-top-media">
+<div th:unless="${topImage} != null" class="show-top-media">
 	<img src="../static/img/no_image.png" class="show-no-img">
 </div>
 
 <h3>スクール風景</h3>
 <div style="padding: 30%">
-<div th:if="${#lists.size(subImages)}>1" class="carousel3d" id="carousel">
+<div th:if="${subImages} != null" class="carousel3d" id="carousel">
 	<figure>
 		<th:block th:each="subImg : ${subImages}">
 			<img th:src="${'data:image/png;base64,' + subImg.base64}">
@@ -42,7 +40,7 @@
 </div>
 </div>
 
-<div th:if="${#lists.size(subImages)}<1" class="show-top-media">
+<div th:unless="${subImages} != null" class="show-top-media">
 	<img src="../static/img/no_image.png" class="show-no-img">
 </div>
 

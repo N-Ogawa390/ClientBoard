@@ -76,6 +76,7 @@ public class CommonControllerAdvice {
 	@ModelAttribute("areaNameList")
 	public List<String> areaNameList() {
 		final String[] areaNameList = {
+			"地域を選択してください",
 			"北海道", "青森県", "岩手県", "宮城県",
 			"秋田県", "山形県", "福島県", "茨城県",
 			"栃木県", "群馬県", "埼玉県", "千葉県",

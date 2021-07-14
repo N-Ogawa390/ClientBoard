@@ -55,7 +55,7 @@ public class S3DownloadHelper {
 			
 			Resource resource = getResource(clientMedia);
 			
-			try(InputStream inputStream = resource.getInputStream()) {	//①で取得したインスタンスをストリーム(バイト列)に変換
+			try(InputStream inputStream = resource.getInputStream()) {	//取得したインスタンスをストリーム(バイト列)に変換
 				image = ImageIO.read(inputStream);	//ストリームをBufferdImage(Javaで画像を扱うときの基本型)に変換
 
 				mediaList.add(new MediaFormat(clientMedia, clientMediaService.getByteImages(image)));

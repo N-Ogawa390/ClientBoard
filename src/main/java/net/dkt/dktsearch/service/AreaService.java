@@ -43,7 +43,7 @@ public class AreaService {
 	public Area createDefaultArea() {
 		
 		Area area = new Area();
-		area.setAreaName("東京都");
+		area.setAreaName("地域を選択してください");
 		return area;
 	}
 	

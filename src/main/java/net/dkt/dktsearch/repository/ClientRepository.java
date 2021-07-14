@@ -9,5 +9,7 @@ import net.dkt.dktsearch.model.Client;
 public interface ClientRepository extends JpaRepository<Client, Integer> {
 	
 	List<Client> findByClientNameContains(String word);
+	
+	List<Client> findByActiveFalse();
 
 }

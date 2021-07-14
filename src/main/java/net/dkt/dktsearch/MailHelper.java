@@ -36,8 +36,8 @@ public class MailHelper {
 	@Autowired
 	private JavaMailSender mailSender;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Autowired
 	private SpringUserService springUserService;
@@ -51,8 +51,7 @@ public class MailHelper {
 
 		TmpAccount tmpAccount = new TmpAccount();
 		tmpAccount.setUsername(username);
-//		tmpAccount.setPassword(passwordEncoder.encode(password));
-		tmpAccount.setPassword(password);
+		tmpAccount.setPassword(passwordEncoder.encode(password));
 		tmpAccount.setEmail(email);
 		tmpAccount.setSite(site);
 		tmpAccount.setTmpURL(tmpURL);

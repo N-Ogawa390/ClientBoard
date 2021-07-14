@@ -50,11 +50,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		return new JdbcUserDetailsManager(dataSource);
 	}
 	
-	//エンコーダを指定
-//	@Bean
-//	public PasswordEncoder passwordEncoder() {
-//		
-//		return new BCryptPasswordEncoder();
-//	}
+	//エンコーダを指定 ※tmpAccount登録時にエンコードする必要があるため
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		
+		return new BCryptPasswordEncoder();
+	}
 
 }

@@ -24,18 +24,22 @@
 			<td><input type="text" th:field="*{email}"></td>
 		</tr>
 		<tr>
-			<td>パスワード（8文字以上）</td>
+			<td>パスワード　※8文字以上</td>
 			<td><input type="password" th:field="*{password}"></td>
 		</tr>
 		<tr>
-			<td>サイトURL</td>
+			<td>パスワード（確認用）</td>
+			<td><input type="password" name="passwordVerify"></td>
+		</tr>
+		<tr>
+			<td>サイトURL　※任意</td>
 			<td><input type="text" th:field="*{site}"></td>
 		</tr>
 	</table>
 
-	<div><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></div>
-	<div><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></div>
-	<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></div>
+	<div><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></span></div>
+	<div><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="text-danger"></span></div>
+	<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span></div>
 	<input type="submit" value="登録" class="btn btn-primary">
 </form>
 </div>

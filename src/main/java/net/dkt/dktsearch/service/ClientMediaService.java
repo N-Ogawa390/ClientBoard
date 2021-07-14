@@ -112,6 +112,7 @@ public class ClientMediaService {
 	}
 	
 	//サブ画像の優先順位を上げる　※1つ優先順位の高い画像は順位を下げる
+	@Transactional
 	public void raisePriority(Integer priority, Client client) {
 		
 		List<ClientMedia> clientMedias = client.getClientMedias();
@@ -119,27 +120,34 @@ public class ClientMediaService {
 		Integer upId = 0;	//引数で渡された優先順位の画像のID
 		Integer downId = 0;	//引数で渡されたものより優先順位の1つ高い画像のID
 		
-		for(ClientMedia cm : clientMedias) {
+		for(ClientMedia clientMedia : clientMedias) {
 			
-			if(cm.getPriority() == priority) {
-				upId = cm.getId();
+			Integer clientMediaPriority = clientMedia.getPriority();
+			
+			if(clientMediaPriority != null) {
 				
-			} else if(cm.getPriority() == priority - 1) {
-				downId = cm.getId();
+				if(clientMediaPriority == priority) {
+					upId = clientMedia.getId();
+					
+				} else if(clientMediaPriority == priority - 1) {
+					downId = clientMedia.getId();
+				}
 			}
 		}
 		
-		for(ClientMedia cm : clientMedias) {
+		for(ClientMedia clientMedia : clientMedias) {
 			
-			if(cm.getId() == upId) {
+			Integer clientMediaPriority = clientMedia.getPriority();
+			
+			if(clientMedia.getId() == upId) {
 				
-				cm.setPriority(cm.getPriority() - 1);	//優先順位を上げる
-				clientMediaRepository.save(cm);
+				clientMedia.setPriority(clientMediaPriority - 1);	//優先順位を上げる
+				clientMediaRepository.save(clientMedia);
 				
-			} else if(cm.getId() == downId) {
+			} else if(clientMedia.getId() == downId) {
 				
-				cm.setPriority(cm.getPriority() + 1);	//優先順位を下げる
-				clientMediaRepository.save(cm);
+				clientMedia.setPriority(clientMediaPriority + 1);	//優先順位を下げる
+				clientMediaRepository.save(clientMedia);
 			}
 		}
 	}
@@ -152,27 +160,34 @@ public class ClientMediaService {
 		Integer downId = 0;	//引数で渡された優先順位の画像のID
 		Integer upId = 0;	//引数で渡されたものより優先順位の1つ低い画像のID
 		
-		for(ClientMedia cm : clientMedias) {
+		for(ClientMedia clientMedia : clientMedias) {
 			
-			if(cm.getPriority() == priority) {
-				downId = cm.getId();
+			Integer clientMediaPriority = clientMedia.getPriority();
+			
+			if(clientMediaPriority != null) {
 				
-			} else if(cm.getPriority() == priority + 1) {
-				upId = cm.getId();
+				if(clientMediaPriority == priority) {
+					downId = clientMedia.getId();
+					
+				} else if(clientMediaPriority == priority + 1) {
+					upId = clientMedia.getId();
+				}
 			}
 		}
 		
-		for(ClientMedia cm : clientMedias) {
+		for(ClientMedia clientMedia : clientMedias) {
 			
-			if(cm.getId() == downId) {
+			Integer clientMediaPriority = clientMedia.getPriority();
+			
+			if(clientMedia.getId() == downId) {
 				
-				cm.setPriority(cm.getPriority() + 1);	//優先順位を下げる
-				clientMediaRepository.save(cm);
+				clientMedia.setPriority(clientMediaPriority + 1);	//優先順位を下げる
+				clientMediaRepository.save(clientMedia);
 				
-			} else if(cm.getId() == upId) {
+			} else if(clientMedia.getId() == upId) {
 				
-				cm.setPriority(cm.getPriority() - 1);	//優先順位を上げる
-				clientMediaRepository.save(cm);
+				clientMedia.setPriority(clientMediaPriority - 1);	//優先順位を上げる
+				clientMediaRepository.save(clientMedia);
 			}
 		}
 	}
@@ -181,7 +196,7 @@ public class ClientMediaService {
 	@Transactional
 	public void deleteClientMedia(ClientMedia clientMedia) {
 		
-		clientMediaRepository.delete(clientMedia);	//★消えねぇ あ、S3通してないからか…?いや、他のクラス見るとそんなこともないな…なぜ。
+		clientMediaRepository.delete(clientMedia);
 	}
 	
 	//画像の優先順位の空きを詰める　※サブ画像削除後

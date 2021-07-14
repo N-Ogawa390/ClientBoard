@@ -66,7 +66,7 @@ public class Client {
 	private Integer capital;
 	
 	//閉店した場合はfalse
-	private Boolean active;
+	private boolean active;
 	
 	//月4予算(内部用)
 	private String budget;

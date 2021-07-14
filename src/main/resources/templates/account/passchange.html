@@ -18,13 +18,22 @@
 		<input type="hidden" th:field="*{type}">
 		<input type="hidden" th:field="*{site}">
 		<input type="hidden" th:field="*{email}">
+		
 		<table class="table">
 			<tr>
 				<td>新しいパスワード</td>
 				<td><input type="password" th:field="*{password}"></td>
 			</tr>
+			<tr>
+				<td>パスワード（確認用）</td>
+				<td><input type="password" name="passwordVerify"></td>
+			</tr>
 		</table>
+		
+		<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger"></span></div>
+		
 		<input type="submit" value="送信" class="btn btn-primary">
+		
 		</form>
 	</div>
 </div>

@@ -11,19 +11,16 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-
 <h2 class="lead py-4" style="font-weight: bold;">
 	<span th:text="*{clientName}"></span>
 </h2>
 
 <h3>トップ画像</h3>
-<th:block th:each="topImg : ${topImages}">
-	<div class="form-top-medias">
-		<img style="width: 60%;" th:src="${'data:image/png;base64,' + topImg.base64}">
-	</div>
-</th:block>
-<div th:if="${#lists.size(topImages)}<1">
-	<p>※トップ画像が登録されていません</p>
+<div th:if="${topImage} != null" class="form-top-medias">
+	<img style="width: 60%;" th:src="${'data:image/png;base64,' + topImage.base64}">
+</div>
+<div th:unless="${topImage} != null">
+	<img src="../static/img/no_image.png" class="show-no-img">
 </div>
 
 <div>
@@ -31,15 +28,15 @@
 </div>
 
 <h3>サブ画像</h3>
-<div class="form-sub-medias">
+<div th:if="${subImages} != null" class="form-sub-medias">
 	<th:block th:each="subImg : ${subImages}">
 		<div class="form-sub-medias-child">
 			<img th:src="${'data:image/png;base64,' + subImg.base64}">
 		</div>
 	</th:block>
 </div>
-<div th:if="${#lists.size(subImages)}<1">
-	<p>※サブ画像が登録されていません</p>
+<div th:unless="${subImages} != null">
+	<img src="../static/img/no_image.png" class="show-no-img">
 </div>
 
 <div>
@@ -55,7 +52,7 @@
 	<div class="col">
 		<table class="table">
 			<tr>
-				<td>スクール名</td>
+				<td>スクール名  ※必須</td>
 				<td><input type="text" th:field="*{clientName}"></td>
 			</tr>
 			<tr>
@@ -63,13 +60,14 @@
 				<td><input type="text" th:field="*{clientSubName}"></td>
 			</tr>
 		</table>
+		<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
 	</div>
 </div>
 </section>
 
 <section class="py-3">
 <h3 class="py-3">地域</h3>
- 
+
 <div class="row">
 	<div class="col">
 		<select name="areaNames">
@@ -83,9 +81,6 @@
 	</div>
 </div>
 
-<div>
-	<span th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-muted"></span>	
-</div>
 </section>
 
 <section class="py-3">
@@ -228,10 +223,10 @@
 
 </section>
 
-<input type="submit" value="完了" class="btn btn-primary m-3">
+<input type="submit" value="保存" class="btn btn-primary m-3">
 <div onclick="history.back()" class="btn btn-primary m-3">戻る</div>
 <div>
-	<span th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3">削除</a></span>
+	<span th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3">スクールを削除</a></span>
 </div>
 </form>
 

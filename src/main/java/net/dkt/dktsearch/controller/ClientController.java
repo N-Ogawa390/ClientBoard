@@ -106,6 +106,7 @@ public class ClientController {
 	}
 	
 	//クライアント詳細画面表示
+	@Transactional
 	@GetMapping("/{clientId}")
 	public String showClient(@PathVariable("clientId") Client client, Model model) {
 
@@ -113,7 +114,7 @@ public class ClientController {
 		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
 
 		model.addAttribute("client", client);
-		model.addAttribute("topImages", getTopImage(byteImages));
+		model.addAttribute("topImage", getTopImage(byteImages));
 		model.addAttribute("subImages", getSubImage(byteImages));
 		
 		return "client/show";
@@ -138,6 +139,10 @@ public class ClientController {
 			) {
 		
 		if (bindingResult.hasErrors()) {
+			
+			Area area = areaService.createDefaultArea();	//地域のデフォルト値をセット
+			client.setArea(area);
+			
 			return "client/form";
 		}
 		
@@ -152,7 +157,7 @@ public class ClientController {
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
-		return "redirect:/";
+		return "redirect:/manage";
 	}
 	
 	//クライアント編集画面表示
@@ -171,8 +176,7 @@ public class ClientController {
 		//画像表示
 		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
 
-
-		model.addAttribute("topImages", getTopImage(byteImages));
+		model.addAttribute("topImage", getTopImage(byteImages));
 		model.addAttribute("subImages", getSubImage(byteImages));
 		
 		return "client/form";
@@ -276,7 +280,6 @@ public class ClientController {
 	}
 	
 	//クライアント画像削除
-	@Transactional
 	@GetMapping("/{clientId}/medias/delete/{mediaId}")
 	public String deleteClientMedia(
 			@PathVariable("clientId") Client client,
@@ -285,7 +288,7 @@ public class ClientController {
 
 		clientMediaService.deleteClientMedia(clientMedia);	//該当Idのメディアを削除
 
-//		//サブ画像の場合は削除後に優先順位を詰める
+		//サブ画像の場合は削除後に優先順位を詰める
 		if(clientMedia.getMediaType().equals("s")) {
 			
 			List<ClientMedia> clientMedias = client.getClientMedias();	//クライアントの画像一覧を取得
@@ -408,8 +411,9 @@ public class ClientController {
 	//クライアント削除
 	@GetMapping("/{clientId}/delete")
 	public String deleteClient(@PathVariable("clientId") Client client) {
+		
 		clientService.deleteClient(client);
-		return "redirect:/";
+		return "redirect:/manage";
 	}
 	
 	//他クライアントへの不正アクセス防止用
@@ -436,18 +440,18 @@ public class ClientController {
 	}
 	
 	//トップ画像の抽出
-	private List<MediaFormat> getTopImage(List<MediaFormat> mfList) {
+	private MediaFormat getTopImage(List<MediaFormat> mfList) {
 		
-		List<MediaFormat> mediaFormatList = new ArrayList<>();
+		MediaFormat mediaFormat = null;
 		
 		for(MediaFormat mf : mfList) {
 			
 			if(mf.getClientMedia().getMediaType().equals("t")) {
 				
-				mediaFormatList.add(mf);
+				mediaFormat = mf;
 			}
 		}
-		return mediaFormatList;
+		return mediaFormat;
 	}
 	
 	//サブ画像の抽出
@@ -462,6 +466,12 @@ public class ClientController {
 				mediaFormatList.add(mf);
 			}
 		}
+		
+		if(mediaFormatList.size() < 1) {
+			
+			return null;
+		}
+		
 		return sortMediaFormatList(mediaFormatList);
 	}
 	
@@ -472,6 +482,4 @@ public class ClientController {
 																								//優先度昇順に並び替え
 		return mfList;
 	}
-
-
 }

@@ -8,6 +8,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -82,19 +83,25 @@ public class AccountController {
 	
 	//アカウント作成仮登録 ※認証メールを送信
 	@PostMapping("/tmp/create")
-	public String testMail(@Valid TmpAccount tmpAccount, BindingResult bindingResult) {
+	public String testMail(
+			@Valid TmpAccount tmpAccount,
+			BindingResult bindingResult,
+			@RequestParam("passwordVerify") String passwordVerify) {
 		
 		if (bindingResult.hasErrors()) {
-			return "account/tmp/form";
 			
+			return "account/tmp/form";
 		} else if (accountService.accountExist(tmpAccount.getUsername()) == true) {
 			
-			bindingResult.addError(new FieldError("accountForm", "username", "※すでに存在するユーザIDです"));
+			bindingResult.addError(new FieldError("accountForm", "username", "※このユーザIDはすでに使用されています"));
 			return "account/tmp/form";
-			
 		} else if (accountService.accountEmailExist(tmpAccount.getEmail()) == true) {
 			
-			bindingResult.addError(new FieldError("accountForm", "email", "※すでに使用されているメールアドレスです"));
+			bindingResult.addError(new FieldError("accountForm", "email", "※このメールアドレスはすでに使用されています"));
+			return "account/tmp/form";
+		} else if (accountService.accountPasswordVerify(tmpAccount.getPassword(), passwordVerify) == false) {
+			
+			bindingResult.addError(new FieldError("accountForm", "password", "※確認用パスワードが一致しません"));
 			return "account/tmp/form";
 		}
 		
@@ -195,16 +202,23 @@ public class AccountController {
 	
 	//パスワード再設定
 	@PostMapping("/{username}/passchange")
-	public String passChange(@PathVariable("username") Account account,
+	public String passChange(
+			@PathVariable("username") Account account,
+			@RequestParam("passwordVerify") String passwordVerify,
 			@Valid AccountForm accountForm, BindingResult bindingResult) {
-		
-		if (bindingResult.hasErrors()) {
-			return "account/passchange";
-		}
 		
 		String username = account.getUsername();
 		String password = accountForm.getPassword();
 		boolean active = true;
+		
+		if (bindingResult.hasErrors()) {
+			
+			return "account/passchange";
+		} else if (accountService.accountPasswordVerify(accountForm.getPassword(), passwordVerify) == false) {
+			
+			bindingResult.addError(new FieldError("accountForm", "password", "※確認用パスワードが一致しません"));
+			return "account/passchange";
+		}
 		
 		springUserService.updateSpringUser(username, password, active);
 

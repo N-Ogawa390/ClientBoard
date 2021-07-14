@@ -45,9 +45,6 @@ public class PlanService {
 		
 		//一般料金があれば最小値を予算にセット
 		for(Plan plan : plans) {
-//			System.out.println(plan.getPlanName());
-//			System.out.println(plan.getPlanType().getPlanTypeName());
-//			System.out.println(plan.getAgeGroup());
 			if (
 					(plan.getPlanType().getPlanTypeName().equals("チケット4") && plan.getAgeGroup().equals("ALL")) ||
 					(plan.getPlanType().getPlanTypeName().equals("クラス4") && plan.getAgeGroup().equals("ALL"))
@@ -55,8 +52,6 @@ public class PlanService {
 				provisional.add(plan.getPrice());
 			}
 		}
-		
-//		System.out.println("一般料金HIT件数" + provisional.size());
 		
 		if (provisional.size() != 0) {	//暫定リストに値があれば
 			Collections.sort(provisional);	//小さい順にソート
@@ -74,8 +69,6 @@ public class PlanService {
 					provisional.add(plan.getPrice());
 				}
 			}
-			
-//			System.out.println("キッズ料金HIT件数" + provisional.size());
 			
 			if (provisional.size() != 0) {	//暫定リストに値があれば
 				Collections.sort(provisional);	//小さい順にソート

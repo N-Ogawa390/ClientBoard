@@ -54,9 +54,6 @@ public class AccountService {
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-//	@Autowired
-//	private PasswordEncoder passwordEncoder;
-	
 	@Autowired
 	private AccountRepository accountRepository;
 	
@@ -65,6 +62,20 @@ public class AccountService {
 	
 	@Autowired
 	private TmpAccountRepository tmpAccountRepository;
+	
+	//スタブ
+	public Account createDefaultAccount() {
+		
+		Account account = new Account();
+		account.setUsername("ユーザ名を設定してください");
+		account.setType("client");
+		account.setEmail("please@set.email");
+		account.setSite("please set url");
+		account.setActive(true);
+		accountRepository.save(account);
+		
+		return account;
+	}
 	
 	//ユーザ名からアカウントobjを取得
 	public Account find(String username) {
@@ -85,7 +96,18 @@ public class AccountService {
 		return tmpAccount;
 	}
 	
-	//アカウントがすでに存在するかチェック
+	//パスワードと確認用パスワードが一致するかチェック
+	public boolean accountPasswordVerify(String password, String passwordVerify) {
+		
+		if(password.equals(passwordVerify)) {
+			
+			return true;
+		}
+		
+		return false;
+	}
+	
+	//アカウントのユーザ名がすでに存在するかチェック
 	public boolean accountExist(String username) {
 		
 		Optional<Account> accountCheck = accountRepository.findById(username);

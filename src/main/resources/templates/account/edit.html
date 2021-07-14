@@ -41,7 +41,7 @@
 	<div><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></div>
 	<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></div>
 	<input type="submit" value="登録" class="btn btn-primary">
-	<span th:if="*{username}"><a th:href="@{|/account/*{username}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-5">削除</a></span>
+	<span th:if="*{username}"><a th:href="@{|/account/*{username}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-5">アカウントの削除</a></span>
 </form>
 </div>
 </div>

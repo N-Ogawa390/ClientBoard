@@ -35,37 +35,55 @@ public class ClientService {
 	
 	//デフォルト値でクライアントを作成(テスト用)
 	public Client createDefaultClient() {
+		
 		Client client = new Client();
 		client.setClientName("DANCE回転灯スクール");
 		client.setAccess("吉祥寺駅徒歩5分");
 		client.setPresentation(true);
 		clientRepository.save(client);
+		
 		return client;
 	}
 	
 	//クライアントオブジェクト一覧を取得
 	public List<Client> getClientAll() {
+		
 		List<Client> clients = clientRepository.findAll();
+		
+		return clients;
+	}
+	
+	//閉店していないクライアントオブジェクト一覧を取得
+	public List<Client> getActiveClients() {
+		
+		List<Client> clients = clientRepository.findByActiveFalse();
+		
 		return clients;
 	}
 
 	//クライアントを作成・更新
 	public Client saveClient(Client client) {
+		
 		return clientRepository.save(client);
 	}
 	
 	//クライアントを削除
 	public void deleteClient(Client client) {
+		
 		clientRepository.delete(client);
 	}
 	
 	//クライアントIDのリストからクライアントオブジェクトのリストを取得
 	public List<Client> getClientsWithClientIds(List<Integer> clientIds) {
+		
 		List<Client> clients = new ArrayList<>();
-		for (Integer c : clientIds) {
-			Client client = clientRepository.findById(c).get();
+		
+		for (Integer clientId : clientIds) {
+			
+			Client client = clientRepository.findById(clientId).get();
 			clients.add(client);
 		}
+		
 		return clients;
 	}
 }
