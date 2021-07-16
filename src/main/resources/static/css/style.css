@@ -27,12 +27,13 @@ h3 {
   transition: all 1s;
 }
 .btn-shadow {
+	width: 50%;
 	border-radius: 50%;
 	cursor: pointer;
+	box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 .btn-shadow:hover {
-	opacity: 0.8;
-	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	opacity: 0.5;
 	transition: 0.4s;
 }
 @keyframes fadein-topimg {
@@ -96,8 +97,9 @@ h3 {
 }
 
 .description {
-	position: relative;
     padding: 16px;
+    display: flex;
+    flex-direction: column;
 }
 
 .desc-headline {
@@ -118,6 +120,15 @@ h3 {
     color: gray;
 }
 
+.description .budget-box {
+	height: 40px;
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+}
+
 .description .budget {
 	height: 20px;
 }
@@ -129,10 +140,10 @@ h3 {
 
 /************* スクール詳細ページ *************/
 /*トップ画像*/
-.show-top-media {
+.school-top-image {
 	width: 100%;
-	margin: 5% auto;
-	box-shadow: 4px 4px 4px lightgray;
+	box-shadow: 16px 16px 16px lightgray;
+	border-radius: 8px;
 }
 
 .show-top-media>img {
@@ -142,8 +153,8 @@ h3 {
 }
 
 /*イメージ無しデフォルト画像*/
-.show-no-img {
-	width: 40%;
+.no-img {
+	width: 100%;
 }
 
 /*スクールからひとこと吹き出し*/
@@ -312,6 +323,12 @@ li.img-nav-item {
 	margin: 0 3%;
 }
 
+
+/************* スクールページ共通基本装飾 *************/
+.school-headline {
+	font-weight: bold;
+	margin-bottom: 2px;
+}
 
 
 

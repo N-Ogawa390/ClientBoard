@@ -42,6 +42,13 @@ public class HomeController {
 		return "index";
 	}
 	
+	//ログイン画面を表示
+	@GetMapping("/login")
+	public String login() {
+		
+		return "login";
+	}
+	
 	//管理画面表示
 	@GetMapping("/manage")
 	public String manage() {
@@ -116,6 +123,10 @@ public class HomeController {
 			targetClients = targetClientsWithGenreName;
 		}
 		
+		model.addAttribute("budGetWithClientId", clientService.getMapBudgetWithClientId(targetClients, "ALL"));
+			//クライアントIDと月4予算のマップ
+		model.addAttribute("butGetWithClientIdKids", clientService.getMapBudgetWithClientId(targetClients, "キッズ"));
+			//クライアントIDと月4予算(キッズ)のマップ
 		model.addAttribute("topImagesWithClientId", s3DownloadHelper.getTopImagesWithClientId(targetClients));
 			//クライアントIDとトップ画像MediaFormatのマップ
 		model.addAttribute("targetClients", targetClients);
@@ -123,10 +134,4 @@ public class HomeController {
 		return "search";
 	}
 	
-	//ログイン画面を表示
-	@GetMapping("/login")
-	public String login() {
-		
-		return "login";
-	}
 }

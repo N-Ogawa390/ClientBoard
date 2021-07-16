@@ -11,224 +11,238 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-<h2 class="lead py-4" style="font-weight: bold;">
-	<span th:text="*{clientName}"></span>
-</h2>
-
-<h3>トップ画像</h3>
-<div th:if="${topImage} != null" class="form-top-medias">
-	<img style="width: 60%;" th:src="${'data:image/png;base64,' + topImage.base64}">
-</div>
-<div th:unless="${topImage} != null">
-	<img src="../static/img/no_image.png" class="show-no-img">
-</div>
-
-<div>
-	<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
-</div>
-
-<h3>サブ画像</h3>
-<div th:if="${subImages} != null" class="form-sub-medias">
-	<th:block th:each="subImg : ${subImages}">
-		<div class="form-sub-medias-child">
-			<img th:src="${'data:image/png;base64,' + subImg.base64}">
+	<h2 class="lead school-headline">
+		<span th:text="*{clientName}"></span>
+	</h2>
+	<h3 th:if="*{clientSubName} != '' and *{clientSubName} != null" style="margin: 0; font-size: 1rem;">
+		～<span th:text="*{clientSubName}"></span>～
+	</h3>
+	
+	<h3>トップ画像</h3>
+	<div th:if="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img th:src="${'data:image/png;base64,' + topImage.base64}" class="school-top-image">
 		</div>
-	</th:block>
-</div>
-<div th:unless="${subImages} != null">
-	<img src="../static/img/no_image.png" class="show-no-img">
-</div>
-
-<div>
-	<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
-</div>
-
-<form th:action="@{''}" method="post">
-<input type="hidden" th:field="*{id}">
-
-<section class="py-3">
-<h3 class="py-3">スクール名</h3>
-<div class="row">
-	<div class="col">
-		<table class="table">
-			<tr>
-				<td>スクール名  ※必須</td>
-				<td><input type="text" th:field="*{clientName}"></td>
-			</tr>
-			<tr>
-				<td>校舎名</td>
-				<td><input type="text" th:field="*{clientSubName}"></td>
-			</tr>
-		</table>
-		<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
 	</div>
-</div>
-</section>
-
-<section class="py-3">
-<h3 class="py-3">地域</h3>
-
-<div class="row">
-	<div class="col">
-		<select name="areaNames">
-			<option
-			 th:each="a : ${areaNameList}"
-			 th:value="${a}"
-			 th:text="${a}"
-			 th:selected="${a} == *{area.areaName}"
-			 ></option>
-		</select>
+	<div th:unless="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img src="../static/img/no_image.png" class="show-no-img">
+		</div>
 	</div>
-</div>
-
-</section>
-
-<section class="py-3">
-<h3 class="py-3">ダンスジャンル</h3>
-<div class="row">
-	<div th:each="b : ${genreNameList}" class="col-md-4 col-sm-6">
-		<input type="checkbox"
-		th:text="${b}"
-		name="genreNames"
-		th:value="${b}"
-		th:checked="${#lists.contains(genreNamesWithClient, b)}"
-		>
+	
+	<div>
+		<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
 	</div>
-</div>
-</section>
-
-<section>
-<h3 class="py-3">ユーザへのアピール</h3>
-<div class="row">
-	<div class="col">
-		<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
-		<textarea th:field="*{appeal}" cols="40" rows="5">
-		</textarea>
-		<p>※200文字以内</p>
+	
+	<h3>サブ画像</h3>
+	<div th:if="${subImages} != null" class="form-sub-medias">
+		<th:block th:each="subImg : ${subImages}">
+			<div class="form-sub-medias-child">
+				<img th:src="${'data:image/png;base64,' + subImg.base64}">
+			</div>
+		</th:block>
 	</div>
-</div>
-</section>
-
-<section class="py-3">
-<h3 class="my-3">レッスン基本情報</h3>
-<div class="row">
-	<div class="col">
-		<table class="table">
-			<tr>
-				<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
-				<td><input type="text" th:field="*{lessonLevels}"></td>
-			</tr>
-			<tr>
-				<td>レッスン時間単位</td>
-				<td><input type="text" th:field="*{duration}"></td>
-			</tr>
-			<tr>
-				<td>対応時間帯</td>
-				<td><input type="text" th:field="*{supporteTime}"></td>
-			</tr>
-		</table>
+	
+	<div th:unless="${subImages} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img src="/img/no_image.png"  class="no-img">
+		</div>
 	</div>
-</div>
-<div>
-	<span th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}"></span>
-	<span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
-	<span th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}"></span>
-</div>
-</section>
-
-<section class="py-3">
-<h3 class="my-3">プラン情報</h3>
-<div class="row">
-	<div class="col">
-		<table class="table">
-			<tr>
-				<th>プラン名</th>
-				<th>プランタイプ</th>
-				<th>年齢制限</th>
-				<th>料金</th>
-				<th></th>
-			</tr>
-			<tr th:each="plan : *{plans}">
-				<td th:text="${plan.planName}"></td>
-				<td th:text="${plan.planType.PlanTypeName}"></td>
-				<td th:text="${plan.ageGroup}"></td>
-				<td th:text="${plan.price} + '円'"></td>
-				<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
-			</tr>
-		</table>
-		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
+	
+	<div>
+		<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
 	</div>
-</div>
-<div>
-	<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
-</div>
-</section>
-
-<section class="py-3">
-<h3 class="py-3">スクール基本情報</h3>
-<div class="row">
-	<div class="col">
-		<table class="table">
-			<tr>
-				<td>スクール正式名称</td>
-				<td><input type="text" th:field="*{formalName}"></td>
-			</tr>
-			<tr>
-				<td>サイトURL</td>
-				<td><input type="text" th:field="*{siteURL}"></td>
-			</tr>
-			<tr>
-				<td>発表会の有無</td>
-				<td><input type="text" th:field="*{presentation}"></td>
-			</tr>
-			<tr>
-				<td>アクセス</td>
-				<td><input type="text" th:field="*{access}"></td>
-			</tr>
-			<tr>
-				<td>運営会社名</td>
-				<td><input type="text" th:field="*{company}"></td>
-			</tr>
-			<tr>
-				<td>本社所在地</td>
-				<td><input type="text" th:field="*{headOffice}"></td>
-			</tr>
-			<tr>
-				<td>設立</td>
-				<td><input type="text" th:field="*{establishment}"></td>
-			</tr>
-			<tr>
-				<td>資本金</td>
-				<td><input type="text" th:field="*{capital}"></td>
-			</tr>
-			<tr>
-				<td>閉店</td>
-				<td><input type="checkbox" th:field="*{active}"></td>
-			</tr>
-		</table>
-	</div>
-</div>
-
-<div>
-	<span th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}"></span>
-	<span th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}"></span>
-	<span th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}"></span>
-	<span th:if="${#fields.hasErrors('access')}" th:errors="*{access}"></span>
-	<span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"></span>
-	<span th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}"></span>
-	<span th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}"></span>
-	<span th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}"></span>
-	<span th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
-</div>
-
-</section>
-
-<input type="submit" value="保存" class="btn btn-primary m-3">
-<div onclick="history.back()" class="btn btn-primary m-3">戻る</div>
-<div>
-	<span th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3">スクールを削除</a></span>
-</div>
-</form>
+	
+	<form th:action="@{''}" method="post">
+	
+		<input type="hidden" th:field="*{id}">
+		
+		<section class="py-3">
+		<h3 class="py-3">スクール名</h3>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<td>スクール名  ※必須</td>
+						<td><input type="text" th:field="*{clientName}"></td>
+					</tr>
+					<tr>
+						<td>校舎名</td>
+						<td><input type="text" th:field="*{clientSubName}"></td>
+					</tr>
+				</table>
+				<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
+			</div>
+		</div>
+		</section>
+		
+		<section class="py-3">
+		<h3 class="py-3">地域</h3>
+		
+		<div class="row">
+			<div class="col">
+				<select name="areaNames">
+					<option
+					 th:each="a : ${areaNameList}"
+					 th:value="${a}"
+					 th:text="${a}"
+					 th:selected="${a} == *{area.areaName}"
+					 ></option>
+				</select>
+			</div>
+		</div>
+		
+		</section>
+		
+		<section class="py-3">
+		<h3 class="py-3">ダンスジャンル</h3>
+		<div class="row">
+			<div th:each="b : ${genreNameList}" class="col-md-4 col-sm-6">
+				<input type="checkbox"
+				th:text="${b}"
+				name="genreNames"
+				th:value="${b}"
+				th:checked="${#lists.contains(genreNamesWithClient, b)}"
+				>
+			</div>
+		</div>
+		</section>
+		
+		<section>
+		<h3 class="py-3">ユーザへのアピール</h3>
+		<div class="row">
+			<div class="col">
+				<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
+				<textarea th:field="*{appeal}" cols="40" rows="5">
+				</textarea>
+				<p>※200文字以内</p>
+			</div>
+		</div>
+		</section>
+		
+		<section class="py-3">
+		<h3 class="my-3">レッスン基本情報</h3>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
+						<td><input type="text" th:field="*{lessonLevels}"></td>
+					</tr>
+					<tr>
+						<td>レッスン時間単位</td>
+						<td><input type="text" th:field="*{duration}"></td>
+					</tr>
+					<tr>
+						<td>対応時間帯</td>
+						<td><input type="text" th:field="*{supporteTime}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div>
+			<span th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}"></span>
+			<span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
+			<span th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}"></span>
+		</div>
+		</section>
+		
+		<section class="py-3">
+		<h3 class="my-3">プラン情報</h3>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<th>プラン名</th>
+						<th>プランタイプ</th>
+						<th>年齢制限</th>
+						<th>料金</th>
+						<th></th>
+					</tr>
+					<tr th:each="plan : *{plans}">
+						<td th:text="${plan.planName}"></td>
+						<td th:text="${plan.planType.PlanTypeName}"></td>
+						<td th:text="${plan.ageGroup}"></td>
+						<td th:text="${plan.price} + '円'"></td>
+						<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
+					</tr>
+				</table>
+				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
+			</div>
+		</div>
+		<div>
+			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
+		</div>
+		</section>
+		
+		<section class="py-3">
+		<h3 class="py-3">スクール基本情報</h3>
+		<div class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<td>スクール正式名称</td>
+						<td><input type="text" th:field="*{formalName}"></td>
+					</tr>
+					<tr>
+						<td>サイトURL</td>
+						<td><input type="text" th:field="*{siteURL}"></td>
+					</tr>
+					<tr>
+						<td>発表会の有無</td>
+						<td><input type="text" th:field="*{presentation}"></td>
+					</tr>
+					<tr>
+						<td>アクセス</td>
+						<td><input type="text" th:field="*{access}"></td>
+					</tr>
+					<tr>
+						<td>運営会社名</td>
+						<td><input type="text" th:field="*{company}"></td>
+					</tr>
+					<tr>
+						<td>本社所在地</td>
+						<td><input type="text" th:field="*{headOffice}"></td>
+					</tr>
+					<tr>
+						<td>設立</td>
+						<td><input type="text" th:field="*{establishment}"></td>
+					</tr>
+					<tr>
+						<td>資本金</td>
+						<td><input type="text" th:field="*{capital}"></td>
+					</tr>
+					<tr>
+						<td>閉店</td>
+						<td><input type="checkbox" th:field="*{active}"></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		
+		<div>
+			<span th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}"></span>
+			<span th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}"></span>
+			<span th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}"></span>
+			<span th:if="${#fields.hasErrors('access')}" th:errors="*{access}"></span>
+			<span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"></span>
+			<span th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}"></span>
+			<span th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}"></span>
+			<span th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}"></span>
+			<span th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+		</div>
+		
+		</section>
+		
+		<input type="submit" value="保存" class="btn btn-primary m-3">
+		<div class="btn btn-primary m-3">
+			<a th:href="@{|/manage|}" style="color:white;">戻る</a>
+		</div>
+		<div>
+			<span th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></span>
+		</div>
+		
+	</form>
 
 </div>
 </body>

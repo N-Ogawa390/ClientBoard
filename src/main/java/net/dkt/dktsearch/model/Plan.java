@@ -23,7 +23,10 @@ public class Plan {
 	@NotBlank(message="※プラン名は必須項目です")
 	private String planName;
 	
-	private String ageGroup;
+	@NotBlank(message="※対象年齢は必須項目です")
+	private String ageGroup;	//ALLまたはキッズ
+	
+	private Boolean online;
 	
 	@NotNull(message="※価格は必須項目です")
 	private Integer price;

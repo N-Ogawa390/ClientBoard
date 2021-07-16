@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
 import java.util.Comparator;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.ClientMedia;
+import net.dkt.dktsearch.model.MediaFormat;
 import net.dkt.dktsearch.repository.ClientMediaRepository;
 
 @Service
@@ -228,6 +230,50 @@ public class ClientMediaService {
 			e.printStackTrace();
 		}
 		return encodedImage;
+	}
+	
+	//トップ画像の抽出
+	public MediaFormat getTopImage(List<MediaFormat> mfList) {
+		
+		MediaFormat mediaFormat = null;
+		
+		for(MediaFormat mf : mfList) {
+			
+			if(mf.getClientMedia().getMediaType().equals("t")) {
+				
+				mediaFormat = mf;
+			}
+		}
+		return mediaFormat;
+	}
+	
+	//サブ画像の抽出
+	public List<MediaFormat> getSubImage(List<MediaFormat> mfList) {
+		
+		List<MediaFormat> mediaFormatList = new ArrayList<>();
+		
+		for(MediaFormat mf : mfList) {
+			
+			if(mf.getClientMedia().getMediaType().equals("s")) {
+				
+				mediaFormatList.add(mf);
+			}
+		}
+		
+		if(mediaFormatList.size() < 1) {
+			
+			return null;
+		}
+		
+		return sortMediaFormatList(mediaFormatList);
+	}
+	
+	//List<MediaFormat>を優先度順に並べ替え
+	public List<MediaFormat> sortMediaFormatList(List<MediaFormat> mfList){
+		
+		mfList.sort((a, b)->a.getClientMedia().getPriority().compareTo(b.getClientMedia().getPriority()));
+																								//優先度昇順に並び替え
+		return mfList;
 	}
 
 }

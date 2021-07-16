@@ -46,10 +46,17 @@
 			<div class="appeal">
 				<p th:text="${client.appeal}"></p>
 			</div>
-			<div class="budget">
-				<p th:if="${client.budget}" class="budget-text">予算(月4回)：
-					<span th:text="${client.budget} + '円'"></span>
-				</p>
+			<div class="budget-box">
+				<div th:if="${budGetWithClientId.get(client.id)}" class="budget">
+					<p class="budget-text">
+						予算(月4回)：<span th:text="${budGetWithClientId.get(client.id)} + '円'"></span> 税込
+					</p>
+				</div>
+				<div th:if="${butGetWithClientIdKids.get(client.id)}" class="budget">
+					<p class="budget-text">
+						キッズ(月4回)：<span th:text="${butGetWithClientIdKids.get(client.id)} + '円'"></span> 税込
+					</p>
+				</div>
 			</div>
 		</div>
 	</div>

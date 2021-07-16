@@ -12,20 +12,25 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-	<h2 class="lead py-4" style="font-weight: bold;">
-		<span th:text="*{clientName}"></span><br>
-		<span th:text="*{clientSubName}"></span>
+	<h2 class="lead school-headline">
+		<span th:text="${client.clientName}"></span>
 	</h2>
+	<h3 th:if="*{clientSubName} != '' and *{clientSubName} != null" style="margin: 0; font-size: 1rem;">
+		～<span th:text="*{clientSubName}"></span>～
+	</h3>
 	
 	<h3>トップ画像</h3>
-	<th:block th:each="topImg : ${topImages}">
-		<div class="form-top-medias">
-			<img style="width: 60%;" th:src="${'data:image/png;base64,' + topImg.base64}">
+	<div th:if="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img th:src="${'data:image/png;base64,' + topImage.base64}" class="school-top-image">
 		</div>
-	</th:block>
-	<div th:if="${#lists.size(topImages)}<1">
-		<p>※トップ画像が登録されていません</p>
 	</div>
+	<div th:unless="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img src="/img/no_image.png" class="show-no-img">
+		</div>
+	</div>
+	
 	<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mediaType" value="t">
 		<label for="file_upload" style="color: #007bff; margin-right: 10px; cursor: pointer;">トップ画像を変更</label>
@@ -70,9 +75,12 @@
 					</div>
 				</div>
 			</th:block>
-		</div>	
-		<div th:if="${#lists.size(subImages)}<1">
-			<p>※サブ画像が登録されていません</p>
+		</div>
+		
+		<div th:unless="${subImages} != null" class="row">
+			<div class="col-sm-8 col-md-6 mx-auto">
+				<img src="/img/no_image.png" class="no-img">
+			</div>
 		</div>
 	</div>
 	
@@ -84,6 +92,10 @@
 	</form>
 	<div>
 		<p th:text="${mediaUploadMaxNumError}"></p>
+	</div>
+	
+	<div class="btn btn-primary m-3">
+		<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>
 	</div>
 	
 </div>

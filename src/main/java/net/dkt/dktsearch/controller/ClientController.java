@@ -106,7 +106,6 @@ public class ClientController {
 	}
 	
 	//クライアント詳細画面表示
-	@Transactional
 	@GetMapping("/{clientId}")
 	public String showClient(@PathVariable("clientId") Client client, Model model) {
 
@@ -114,8 +113,8 @@ public class ClientController {
 		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
 
 		model.addAttribute("client", client);
-		model.addAttribute("topImage", getTopImage(byteImages));
-		model.addAttribute("subImages", getSubImage(byteImages));
+		model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
+		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
 		return "client/show";
 	}
@@ -164,7 +163,7 @@ public class ClientController {
 	@GetMapping("/{clientId}/edit")
 	public String editClient(@PathVariable("clientId") Client client, Model model) {
 		
-		checkClientOwner(client, model);
+		clientService.checkClientOwner(client, model);
 		
 		model.addAttribute("client", client);
 		
@@ -176,8 +175,8 @@ public class ClientController {
 		//画像表示
 		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
 
-		model.addAttribute("topImage", getTopImage(byteImages));
-		model.addAttribute("subImages", getSubImage(byteImages));
+		model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
+		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
 		return "client/form";
 	}
@@ -193,6 +192,7 @@ public class ClientController {
 			) {
 		
 		if (bindingResult.hasErrors()) {
+			
 			return "client/form";
 		}
 		
@@ -202,210 +202,16 @@ public class ClientController {
 		genreService.deleteGenreWithClient(clientId);	//クライアントに紐づくダンスジャンルをリセット
 		
 		if (areaNames != null) {
+			
 			areaService.createAreaWithClient(client, areaNames);	//エリアをクライアントに紐づけて再設定
 		}
 		
 		if (genreNames !=null) {
 			
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
-			
 		}
 		
 		return "redirect:/manage";
-	}
-	
-	//画像編集画面表示
-	@GetMapping("/{clientId}/medias")
-	public String medias(@PathVariable("clientId") Client client, Model model) {
-		
-		model.addAttribute("client", client);
-		
-		//画像表示
-		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
-		model.addAttribute("topImages", getTopImage(byteImages));
-		model.addAttribute("subImages", getSubImage(byteImages));
-		
-		return "client/medias";
-	}
-	
-	//画像の追加
-	@PostMapping("{clientId}/upload")
-	public String upload(
-			@RequestParam MultipartFile file,
-			@RequestParam String mediaType,
-			@PathVariable("clientId") Client client,
-			Model model) {
-		
-		try {
-
-			s3UploadHelper.saveFile(file, client, mediaType);
-				//awsストレージに保存するためServiceに投げるのではなくS3UploadHelperを経由
-				//Service→S3UploadHelperの方がわかりやすいかも…
-			
-		} catch (IOException e) {
-
-			model.addAttribute("client", client);
-			
-			//画像表示
-			List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
-			model.addAttribute("topImages", getTopImage(byteImages));
-			model.addAttribute("subImages", getSubImage(byteImages));
-			
-			model.addAttribute("mediaUploadMaxNumError", e.getMessage());	//エラーメッセージを表示
-			
-			return "client/medias";
-		}
-		
-		return "redirect:/client/{clientId}/medias";
-	}
-	
-	//画像の優先度を上げる・下げる
-	@GetMapping("/{clientId}/medias/{priority}/{done}")
-	public String mediasEdit(
-			@PathVariable("clientId") Client client,
-			@PathVariable("priority") Integer priority,
-			@PathVariable("done") String done
-			) {
-		
-		if(done.equals("raise")) {
-			clientMediaService.raisePriority(priority, client);
-			
-		} else if(done.equals("lower")) {
-			clientMediaService.lowerPriority(priority, client);
-			
-		}
-		
-		return "redirect:/client/{clientId}/medias";
-		
-	}
-	
-	//クライアント画像削除
-	@GetMapping("/{clientId}/medias/delete/{mediaId}")
-	public String deleteClientMedia(
-			@PathVariable("clientId") Client client,
-			@PathVariable("mediaId") ClientMedia clientMedia,
-			Model model) {
-
-		clientMediaService.deleteClientMedia(clientMedia);	//該当Idのメディアを削除
-
-		//サブ画像の場合は削除後に優先順位を詰める
-		if(clientMedia.getMediaType().equals("s")) {
-			
-			List<ClientMedia> clientMedias = client.getClientMedias();	//クライアントの画像一覧を取得
-			clientMediaService.scootClientMediaPriority(clientMedias, clientMedia.getPriority());	//優先順位を詰める
-		}
-		
-		model.addAttribute("client", client);
-		
-		//画像表示
-		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
-		model.addAttribute("topImages", getTopImage(byteImages));
-		model.addAttribute("subImages", getSubImage(byteImages));
-		
-		return "client/medias";
-	}
-	
-	//クライアントに紐づくプラン作成画面表示
-	@GetMapping("/{clientId}/plan/create")
-	public String plan(@PathVariable("clientId") Client client,
-			Plan plan,
-			Model model) {
-		
-		checkClientOwner(client, model);
-
-		model.addAttribute("client", client);	//クライアント名呼び出しのため
-		model.addAttribute("plan", plan);
-		
-		model.addAttribute("planTypeForSelected", null);	//編集時selected用フィールドの初期化(新規作成時は意味はない)
-		
-		return "client/plan/form";
-	}
-	
-	//クライアントに紐づくプラン作成
-	@PostMapping("/{clientId}/plan/create")
-	public String createPlan(@Valid Plan plan, BindingResult bindingResult,
-			@PathVariable("clientId") Client client,
-			@RequestParam(name="planTypeName") String planTypeName,
-			Model model
-			) {
-		
-		if (bindingResult.hasErrors()) {
-			
-			model.addAttribute("client", client);	//クライアント名呼び出しのため
-			return "client/plan/form";
-		}
-		
-		//プランタイプ(クラス・チケット・フリー等)を作成し、プランをセット
-		PlanType planType = new PlanType();
-		planType.setPlan(plan);
-		planType.setPlanTypeName(planTypeName);
-		
-		//プランにクライアント・プランタイプをセット
-		plan.setClient(client);
-		plan.setPlanType(planType);
-		
-		//プランとプランタイプを保存
-		plan = planService.savePlan(plan);
-		planType = planTypeService.savePlanType(planType);
-		
-		//クライアントに予算をセット
-		client.setBudget(planService.getBudget(client));
-		clientService.saveClient(client);
-		
-		return "redirect:/";
-	}
-	
-	//クライアントに紐づくプラン編集画面表示
-	@GetMapping("/{clientId}/plan/{planId}/edit")
-	public String editPlanWithClientGet(
-			@PathVariable("clientId") Client client,
-			@PathVariable("planId") Plan plan,
-			Model model) {
-		
-		checkClientOwner(client, model);
-		
-		model.addAttribute("client", client);
-		
-		plan.setClient(client);
-		model.addAttribute("plan", plan);
-		
-		model.addAttribute("planTypeForSelected", plan.getPlanType().getPlanTypeName());	//プランタイプselected用フィールド
-		
-		return "client/plan/form";
-	}
-	
-	//クライアントに紐づくプラン編集
-	@PostMapping("/{clientId}/plan/{planId}/edit")
-	public String editPlanWithClientPost(
-			@RequestParam(name="planTypeName") String planTypeName,
-			@PathVariable("clientId") Client client,
-			Plan plan) {
-		
-		PlanType planType = planTypeService.getPlanTypeFromPlanId(plan.getId());
-		planType.setPlanTypeName(planTypeName);
-		planType = planTypeService.savePlanType(planType);
-		
-		plan.setPlanType(planType);
-		plan = planService.savePlan(plan);
-		
-		client.setBudget(planService.getBudget(plan.getClient()));
-		clientService.saveClient(client);
-		
-		return "redirect:/client/" + client.getId();
-	}
-	
-	//クライアントに紐づくプラン削除
-	@GetMapping("/{clientId}/plan/{planId}/delete")
-	public String deletePlanWithClient(@PathVariable("planId") Plan plan,
-			@PathVariable("clientId") Client client,	//checkClientOwnerのため
-			Model model	//checkClientOwnerのため
-			) {
-		
-		checkClientOwner(client, model);
-		
-		planService.deletePlan(plan);
-		
-		return "redirect:/";
 	}
 	
 	//クライアント削除
@@ -414,72 +220,5 @@ public class ClientController {
 		
 		clientService.deleteClient(client);
 		return "redirect:/manage";
-	}
-	
-	//他クライアントへの不正アクセス防止用
-	//※リクエストされたクライアント(client)と現在のclient(modelから取り出す)が一致するか比較
-	//クライアントを識別するGetMapメソッドに設定する
-	private void checkClientOwner(Client client, Model model) {
-		
-		Account currentAccount = (Account)model.getAttribute("currentAccount");
-		
-		if (client.getAccount() != currentAccount) {
-			throw new ForbiddenAccountAccessException("アクセスが許可されていません");
-		}
-	}
-	
-	//不正アクセス時のメッセージを設定
-	@ResponseStatus(HttpStatus.FORBIDDEN)
-	private class ForbiddenAccountAccessException extends RuntimeException {
-		
-		private static final long serialVersionUID = 1L;
-		
-		public ForbiddenAccountAccessException(String message) {
-			super(message);
-		}
-	}
-	
-	//トップ画像の抽出
-	private MediaFormat getTopImage(List<MediaFormat> mfList) {
-		
-		MediaFormat mediaFormat = null;
-		
-		for(MediaFormat mf : mfList) {
-			
-			if(mf.getClientMedia().getMediaType().equals("t")) {
-				
-				mediaFormat = mf;
-			}
-		}
-		return mediaFormat;
-	}
-	
-	//サブ画像の抽出
-	private List<MediaFormat> getSubImage(List<MediaFormat> mfList) {
-		
-		List<MediaFormat> mediaFormatList = new ArrayList<>();
-		
-		for(MediaFormat mf : mfList) {
-			
-			if(mf.getClientMedia().getMediaType().equals("s")) {
-				
-				mediaFormatList.add(mf);
-			}
-		}
-		
-		if(mediaFormatList.size() < 1) {
-			
-			return null;
-		}
-		
-		return sortMediaFormatList(mediaFormatList);
-	}
-	
-	//List<MediaFormat>を優先度順に並べ替え
-	private List<MediaFormat> sortMediaFormatList(List<MediaFormat> mfList){
-		
-		mfList.sort((a, b)->a.getClientMedia().getPriority().compareTo(b.getClientMedia().getPriority()));
-																								//優先度昇順に並び替え
-		return mfList;
 	}
 }
