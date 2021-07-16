@@ -26,12 +26,15 @@
 	</div>
 	<div th:unless="${topImage} != null" class="row">
 		<div class="col-sm-8 col-md-6 mx-auto">
-			<img src="../static/img/no_image.png" class="show-no-img">
+			<img src="/img/no_image.png" class="no-img">
 		</div>
 	</div>
 	
-	<div>
+	<div th:if="*{id} != null">
 		<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
+	</div>
+	<div th:unless="*{id} != null">
+		<p>※画像を登録するには、1度スクール情報を保存してください</p>
 	</div>
 	
 	<h3>サブ画像</h3>
@@ -49,8 +52,11 @@
 		</div>
 	</div>
 	
-	<div>
+	<div th:if="*{id} != null">
 		<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
+	</div>
+	<div th:unless="*{id} != null">
+		<p>※画像を登録するには、1度スクール情報を保存してください</p>
 	</div>
 	
 	<form th:action="@{''}" method="post">
@@ -149,7 +155,7 @@
 		
 		<section class="py-3">
 		<h3 class="my-3">プラン情報</h3>
-		<div class="row">
+		<div th:if="*{id} != null" class="row">
 			<div class="col">
 				<table class="table">
 					<tr>
@@ -172,6 +178,9 @@
 		</div>
 		<div>
 			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
+		</div>
+		<div th:unless="*{id} != null" class="row">
+			<p>※プランを登録するには、1度スクール情報を保存してください</p>
 		</div>
 		</section>
 		

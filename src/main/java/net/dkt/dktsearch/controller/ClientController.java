@@ -156,7 +156,7 @@ public class ClientController {
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
-		return "redirect:/manage";
+		return "redirect:/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアント編集画面表示
@@ -182,7 +182,6 @@ public class ClientController {
 	}
 	
 	//クライアント編集
-	@Transactional
 	@PostMapping("/{clientId}/edit")
 	public String editClient(@Valid Client client, BindingResult bindingResult,
 			String[] areaNames,
@@ -211,7 +210,7 @@ public class ClientController {
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
-		return "redirect:/manage";
+		return "redirect:/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアント削除
