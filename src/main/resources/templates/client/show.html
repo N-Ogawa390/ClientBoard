@@ -10,26 +10,12 @@
 <script type="text/javascript" src="/js/carousel.js"></script>
 </head>
 <body>
-<div layout:fragment="contents" th:object="${client}">
+<div layout:fragment="contents">
+<div th:object="${client}">
 
-	<h2 class="lead school-headline">
-		<span th:text="*{clientName}"></span><br>
-	</h2>
-	
-	<h3 th:if="*{clientSubName} != '' and *{clientSubName} != null" style="margin: 0; font-size: 1rem;">
-		～<span th:text="*{clientSubName}"></span>～
-	</h3>
-	
-	<div th:if="${topImage} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
-			<img th:src="${'data:image/png;base64,' + topImage.base64}" class="school-top-image">
-		</div>
-	</div>
-	<div th:unless="${topImage} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
-			<img src="/img/no_image.png" class="show-no-img">
-		</div>
-	</div>
+	<div th:replace="~{client/fragment/title :: title}"></div>
+
+	<div th:replace="~{client/fragment/top-image :: top-image}"></div>
 	
 	<h3>スクール風景</h3>
 	<div th:if="${subImages} != null" style="padding: 30%">
@@ -179,6 +165,7 @@
 	
 	<div onclick="history.back()" class="btn btn-primary m-3">戻る</div>
 
+</div>
 </div>
 
 </body>

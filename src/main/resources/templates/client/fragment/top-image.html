@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+>
+<head>
+<meta charset="UTF-8">
+</head>
+<body>
+
+<div th:fragment="top-image" th:remove="tag">
+	
+	<div th:if="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img th:src="${'data:image/png;base64,' + topImage.base64}" class="school-top-image">
+		</div>
+	</div>
+	<div th:unless="${topImage} != null" class="row">
+		<div class="col-sm-8 col-md-6 mx-auto">
+			<img src="/img/no_image.png" class="show-no-img">
+		</div>
+	</div>
+	
+</div>
+
+</body>
+</html>

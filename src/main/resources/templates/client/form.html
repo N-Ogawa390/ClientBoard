@@ -11,24 +11,9 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-	<h2 class="lead school-headline">
-		<span th:text="*{clientName}"></span>
-	</h2>
-	<h3 th:if="*{clientSubName} != '' and *{clientSubName} != null" style="margin: 0; font-size: 1rem;">
-		～<span th:text="*{clientSubName}"></span>～
-	</h3>
-	
-	<h3>トップ画像</h3>
-	<div th:if="${topImage} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
-			<img th:src="${'data:image/png;base64,' + topImage.base64}" class="school-top-image">
-		</div>
-	</div>
-	<div th:unless="${topImage} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
-			<img src="/img/no_image.png" class="no-img">
-		</div>
-	</div>
+	<div th:replace="~{client/fragment/title :: title}"></div>
+
+	<div th:replace="~{client/fragment/top-image :: top-image}"></div>
 	
 	<div th:if="*{id} != null">
 		<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
