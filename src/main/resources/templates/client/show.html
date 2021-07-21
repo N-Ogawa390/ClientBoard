@@ -13,9 +13,10 @@
 <div layout:fragment="contents">
 <div th:object="${client}">
 
-	<div th:replace="~{client/fragment/title :: title}"></div>
-
-	<div th:replace="~{client/fragment/top-image :: top-image}"></div>
+	<div class="school-top-image">
+		<div th:replace="~{client/fragment/title :: title}"></div>
+		<div th:replace="~{client/fragment/top-image :: top-image}"></div>
+	</div>
 	
 	<h3>スクール風景</h3>
 	<div th:if="${subImages} != null" style="padding: 30%">

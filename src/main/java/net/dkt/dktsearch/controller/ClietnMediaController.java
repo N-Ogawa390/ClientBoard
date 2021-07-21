@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -21,6 +23,7 @@ import net.dkt.dktsearch.model.MediaFormat;
 import net.dkt.dktsearch.service.ClientMediaService;
 
 @Controller
+@RequestMapping("/client")
 public class ClietnMediaController {
 	
 	@Autowired
@@ -33,7 +36,7 @@ public class ClietnMediaController {
 	private S3DownloadHelper s3DownloadHelper;
 	
 	//画像編集画面表示
-	@GetMapping("/client/{clientId}/medias")
+	@GetMapping("/{clientId}/medias")
 	public String medias(@PathVariable("clientId") Client client, Model model) {
 		
 		model.addAttribute("client", client);
@@ -47,7 +50,7 @@ public class ClietnMediaController {
 	}
 	
 	//画像の追加
-	@PostMapping("/client/{clientId}/upload")
+	@PostMapping("/{clientId}/upload")
 	public String upload(
 			@RequestParam MultipartFile file,
 			@RequestParam String mediaType,
@@ -57,7 +60,7 @@ public class ClietnMediaController {
 		try {
 
 			s3UploadHelper.saveFile(file, client, mediaType);
-				//awsストレージに保存するためServiceに投げるのではなくS3UploadHelperを経由
+				//AWSストレージに保存するためServiceに投げるのではなくS3UploadHelperを経由
 				//Service→S3UploadHelperの方がわかりやすいかも…
 			
 		} catch (IOException e) {
@@ -78,7 +81,7 @@ public class ClietnMediaController {
 	}
 	
 	//画像の優先度を上げる・下げる
-	@GetMapping("/client/{clientId}/medias/{priority}/{done}")
+	@GetMapping("/{clientId}/medias/{priority}/{done}")
 	public String mediasEdit(
 			@PathVariable("clientId") Client client,
 			@PathVariable("priority") Integer priority,
@@ -94,11 +97,10 @@ public class ClietnMediaController {
 		}
 		
 		return "redirect:/client/{clientId}/medias";
-		
 	}
 	
 	//クライアント画像削除
-	@GetMapping("/client/{clientId}/medias/delete/{mediaId}")
+	@GetMapping("/{clientId}/medias/delete/{mediaId}")
 	public String deleteClientMedia(
 			@PathVariable("clientId") Client client,
 			@PathVariable("mediaId") ClientMedia clientMedia,

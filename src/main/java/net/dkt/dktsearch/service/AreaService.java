@@ -34,12 +34,7 @@ public class AreaService {
 	@Autowired
 	AreaRepository areaRepository;
 	
-	//すべてのエリアobjを取得
-	public List<Area> findAll() {
-		return areaRepository.findAll();
-	}
-	
-	//デフォルト値でエリアobjを作成
+	//スタブ
 	public Area createDefaultArea() {
 		
 		Area area = new Area();
@@ -47,8 +42,14 @@ public class AreaService {
 		return area;
 	}
 	
-	//エリアを新規登録
-	public Area createArea(Area area) {
+	//すべてのエリアobjを取得
+	public List<Area> findAll() {
+		return areaRepository.findAll();
+	}
+	
+	//エリアを保存
+	public Area saveArea(Area area) {
+		
 		return areaRepository.save(area);
 	}
 	
@@ -58,7 +59,7 @@ public class AreaService {
 			Area area = new Area();
 			area.setAreaName(a);
 			area.setClient(client);
-			createArea(area);
+			saveArea(area);
 		}
 	}
 	

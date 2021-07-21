@@ -120,6 +120,16 @@ public class AccountController {
 		String password = tmpAccount.getPassword();
 		String email = tmpAccount.getEmail();
 		String site = tmpAccount.getSite();
+		
+		List<Account> accountList = accountService.getAccountsOfRoleClient();
+		
+		for(Account account : accountList) {
+			
+			if(email.equals(account.getEmail())) {
+				
+				return "account/tmp/reject";
+			}
+		}
 
 		accountService.createAccount(username, password, email, site);
 

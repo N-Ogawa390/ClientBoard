@@ -46,7 +46,7 @@ public class ClientService {
 		Client client = new Client();
 		client.setClientName("DANCE回転灯スクール");
 		client.setAccess("吉祥寺駅徒歩5分");
-		client.setPresentation(true);
+		client.setPresentation("有");
 		clientRepository.save(client);
 		
 		return client;
@@ -66,6 +66,12 @@ public class ClientService {
 		List<Client> clients = clientRepository.findByActiveFalse();
 		
 		return clients;
+	}
+	
+	//クライアントIDからクライアントオブジェクトを取得
+	public Client getClientById(Integer id) {
+		
+		return clientRepository.findById(id).get();
 	}
 
 	//クライアントを作成・更新

@@ -7,6 +7,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
@@ -24,6 +25,7 @@ public class Account {
 	private String type;
 	
 	@NotBlank(message = "※メールアドレスを入力してください")
+	@Email(message = "※正しい形式で入力してください")
 	private String email;
 	
 	private String site;

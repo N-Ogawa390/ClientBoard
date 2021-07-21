@@ -31,6 +31,6 @@ public class TmpAccount {
 	
 	private String tmpURL;
 	
-	private LocalDateTime timeStamp;
+	private LocalDateTime created;
 
 }

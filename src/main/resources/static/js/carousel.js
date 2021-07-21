@@ -4,7 +4,11 @@
 window.addEventListener('load', () => {
 	
 	var carousel3d = document.querySelector('.carousel3d');
-	carousel(carousel3d);
+	
+	if(carousel3d != null) {
+		
+		carousel(carousel3d);
+	}
 });
 
 function carousel(root) {
@@ -20,7 +24,6 @@ function carousel(root) {
 	imgWidth = parseFloat(computedStyle.width),
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
 	nav = root.querySelector('nav');
-	console.log(imgWidth);
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	

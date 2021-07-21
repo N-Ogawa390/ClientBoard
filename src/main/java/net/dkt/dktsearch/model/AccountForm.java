@@ -15,6 +15,7 @@ public class AccountForm {
 	private String username;
 	
 	@NotBlank(message = "※メールアドレスを入力してください")
+	@Email(message = "※正しい形式で入力してください")
 	private String email;
 	
 	private String site;

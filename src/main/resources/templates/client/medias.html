@@ -13,22 +13,29 @@
 <div layout:fragment="contents" th:object="${client}">
 
 	<div th:replace="~{client/fragment/title :: title}"></div>
-
-	<h3>トップ画像</h3>
-	<div th:replace="~{client/fragment/top-image :: top-image}"></div>
 	
-	<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
-		<input type="hidden" name="mediaType" value="t">
-		<label for="file_upload" style="color: #007bff; margin-right: 10px; cursor: pointer;">トップ画像を変更</label>
-		<input type="file" name="file" accept="image/jpeg, image/png" id="file_upload" class="file-upload-top" style="display:none">
+	<div class="school-top-image">
+		<h3>トップ画像</h3>
+		<div th:replace="~{client/fragment/top-image :: top-image}" class="row"></div>
 		
-		<label for="submit" style="cursor: pointer;" class="btn btn-primary my-3 inactive" id="file-submit">送信</label>
-		<input type="submit" id="submit" style="display:none">
-		<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
-		
-	</form>
-	<div>
-		<p th:text="${mediaUploadMaxNumError}"></p>
+		<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="mediaType" value="t">
+			
+			<div class="option">
+				<div class="row">
+					<label for="file_upload_top" class="link-text">トップ画像を変更</label>
+					<input type="file" name="file" accept="image/jpeg, image/png" id="file_upload_top" style="display:none">
+				</div>
+				<div class="row">
+					<label for="submit_top" style="cursor: pointer;" class="btn btn-primary my-3 inactive" id="file_submit_top">送信</label>
+					<input type="submit" id="submit_top" style="display:none">
+					<p id="file_upload_top_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
+				</div>
+				<div class="row">
+					<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+				</div>
+			</div>
+		</form>
 	</div>
 		
 	<h3>サブ画像</h3>
@@ -71,10 +78,24 @@
 	</div>
 	
 	<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
-		<p>サブ画像を追加する</p>
 		<input type="hidden" name="mediaType" value="s">
-		<input type="file" name="file" accept="image/jpeg, image/png">
-		<input type="submit">
+		
+		<div class="row">
+			<label for="file_upload_sub" class="link-text">サブ画像を追加</label>
+			<input type="file" name="file" accept="image/jpeg, image/png" id="file_upload_sub" style="display:none">
+		</div>
+		<div class="row">
+			<label for="submit_sub" style="cursor: pointer;" class="btn btn-primary my-3 inactive" id="file_submit_sub">送信</label>
+			<input type="submit" id="submit_sub" style="display:none">
+			<p id="file_upload_sub_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
+		</div>
+		<div class="row">
+			<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+		</div>
+		
+		<div th:if="${mediaUploadMaxNumError}">
+			<p th:text="${mediaUploadMaxNumError}"></p>
+		</div>
 	</form>
 	<div>
 		<p th:text="${mediaUploadMaxNumError}"></p>

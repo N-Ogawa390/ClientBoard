@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.Collections;
@@ -16,8 +17,10 @@ import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import net.dkt.dktsearch.S3UploadHelper;
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.ClientMedia;
 import net.dkt.dktsearch.model.MediaFormat;
@@ -27,7 +30,13 @@ import net.dkt.dktsearch.repository.ClientMediaRepository;
 public class ClientMediaService {
 	
 	@Autowired
-	ClientMediaRepository clientMediaRepository;
+	private ClientMediaRepository clientMediaRepository;
+	
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
+	
+	@Autowired
+	private S3UploadHelper s3UploadHelper;
 	
 	//画像を追加する
 	public ClientMedia saveMediaFile(String mediaFileName, Client client, String mediaType) throws IOException {
@@ -59,11 +68,12 @@ public class ClientMediaService {
 			deleteClientMedia(currentTopMedia);
 		}
 		
+		//画像の追加
 		ClientMedia clientMedia = new ClientMedia();
-		
 		clientMedia.setMediaFileName(mediaFileName);
 		clientMedia.setMediaType("t");
 		clientMedia.setClient(client);
+		clientMedia.setCreated(LocalDateTime.now());
 		
 		return clientMediaRepository.save(clientMedia);
 	}
@@ -198,7 +208,9 @@ public class ClientMediaService {
 	@Transactional
 	public void deleteClientMedia(ClientMedia clientMedia) {
 		
-		clientMediaRepository.delete(clientMedia);
+//		clientMediaRepository.delete(clientMedia);	//なぜかdeleteだけJPAの挙動がおかしいのでJDBCで回避
+		jdbcTemplate.update("delete from client_media where id = ?",clientMedia.getId());
+		s3UploadHelper.deleteFile(clientMedia.getMediaFileName());
 	}
 	
 	//画像の優先順位の空きを詰める　※サブ画像削除後
@@ -214,15 +226,18 @@ public class ClientMediaService {
 		}
 	}
 	
-	
 	//画像表示用関数 ※BufferedImageをbase64文字列にして返す
 	public String getByteImages(BufferedImage image) {
 		
 		ByteArrayOutputStream bos = new ByteArrayOutputStream();	//ストリームをnew
 		BufferedOutputStream os = new BufferedOutputStream(bos);	//bufferedImageを書き込めるストリームに変換
-		image.flush();	//？？？
+		
+		image.flush();	//メモリ解放？
+		
 		String encodedImage = null;
+		
 		try {
+			
 			ImageIO.write(image, "png", os);	//ストリーム(os)にbufferedImage(i)をpng形式で書き込み
 			encodedImage = Base64.getEncoder().encodeToString(bos.toByteArray());	//base64形式に変換
 		} catch (IOException e) {

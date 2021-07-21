@@ -35,7 +35,7 @@
 				th:src="${'data:image/png;base64,' + topImagesWithClientId.get(client.id).base64}"
 			 	class="blogcard-img">
 			<img th:unless="${topImagesWithClientId.get(client.id)} != null"
-				src="../static/img/no_image.png"
+				src="/img/no_image.png"
 				class="blogcard-img">
 		</div>
 		<p th:text="${client.Area.AreaName}" class="blogcard-area slidein-scroll"></p>

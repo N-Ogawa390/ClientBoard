@@ -1,5 +1,7 @@
 package net.dkt.dktsearch.controller;
 
+import java.time.LocalDateTime;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,8 @@ public class PlanController {
 	
 	//クライアントに紐づくプラン作成画面表示
 	@GetMapping("/client/{clientId}/plan/create")
-	public String plan(@PathVariable("clientId") Client client,
+	public String plan(
+			@PathVariable("clientId") Client client,
 			Plan plan,
 			Model model) {
 		
@@ -71,6 +74,7 @@ public class PlanController {
 		plan.setPlanType(planType);
 		
 		//プランとプランタイプを保存
+		plan.setCreated(LocalDateTime.now());
 		plan = planService.savePlan(plan);
 		planType = planTypeService.savePlanType(planType);
 		
@@ -119,6 +123,7 @@ public class PlanController {
 		planType = planTypeService.savePlanType(planType);
 		
 		plan.setPlanType(planType);
+		plan.setLastModified(LocalDateTime.now());
 		plan = planService.savePlan(plan);
 		
 //		client.setBudget(planService.getBudget(plan.getClient()));

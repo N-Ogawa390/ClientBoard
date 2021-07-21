@@ -32,8 +32,18 @@ $(function(){
 
 /* ファイルアップロードフォーム装飾 */
 $(function(){
-	$('.file-upload-top').on('change', function(){
-		$('#file-submit').removeClass('inactive');
+	$('#file_upload_top').on('change', function(){
+		const file = $(this).prop('files')[0];
+		$('#file_upload_top_text').text(file.name);
+		$('#file_submit_top').removeClass('inactive');
+	})
+})
+
+$(function(){
+	$('#file_upload_sub').on('change', function(){
+		const file = $(this).prop('files')[0];
+		$('#file_upload_sub_text').text(file.name);
+		$('#file_submit_sub').removeClass('inactive');
 	})
 })
 

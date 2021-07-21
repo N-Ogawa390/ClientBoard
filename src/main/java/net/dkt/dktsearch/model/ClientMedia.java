@@ -1,5 +1,7 @@
 package net.dkt.dktsearch.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class ClientMedia {
 	private Integer priority;
 	
 	private String mediaType;
+	
+	private LocalDateTime created;
 	
 	@ManyToOne
 	private Client client;

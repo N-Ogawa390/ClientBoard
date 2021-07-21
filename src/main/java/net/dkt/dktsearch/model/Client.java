@@ -1,5 +1,6 @@
 package net.dkt.dktsearch.model;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -48,7 +49,7 @@ public class Client {
 	private String formalName;
 	
 	//発表会の有無
-	private Boolean presentation;
+	private String presentation;
 	
 	//特徴
 	private String appeal;
@@ -70,6 +71,12 @@ public class Client {
 	
 	//月4予算(内部用)
 	private String budget;
+	
+	//作成日
+	private LocalDateTime created;
+	
+	//最終更新日
+	private LocalDateTime lastModified;
 	
 	@ManyToOne
 	private Account account;

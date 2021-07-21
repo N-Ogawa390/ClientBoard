@@ -11,37 +11,44 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-	<div th:replace="~{client/fragment/title :: title}"></div>
+	<div class="school-top-image">
 
-	<div th:replace="~{client/fragment/top-image :: top-image}"></div>
-	
-	<div th:if="*{id} != null">
-		<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
-	</div>
-	<div th:unless="*{id} != null">
-		<p>※画像を登録するには、1度スクール情報を保存してください</p>
-	</div>
-	
-	<h3>サブ画像</h3>
-	<div th:if="${subImages} != null" class="form-sub-medias">
-		<th:block th:each="subImg : ${subImages}">
-			<div class="form-sub-medias-child">
-				<img th:src="${'data:image/png;base64,' + subImg.base64}">
-			</div>
-		</th:block>
-	</div>
-	
-	<div th:unless="${subImages} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
-			<img src="/img/no_image.png"  class="no-img">
+		<div th:replace="~{client/fragment/title :: title}"></div>
+		<div th:replace="~{client/fragment/top-image :: top-image}"></div>
+		
+		<div th:if="*{id} != null" class="option">
+			<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
 		</div>
+		<div th:unless="*{id} != null">
+			<p>※画像を登録するには、1度スクール情報を保存してください</p>
+		</div>
+	
 	</div>
 	
-	<div th:if="*{id} != null">
-		<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
-	</div>
-	<div th:unless="*{id} != null">
-		<p>※画像を登録するには、1度スクール情報を保存してください</p>
+	<div class="school-sub-image">
+		<h3>サブ画像</h3>
+		<div th:if="${subImages} != null" class="form-sub-medias">
+			<th:block th:each="subImg : ${subImages}">
+				<div class="form-sub-medias-child">
+					<img th:src="${'data:image/png;base64,' + subImg.base64}">
+				</div>
+			</th:block>
+		</div>
+		
+		<div th:unless="${subImages} != null" class="row">
+			<div class="col-sm-8 col-md-6 mx-auto">
+				<img src="/img/no_image.png"  class="no-img">
+			</div>
+		</div>
+		
+		<div class="option">
+			<div th:if="*{id} != null">
+				<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
+			</div>
+			<div th:unless="*{id} != null">
+				<p>※画像を登録するには、1度スクール情報を保存してください</p>
+			</div>
+		</div>
 	</div>
 	
 	<form th:action="@{''}" method="post">
@@ -72,7 +79,7 @@
 		
 		<div class="row">
 			<div class="col">
-				<select name="areaNames">
+				<select th:field="*{area.areaName}">
 					<option
 					 th:each="a : ${areaNameList}"
 					 th:value="${a}"
@@ -184,7 +191,12 @@
 					</tr>
 					<tr>
 						<td>発表会の有無</td>
-						<td><input type="text" th:field="*{presentation}"></td>
+						<td>
+							<select th:field="*{presentation}">
+								<option th:value="有" th:text="有"></option>
+								<option th:value="無" th:text="無"></option>
+							</select>
+						</td>
 					</tr>
 					<tr>
 						<td>アクセス</td>

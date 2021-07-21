@@ -2,6 +2,7 @@ package net.dkt.dktsearch.controller;
 
 import java.awt.Graphics;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,15 +86,6 @@ public class ClientController {
 	private GenreService genreService;
 	
 	@Autowired
-	private PlanService planService;
-	
-	@Autowired
-	private PlanTypeService planTypeService;
-	
-	@Autowired
-	private S3UploadHelper s3UploadHelper;
-	
-	@Autowired
 	private S3DownloadHelper s3DownloadHelper;
 	
 	@Autowired
@@ -131,8 +123,8 @@ public class ClientController {
 	
 	//クライアント作成
 	@PostMapping("/create")
-	public String createClient(@Valid Client client, BindingResult bindingResult,
-			@RequestParam(required = false) String[] areaNames,
+	public String createClient(
+			@Valid Client client, BindingResult bindingResult,
 			@RequestParam(required = false) String[] genreNames,
 			Model model
 			) {
@@ -145,14 +137,17 @@ public class ClientController {
 			return "client/form";
 		}
 		
+		Area area = new Area();
+		area.setAreaName(client.getArea().getAreaName());
+		area.setClient(client);
+		
 		client.setAccount((Account)model.getAttribute("currentAccount"));
+		client.setArea(area);
+		client.setCreated(LocalDateTime.now());
 		clientService.saveClient(client);
 		
-		if (areaNames != null) {
-			areaService.createAreaWithClient(client, areaNames);	//エリアをクライアントに紐づけて再設定
-		}
-		
 		if (genreNames !=null) {
+			
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
@@ -183,8 +178,8 @@ public class ClientController {
 	
 	//クライアント編集
 	@PostMapping("/{clientId}/edit")
-	public String editClient(@Valid Client client, BindingResult bindingResult,
-			String[] areaNames,
+	public String editClient(
+			@Valid Client client, BindingResult bindingResult,
 			String[] genreNames,
 			@PathVariable Integer clientId,
 			Model model
@@ -195,15 +190,20 @@ public class ClientController {
 			return "client/form";
 		}
 		
-		client.setAccount((Account)model.getAttribute("currentAccount"));
-		clientService.saveClient(client);	//クライアントをアップデート
-		areaService.deleteAreaWithClient(clientId);	//クライアントに紐づくエリアをリセット
-		genreService.deleteGenreWithClient(clientId);	//クライアントに紐づくダンスジャンルをリセット
-		
-		if (areaNames != null) {
+		Area area = clientService.getClientById(clientId).getArea();
+		if(area == null) {
 			
-			areaService.createAreaWithClient(client, areaNames);	//エリアをクライアントに紐づけて再設定
+			area = new Area();
+			area.setClient(client);
 		}
+		area.setAreaName(client.getArea().getAreaName());
+		
+		client.setArea(area);
+		client.setAccount((Account)model.getAttribute("currentAccount"));
+		client.setLastModified(LocalDateTime.now());
+		clientService.saveClient(client);	//クライアントをアップデート
+		
+		genreService.deleteGenreWithClient(clientId);	//クライアントに紐づくダンスジャンルをリセット
 		
 		if (genreNames !=null) {
 			

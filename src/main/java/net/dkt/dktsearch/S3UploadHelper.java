@@ -18,7 +18,12 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.amazonaws.auth.AWSCredentials;
+import com.amazonaws.auth.AWSStaticCredentialsProvider;
+import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.s3.AmazonS3;
+import com.amazonaws.services.s3.AmazonS3Client;
+import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.ObjectMetadata;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 
@@ -47,10 +52,40 @@ public class S3UploadHelper {
 	@Autowired
 	ClientMediaService clientMediaService;
 	
+	@Autowired
+	private BasicAWSCredentials basicAWSCredentials;
+	
+	//S3アクセス用オブジェクトキーの生成
+	private String getObjectKey (String mediaFileName) {
+		
+		String objectKey = new StringBuilder()	//URIを指定
+				.append(S3_BUCKET_PREFIX)
+				.append(bucketName)
+				.append(DIRECTORY_DELIMITER)
+				.append(mediaFileName)
+				.toString();
+		
+		return objectKey;
+	}
+	
+	//AWSクライアント生成
+	private AmazonS3 getAwsS3Client(String bucketName) {
+		
+		AWSCredentials credentials = basicAWSCredentials;
+		
+		AmazonS3 s3Client = AmazonS3ClientBuilder
+				.standard()
+				.withCredentials(new AWSStaticCredentialsProvider(credentials))
+				.build();
+		
+		return s3Client;
+	}
+	
+	//ファイルアップロード
 	public String saveFile(MultipartFile multipartFile, Client client, String mediaType) throws IOException {
 		
 		//ファイル名を作成 ※クライアント名+乱数_ファイル名
-		String mediaFileName = client.getClientName() + new Random().nextInt(1000000) + "_" + multipartFile.getOriginalFilename();
+		String mediaFileName = client.getClientName() + "_" + client.getId() + "_" + new Random().nextInt(1000000) + "_" + multipartFile.getOriginalFilename();
 		
 		//Model ClientMediaに情報を保存
 		try {
@@ -61,12 +96,7 @@ public class S3UploadHelper {
 		}
 		
 		//S3アクセス用　※パス+メディアファイル名
-		String objectKey = new StringBuilder()	//URIを指定
-				.append(S3_BUCKET_PREFIX)
-				.append(bucketName)
-				.append(DIRECTORY_DELIMITER)
-				.append(mediaFileName)
-				.toString();
+		String objectKey = getObjectKey(mediaFileName);
 		
 		WritableResource writableResource = (WritableResource)resourceLoader.getResource(objectKey);	//S3の書き込み可能なリソースに、objectKeyを指定してアクセス
 
@@ -74,6 +104,7 @@ public class S3UploadHelper {
 			InputStream inputStream = multipartFile.getInputStream();	//postされたファイルをストリームに変換 ※直接outputstreamには変換できない
 			OutputStream outputStream = writableResource.getOutputStream()	//アクセス中のS3リソースを書き込み用ストリームに変換
 			) {
+			
 			IOUtils.copy(inputStream, outputStream);	//取り込んだinputstreamをoutputstreamにコピー ※これでS3に保存される
 			
 		} catch (IOException e) {
@@ -82,6 +113,14 @@ public class S3UploadHelper {
 		}
 		
 		return objectKey;
+	}
+	
+	//ファイル削除
+	public void deleteFile(String mediaFileName) {
+		
+		String objectKey = getObjectKey(mediaFileName);
+		
+		getAwsS3Client(objectKey).deleteObject(bucketName, mediaFileName);
 	}
 	
 	public boolean existsDirectory(String directoryPath) {
@@ -102,9 +141,11 @@ public class S3UploadHelper {
 	
 	public void createDirectory(String directoryPath) {
 		ObjectMetadata objectMetadata = new ObjectMetadata();
+		
 		try(InputStream emptyContent = new ByteArrayInputStream(new byte[0]);) {
 			PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, directoryPath, emptyContent, objectMetadata);
 			amazonS3.putObject(putObjectRequest);
+			
 		} catch (IOException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

@@ -55,7 +55,7 @@ public class MailHelper {
 		tmpAccount.setEmail(email);
 		tmpAccount.setSite(site);
 		tmpAccount.setTmpURL(tmpURL);
-		tmpAccount.setTimeStamp(LocalDateTime.now());
+		tmpAccount.setCreated(LocalDateTime.now());
 
 		tmpAccountRepository.save(tmpAccount);
 

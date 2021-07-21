@@ -1,5 +1,7 @@
 package net.dkt.dktsearch.model;
 
+import java.time.LocalDateTime;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,10 @@ public class Plan {
 	private Integer price;
 	
 	private String planNote;
+	
+	private LocalDateTime created;
+	
+	private LocalDateTime lastModified;
 	
 	@ManyToOne
 	private Client client;
