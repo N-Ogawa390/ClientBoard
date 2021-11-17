@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>アカウント管理</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<div class="row">
+	<div class="col">
+		<table class="table">
+			<thead>
+			<tr>
+				<th>ユーザID</th>
+				<th>有効</th>
+				<th></th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="account : ${accountsOfRoleClient}" th:object="${account}">
+				<td th:text="*{username}"></td>
+				<td><span th:if="*{active}">有効</span></td>
+				<td><a th:href="@{|/account/*{username}/edit|}">編集</a></td>
+			</tr>
+			</tbody>
+		</table>
+	</div>
+</div>
+
+</div>
+</body>
+</html>

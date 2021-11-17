@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>スクール情報</title>
+
+</head>
+<body>
+<div layout:fragment="contents" th:object="${client}">
+
+	<div th:replace="~{client/fragment/title :: title}"></div>
+	
+	<div class="school-top-image">
+		<h3>トップ画像</h3>
+		<div th:replace="~{client/fragment/top-image :: top-image}" class="row"></div>
+		
+		<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="mediaType" value="t">
+			
+			<div class="option">
+				<div class="row">
+					<label for="file_upload_top" class="link-text">トップ画像を変更</label>
+					<input type="file" name="file" accept="image/jpeg, image/png" id="file_upload_top" style="display:none">
+				</div>
+				<div class="row">
+					<label for="submit_top" style="cursor: pointer;" class="btn btn-primary my-3 inactive" id="file_submit_top">送信</label>
+					<input type="submit" id="submit_top" style="display:none">
+					<p id="file_upload_top_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
+				</div>
+				<div class="row">
+					<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+				</div>
+			</div>
+		</form>
+	</div>
+		
+	<h3>サブ画像</h3>
+	<div class="container">
+		<div th:if="${subImages}" class="row">
+			<th:block th:each="subImg : ${subImages}">
+				<div class="col-lg-6">
+					<div class="bg-light edit-img-frame">
+						<h4 style="margin-left: 4%;">優先度：<span th:text="${subImg.clientMedia.priority}"></span></h4>
+						<div class="edit-img-div">
+							<img th:src="${'data:image/png;base64,' + subImg.base64}" class="edit-img">
+						</div>
+						<ul class="list-unstyled">
+							<li th:if="${subImg.clientMedia.priority != 1}" class="img-nav-item">
+								<a th:href="@{/client/{id}/medias/{priority}/raise(id=*{id}, priority=${subImg.clientMedia.priority})}">
+									<span class="sm-small">▲優先度を上げる</span>
+								</a>
+							</li>
+							<li th:if="${subImg.clientMedia.priority < #lists.size(subImages)}" class="img-nav-item">
+								<a th:href="@{/client/{id}/medias/{priority}/lower(id=*{id}, priority=${subImg.clientMedia.priority})}">
+									<span class="sm-middle">▼優先度を下げる</span>
+								</a>
+							</li>
+							<li class="img-nav-item">
+								<a th:href="@{/client/{id}/medias/delete/{mediaId}(id=*{id}, mediaId=${subImg.clientMedia.id})}">
+									<span style="color: red;">削除</span>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</th:block>
+		</div>
+		
+		<div th:unless="${subImages} != null" class="row">
+			<div class="col-sm-8 col-md-6 mx-auto">
+				<img src="/img/no_image.png" class="no-img">
+			</div>
+		</div>
+	</div>
+	
+	<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
+		<input type="hidden" name="mediaType" value="s">
+		
+		<div class="row">
+			<label for="file_upload_sub" class="link-text">サブ画像を追加</label>
+			<input type="file" name="file" accept="image/jpeg, image/png" id="file_upload_sub" style="display:none">
+		</div>
+		<div class="row">
+			<label for="submit_sub" style="cursor: pointer;" class="btn btn-primary my-3 inactive" id="file_submit_sub">送信</label>
+			<input type="submit" id="submit_sub" style="display:none">
+			<p id="file_upload_sub_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
+		</div>
+		<div class="row">
+			<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+		</div>
+		
+		<div th:if="${mediaUploadMaxNumError}">
+			<p th:text="${mediaUploadMaxNumError}"></p>
+		</div>
+	</form>
+	<div>
+		<p th:text="${mediaUploadMaxNumError}"></p>
+	</div>
+	
+	<div class="btn btn-primary m-3">
+		<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>
+	</div>
+	
+</div>
+</body>
+</html>

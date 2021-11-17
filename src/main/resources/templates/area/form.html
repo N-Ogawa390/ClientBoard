@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>地域一覧</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<h2 class="lead py-4" style="font-weight: bold;">地域一覧</h2>
+
+<form>
+<section class="py-3">
+<div class="row">
+	<div class="col">
+		<h3>新宿区：全1校</h3>
+		<table class="table">
+			<tr>
+				<td>NOAダンススタジオ</td>
+				<td>新宿1-2-3</td>
+				<td>詳細</td>
+				<td><input type="text"></td>
+			</tr>
+		</table>
+	</div>
+</div>
+</section>
+
+<input type="submit" value="完了" class="btn btn-primary">
+
+</form>
+
+</div>
+</body>
+</html>

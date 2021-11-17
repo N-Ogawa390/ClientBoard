@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>パスワード再設定</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<div class="row">
+	<div class="col">
+		<div>
+			<p>ご登録されているメールアドレスを入力してください。<br>
+			メールアドレス宛てに新しいパスワードを送信します。</p>
+		</div>
+		<form th:action="@{''}" method="post">
+			<input type="text" name="email">
+			<input type="submit" onclick="return confirm('現在のパスワードをリセットして登録のメールアドレスに新しいパスワードを送信します。よろしいですか？')">
+		</form>
+	</div>
+</div>
+
+</div>
+</body>
+</html>

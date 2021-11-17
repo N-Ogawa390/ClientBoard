@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>アカウント編集</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<div class="row">
+<div class="col">
+<form th:action="@{''}" th:object="${accountForm}" method="post">
+	<input type="hidden" th:field="*{type}">
+	<input type="hidden" th:field="*{username}">
+	<input type="hidden" th:field="*{password}">
+	<table class="table">
+		<tr>
+			<td>メールアドレス</td>
+			<td><input type="text" th:field="*{email}"></td>
+		</tr>
+		<tr>
+			<td>サイトURL</td>
+			<td><input type="text" th:field="*{site}"></td>
+		</tr>
+		<tr>
+			<td>パスワード（8文字以上）</td>
+			<td><a th:href="@{|/account/*{username}/passchange|}">再設定</a></td>
+		</tr>
+		<tr sec:authorize="hasRole('ADMINISTRATOR')">
+			<td>有効</td>
+			<td><input type="checkbox" th:field="*{active}"></td>
+		</tr>
+	</table>
+
+	<div><span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></span></div>
+	<div><span th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></span></div>
+	<div><span th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></span></div>
+	
+	<input type="submit" value="登録" class="btn btn-primary m-3">
+	<div class="btn btn-primary m-3">
+		<a th:href="@{|/manage|}" style="color:white;">戻る</a>
+	</div>
+	<div>
+		<span th:if="*{username}"><a th:href="@{|/account/*{username}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">アカウントの削除</a></span>
+	</div>
+	
+</form>
+</div>
+</div>
+
+</div>
+</body>
+</html>

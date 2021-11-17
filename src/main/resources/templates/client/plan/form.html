@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>プラン登録フォーム</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+	<h2 class="lead school-headline">
+		<span th:text="${client.clientName}"></span>
+	</h2>
+	<h3 th:if="*{clientSubName} != '' and *{clientSubName} != null" style="margin: 0; font-size: 1rem;">
+		～<span th:text="*{clientSubName}"></span>～
+	</h3>
+	
+	<form th:action="@{''}" method="post" th:object="${plan}">
+	<input type="hidden" th:field="*{id}">
+	<input type="hidden" th:field="*{client.id}">
+		
+		<div>
+			<span th:if="${#fields.hasErrors('planName')}" th:errors="*{planName}" class="my-3 text-danger"></span>
+			<span th:if="${#fields.hasErrors('ageGroup')}" th:errors="*{ageGroup}" class="my-3 text-danger"></span>
+			<span th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="my-3 text-danger"></span>
+		</div>
+	
+		<table class="table">
+			<tr>
+				<td>プラン名</td>
+				<td><input type="text" th:field="*{planName}"></td>
+			</tr>
+			<tr>
+				<td>プランタイプ</td>
+				<td>
+				<select name="planTypeName">
+					<option th:value="クラス4" th:selected="${planTypeForSelected == 'クラス4'}">クラス4</option>
+					<option th:value="クラス8" th:selected="${planTypeForSelected == 'クラス8'}">クラス8</option>
+					<option th:value="チケット4" th:selected="${planTypeForSelected == 'チケット4'}">チケット4</option>
+					<option th:value="チケット（その他）" th:selected="${planTypeForSelected == 'チケット（その他）'}">チケット（その他）</option>
+					<option th:value="フリーレッスン（ALL）" th:selected="${planTypeForSelected == 'フリーレッスン（ALL）'}">フリーレッスン（ALL）</option>
+					<option th:value="フリーレッスン（その他）" th:selected="${planTypeForSelected == 'フリーレッスン（その他）'}">フリーレッスン（その他）</option>
+					<option th:value="ビジター" th:selected="${planTypeForSelected == 'ビジター'}">ビジター</option>
+					<option th:value="体験レッスン" th:selected="${planTypeForSelected == '体験レッスン'}">体験レッスン</option>
+					<option th:value="入会金" th:selected="${planTypeForSelected == '入会金'}">入会金</option>
+					<option th:value="その他" th:selected="${planTypeForSelected == 'その他'}">その他</option>
+				</select>
+				</td>
+			</tr>
+			<tr>
+				<td>年齢制限</td>
+				<td>
+					<select th:field="*{ageGroup}">
+						<option th:value="ALL">ALL</option>
+						<option th:value="キッズ">キッズ</option>
+						<option th:value="その他">その他</option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td>価格</td>
+				<td><input type="text" th:field="*{price}"></td>
+			</tr>
+			<tr>
+				<td>オンライン</td>
+				<td><input type="checkbox" th:field="*{online}"></td>
+			</tr>
+			<tr>
+				<td>備考 ※ユーザには公開されません</td>
+				<td><textarea th:field="*{planNote}" rows="8" cols="40"></textarea></td>
+			</tr>
+		</table>
+		
+		<input type="submit" value="登録" class="btn btn-primary m-3">
+		<div class="btn btn-primary m-3">
+			<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>
+		</div>
+		<div>
+			<span th:if="*{id}"><a th:href="@{|/client/${client.id}/plan/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">プランを削除</a></span>
+		</div>
+	</form>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+>
+<head>
+<meta charset="UTF-8">
+<title>ログイン</title>
+</head>
+<body>
+<div layout:fragment="contents">
+
+<div class="row">
+	<div class="col">
+		<form th:action="@{/login}" method="post">
+		<table class="table">
+			<tr>
+				<td>ユーザ名</td>
+				<td><input type="text" name="username"></td>
+			</tr>
+			<tr>
+				<td>パスワード</td>
+				<td><input type="password" name="password"></td>
+			</tr>
+		</table>
+		<input type="submit" value="ログイン" class="btn btn-primary">
+		</form>
+	</div>
+</div>
+
+<div class ="row">
+	<div class = "col" style="margin-top: 30px">
+		<a href="account/passwordreset">※パスワードをお忘れですか？</a>
+	</div>
+</div>
+
+</div>
+</body>
+</html>

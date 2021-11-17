@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html
+	xmlns:th="http://www.thymeleaf.org/"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/common}"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+>
+<head>
+<meta charset="UTF-8">
+<title>スクールサーチWeb</title>
+</head>
+
+<body>
+
+<!-- 個別コンテンツここから -->
+<div layout:fragment="contents">
+
+<section>
+<div class="row">
+	<div>
+		<p><a href="/genre" class="nav-link">ジャンル管理</a></p>
+	</div>
+</div >
+</section>
+
+</div>
+<!-- 個別コンテンツここまで -->
+
+</body>
+</html>
