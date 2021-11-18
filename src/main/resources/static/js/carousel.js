@@ -13,6 +13,8 @@ window.addEventListener('load', () => {
 
 function carousel(root) {
 	
+	const ua = window.navigator.userAgent.toLowerCase();
+	
 	var
 	figure = root.querySelector('figure'),
 	images = figure.children,
