@@ -13,10 +13,6 @@ window.addEventListener('load', () => {
 
 function carousel(root) {
 	
-	const ua = window.navigator.userAgent.toLocaleLowerCase();
-	
-	document.getElementById('ua').textContent = ua;
-	
 	var
 	figure = root.querySelector('figure'),
 	images = figure.children,
@@ -32,10 +28,13 @@ function carousel(root) {
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	
 	for (i=1; i < numImages; i++) {
+		
 		figure.children[i].style.transformOrigin = `center center ${-disCenter}px`;
 		
+		//osの差異を吸収する　※iphoneだけz軸が設定されない
 		if(ua.indexOf('iphone') != -1) {
-			document.getElementById('os').textContent = 'iphoneです';
+			
+			//iosの場合はZ軸の移動を追加
 			figure.children[i].style.transform = `translateZ(${-disCenter}px) rotateY(${i * theta}deg)`;
 		} else {
 			
