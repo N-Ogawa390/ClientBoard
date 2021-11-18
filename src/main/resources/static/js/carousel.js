@@ -32,14 +32,17 @@ function carousel(root) {
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	
-	if(ua.indexOf('iphone') != -1) {
-		console.log('iphoneです');
-		figure.style.transformOrigin = `center center center`;
-	}
-	
 	for (i=1; i < numImages; i++) {
 		figure.children[i].style.transformOrigin = `center center ${-disCenter}px`;
-		figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
+		
+		if(ua.indexOf('iphone') != -1) {
+			document.getElementById('os').textContent = 'iphoneです';
+			figure.children[i].style.transform = `translateZ(${-disCenter}px) rotateY(${i * theta}deg)`;
+		} else {
+			
+			figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
+		}
+	
 	}
 	
 	//ナビゲーションにカルーセル回転イベントを追加
