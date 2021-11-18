@@ -13,9 +13,9 @@ window.addEventListener('load', () => {
 
 function carousel(root) {
 	
-//	const ua = window.navigator.userAgent.toLocaleLowerCase();
+	const ua = window.navigator.userAgent.toLocaleLowerCase();
 	
-//	document.getElementById('ua').textContent = ua;
+	document.getElementById('ua').textContent = ua;
 	
 	var
 	figure = root.querySelector('figure'),
@@ -34,13 +34,13 @@ function carousel(root) {
 	for (i=1; i < numImages; i++) {
 		figure.children[i].style.transformOrigin = `center center ${-disCenter}px`;
 		
-//		if(ua.indexOf('iphone') != -1) {
-//			document.getElementById('os').textContent = 'iphoneです';
-//			figure.children[i].style.transform = `translateZ(${-disCenter}px) rotateY(${i * theta}deg)`;
-//		} else {
+		if(ua.indexOf('iphone') != -1) {
+			document.getElementById('os').textContent = 'iphoneです';
+			figure.children[i].style.transform = `translateZ(${-disCenter}px) rotateY(${i * theta}deg)`;
+		} else {
 			
 			figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
-//		}
+		}
 	
 	}
 	
