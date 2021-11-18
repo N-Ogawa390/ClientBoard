@@ -28,14 +28,14 @@ function carousel(root) {
 	computedStyle = window.getComputedStyle(img),
 	imgWidth = parseFloat(computedStyle.width),
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
-	nav = root.querySelector('nav');
-	
-	if(ua.indexOf('iphone') == 0) {
-		console.log('iphonです');
-		disCenter = 0;
-	}
+	nav = root.querySelector('nav');	
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
+	
+	if(ua.indexOf('iphone') != -1) {
+		console.log('iphoneです');
+		figure.style.transformOrigin = `center center center`;
+	}
 	
 	for (i=1; i < numImages; i++) {
 		figure.children[i].style.transformOrigin = `center center ${-disCenter}px`;
