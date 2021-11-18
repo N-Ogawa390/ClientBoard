@@ -7,10 +7,10 @@
 </head>
 <body>
 
-<div th:fragment="top-image" th:remove="tag">
+<div th:fragment="top-image" class="school-top-image">
 	
 	<div th:if="${topImage} != null" class="row">
-		<div class="col-sm-8 col-md-6 mx-auto">
+		<div class="col-12 col-sm-8 mx-auto">
 			<img th:src="${'data:image/png;base64,' + topImage.base64}">
 		</div>
 	</div>

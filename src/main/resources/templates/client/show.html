@@ -13,17 +13,19 @@
 <div layout:fragment="contents">
 <div th:object="${client}">
 
-	<div class="school-top-image">
+	<div>
 		<div th:replace="~{client/fragment/title :: title}"></div>
 		<div th:replace="~{client/fragment/top-image :: top-image}"></div>
 	</div>
 	
 	<h3>スクール風景</h3>
-	<div th:if="${subImages} != null" style="padding: 30%">
+	<div th:if="${subImages} != null" style="padding: 16%">
 		<div class="carousel3d" id="carousel">
 			<figure>
 				<th:block th:each="subImg : ${subImages}">
-					<img th:src="${'data:image/png;base64,' + subImg.base64}">
+					<div>
+						<img th:src="${'data:image/png;base64,' + subImg.base64}">
+					</div>
 				</th:block>
 			</figure>
 			<nav>
@@ -32,6 +34,9 @@
 			</nav>
 		</div>
 	</div>
+	
+	<p id="ua">text</p>
+	<p id="os">text</p>
 	
 	<div th:unless="${subImages} != null" class="row">
 		<div class="col-sm-8 col-md-6 mx-auto">
@@ -108,14 +113,14 @@
 	</div>
 	</section>
 	
-	<section>
+	<section th:unless="*{#strings.isEmpty(appeal)}">
 	<h3 style="text-align: center;">スクールからひとこと！</h3>
 	<div class="row">
 		<div class="col balloon">
 			<p th:text="*{appeal}"></p>
 		</div>
 	</div>
-	</section>
+	</section >
 	
 	<section class="py-3">
 	<h3>スクール基本情報</h3>

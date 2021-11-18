@@ -13,6 +13,11 @@ window.addEventListener('load', () => {
 
 function carousel(root) {
 	
+	const ua = window.navigator.userAgent.toLocaleLowerCase();
+	
+	document.getElementById('ua').textContent = ua;
+	document.getElementById('os').textContent = ua.indexOf('iphone');
+	
 	var
 	figure = root.querySelector('figure'),
 	images = figure.children,
@@ -24,6 +29,11 @@ function carousel(root) {
 	imgWidth = parseFloat(computedStyle.width),
 	disCenter = (imgWidth / 2) * Math.tan((90 - (180 / numImages)) * (Math.PI / 180)),	//画像から中心に垂線を引いた距離
 	nav = root.querySelector('nav');
+	
+	if(ua.indexOf('iphone') == 0) {
+		console.log('iphonです');
+		disCenter = 0;
+	}
 	
 	figure.style.transformOrigin = `center center -${disCenter}px`;
 	
