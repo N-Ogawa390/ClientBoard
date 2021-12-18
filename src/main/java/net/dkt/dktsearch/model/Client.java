@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 
 import lombok.Data;
 
@@ -29,6 +30,18 @@ public class Client {
 	
 	//校舎名
 	private String clientSubName;
+	
+	//郵便番号
+	@Pattern(regexp="^[0-9]{7}$", message="※郵便番号の形式が不正です")
+	@NotBlank(message="※郵便番号を入力してください")
+	private String zipCode;
+	
+	//市区町村
+	@NotBlank(message="※市区町村を入力してください")
+	private String city;
+	
+	//住所
+	private String address;
 	
 	//サイトURL
 	private String siteURL;

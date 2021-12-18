@@ -187,6 +187,17 @@ public class ClientController {
 		
 		if (bindingResult.hasErrors()) {
 			
+			client = clientService.getClientById(clientId);
+			
+			//ジャンル情報
+			model.addAttribute("genreNamesWithClient", genreNames);
+			
+			//画像表示
+			List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
+
+			model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
+			model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
+			
 			return "client/form";
 		}
 		

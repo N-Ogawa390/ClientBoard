@@ -45,7 +45,8 @@ public class AreaController {
 		
 		for (String areaName : areaNames) {
 			List<Area> areasWithAreaName = areaService.getClientsWithAreaName(areaName);	//該当エリア名を持つエリアobjリスト取得
-			List<Client> clientsWithAreaName = areasWithAreaName.stream().map(a -> a.getClient()).collect(Collectors.toList());	//該当エリア名を持つクライアントobjのリストに変換
+			List<Client> clientsWithAreaName = areasWithAreaName.stream().map(a -> a.getClient()).collect(Collectors.toList());	//各エリアobjを、紐づいているクライアントobjに変換
+			clientsWithAreaName.sort((a, b)->a.getZipCode().compareTo(b.getZipCode()));	//郵便番号でソート
 			areaNameWithClients.put(areaName, clientsWithAreaName);
 		}
 		

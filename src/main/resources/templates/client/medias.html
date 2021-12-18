@@ -31,8 +31,14 @@
 					<input type="submit" id="submit_top" style="display:none">
 					<p id="file_upload_top_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
 				</div>
+				<div class="row" th:if="${mediaUploadTopMaxSizeError}">
+					<p th:text="${mediaUploadTopMaxSizeError}" class="text-danger"></p>
+				</div >
 				<div class="row">
-					<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+					<p class="text-muted">
+						※画像拡張子はpngまたはjpgが使用可能です<br>
+						※推奨サイズは横×縦=640×360pxです
+					</p>
 				</div>
 			</div>
 		</form>
@@ -61,7 +67,7 @@
 							</li>
 							<li class="img-nav-item">
 								<a th:href="@{/client/{id}/medias/delete/{mediaId}(id=*{id}, mediaId=${subImg.clientMedia.id})}">
-									<span style="color: red;">削除</span>
+									<span class="text-danger">削除</span>
 								</a>
 							</li>
 						</ul>
@@ -89,17 +95,19 @@
 			<input type="submit" id="submit_sub" style="display:none">
 			<p id="file_upload_sub_text" class="m-3 d-flex align-items-center">ファイルが選択されていません</p>
 		</div>
-		<div class="row">
-			<p style="color: gray;">※画像拡張子はpngまたはjpgが使用可能です</p>
+		<div class="row" th:if="${mediaUploadMaxNumError}">
+			<p th:text="${mediaUploadMaxNumError}" class="text-danger"></p>
 		</div>
-		
-		<div th:if="${mediaUploadMaxNumError}">
-			<p th:text="${mediaUploadMaxNumError}"></p>
+		<div class="row" th:if="${mediaUploadSubMaxSizeError}">
+			<p th:text="${mediaUploadSubMaxSizeError}" class="text-danger"></p>
+		</div>
+		<div class="row">
+			<p class="text-muted">
+				※画像拡張子はpngまたはjpgが使用可能です<br>
+				※推奨サイズは横×縦=640×360pxです
+			</p>
 		</div>
 	</form>
-	<div>
-		<p th:text="${mediaUploadMaxNumError}"></p>
-	</div>
 	
 	<div class="btn btn-primary m-3">
 		<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>

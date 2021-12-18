@@ -106,7 +106,7 @@ public class ClientMediaService {
 		if (maxPriority.isPresent()) {
 			
 			//すでに優先順位が5まである場合はエラー ※画像の最大登録数は5枚まで　　優先順位ではなく画像枚数でチェックした方がよさそう
-			if (maxPriority.get() >= 5) {	
+			if (maxPriority.get() >= 5) {
 				throw new IOException("※サブ画像の最大登録数は5枚までです");
 				
 			} else {

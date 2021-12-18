@@ -18,15 +18,15 @@
 
 <section>
 <div class="row">
-	<div sec:authorize="hasRole('ADMINISTRATOR')" class="col-12 col-lg-6 mx-auto">
+	<div sec:authorize="hasRole('ADMINISTRATOR')" class="col-12 col-md-6 mx-auto">
 		<h2 class="text-center">管理者メニュー</h2>
-		<div class="mb-3 text-center fadein-scroll">
+		<div class="mb-3 text-center fadein-scroll home-menuicon">
 			<a href="/adminMenu">
 				<img th:src="@{/img/index-icon-admin.png}" alt="search-icon" class="img-fluid btn-shadow">
 			</a>
 		</div>
 	</div>
-	<div sec:authorize="isAuthenticated()" class="col-12 col-lg-6 mx-auto">
+	<div sec:authorize="isAuthenticated()" class="col-12 col-md-6 mx-auto home-menuicon">
 		<h2 class="text-center">管理画面</h2>
 		<div class="mb-3 text-center fadein-scroll">
 			<a href="/manage">
@@ -34,7 +34,7 @@
 			</a>
 		</div>
 	</div>
-	<div class="col-12 col-lg-6 mx-auto">
+	<div class="col-12 col-md-6 mx-auto home-menuicon">
 		<h2 class="text-center">スクールを探す</h2>
 		<div class="mb-3 text-center fadein-scroll">
 			<a href="/search">

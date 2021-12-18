@@ -38,7 +38,10 @@
 				src="/img/no_image.png"
 				class="blogcard-img">
 		</div>
-		<p th:text="${client.Area.AreaName}" class="blogcard-area slidein-scroll"></p>
+		<p class="blogcard-area slidein-scroll">
+			<span th:text="${client.Area.AreaName}"></span>
+			<span th:text="${client.city}"></span>
+		</p>
 		<div class="description">
 			<div class="desc-headline">
 				<h3 th:text="${client.clientName}"></h3>

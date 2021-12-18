@@ -130,6 +130,9 @@ public class HomeController {
 			targetClients = targetClientsWithGenreName;
 		}
 		
+		//郵便番号でソート
+		targetClients.sort((a, b)->a.getZipCode().compareTo(b.getZipCode()));
+		
 		model.addAttribute("budGetWithClientId", clientService.getMapBudgetWithClientId(targetClients, "ALL"));
 			//クライアントIDと月4予算のマップ
 		model.addAttribute("butGetWithClientIdKids", clientService.getMapBudgetWithClientId(targetClients, "キッズ"));

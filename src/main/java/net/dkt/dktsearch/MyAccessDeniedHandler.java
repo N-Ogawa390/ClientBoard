@@ -15,8 +15,10 @@ import org.springframework.security.web.csrf.MissingCsrfTokenException;
 public class MyAccessDeniedHandler implements AccessDeniedHandler{
 	
 	@Override
-	public void handle(HttpServletRequest request, HttpServletResponse response,
-			AccessDeniedException accessDeniedException) throws IOException,
+	public void handle(HttpServletRequest request,
+			HttpServletResponse response,
+			AccessDeniedException accessDeniedException
+			) throws IOException,
 			ServletException {
 		
 		if (accessDeniedException instanceof MissingCsrfTokenException) {

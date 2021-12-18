@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletResponse;
+
+import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import net.dkt.dktsearch.S3DownloadHelper;
@@ -55,7 +59,28 @@ public class ClietnMediaController {
 			@RequestParam MultipartFile file,
 			@RequestParam String mediaType,
 			@PathVariable("clientId") Client client,
+			HttpServletResponse httpServletResponse,
 			Model model) {
+		
+		if(file.getSize() >= 1000000) {
+			System.out.println("ohmy");
+			if(mediaType.equals("t")) {
+				
+				model.addAttribute("mediaUploadTopMaxSizeError", "※ファイルサイズが大きすぎます（最大10MB）");
+			} else {
+				
+				model.addAttribute("mediaUploadSubMaxSizeError", "※ファイルサイズが大きすぎます（最大10MB）");
+			}
+				
+			model.addAttribute("client", client);
+				
+			//画像表示
+			List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
+			model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
+			model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
+				
+			return "client/medias";				
+		}
 		
 		try {
 
@@ -69,7 +94,7 @@ public class ClietnMediaController {
 			
 			//画像表示
 			List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);
-			model.addAttribute("topImages", clientMediaService.getTopImage(byteImages));
+			model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
 			model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 			
 			model.addAttribute("mediaUploadMaxNumError", e.getMessage());	//エラーメッセージを表示
@@ -122,6 +147,6 @@ public class ClietnMediaController {
 		model.addAttribute("topImages", clientMediaService.getTopImage(byteImages));
 		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
-		return "client/medias";
+		return "redirect:/client/{clientId}/medias";
 	}
 }

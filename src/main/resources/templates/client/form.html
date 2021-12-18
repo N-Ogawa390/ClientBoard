@@ -77,17 +77,37 @@
 		<section class="py-3">
 		<h3 class="py-3">地域</h3>
 		
-		<div class="row">
-			<div class="col">
-				<select th:field="*{area.areaName}">
-					<option
-					 th:each="a : ${areaNameList}"
-					 th:value="${a}"
-					 th:text="${a}"
-					 th:selected="${a} == *{area.areaName}"
-					 ></option>
-				</select>
+		<div class="form-group">
+			<label for="zipCode">郵便番号 ※ハイフンなし 必須</label >
+			<div style="align-items: center;">
+				<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111">
+				<div class="btn btn-primary mx-3" id="zipSearch">郵便番号から住所を入力</div>
 			</div>
+			<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
+			<p id="zipError" class="text-danger"></p>
+		</div>
+		
+		<div class="form-group">
+			<label for="prefecture">都道府県 ※必須</label>
+			<select th:field="*{area.areaName}" id="prefecture" class="form-control">
+				<option
+				 th:each="a : ${areaNameList}"
+				 th:value="${a}"
+				 th:text="${a}"
+				 th:selected="${a} == *{area.areaName}"
+				 ></option>
+			</select>
+		</div>
+		
+		<div class="form-group">
+			<label for="city">市区町村 ※必須</label>	
+			<input type="text" th:field="*{city}" class="form-control" id="city" placeholder="新宿区">
+			<p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+		</div>
+		
+		<div class="form-group">
+			<label for="address">住所</label >
+			<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="北新宿1-1-1北新宿ビル101">
 		</div>
 		
 		</section>
@@ -139,9 +159,9 @@
 			</div>
 		</div>
 		<div>
-			<span th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}"></span>
-			<span th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}"></span>
-			<span th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}"></span>
+			<p th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}" class="text-danger"></p>
 		</div>
 		</section>
 		
@@ -227,15 +247,15 @@
 		</div>
 		
 		<div>
-			<span th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}"></span>
-			<span th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}"></span>
-			<span th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}"></span>
-			<span th:if="${#fields.hasErrors('access')}" th:errors="*{access}"></span>
-			<span th:if="${#fields.hasErrors('company')}" th:errors="*{company}"></span>
-			<span th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}"></span>
-			<span th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}"></span>
-			<span th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}"></span>
-			<span th:if="${#fields.hasErrors('active')}" th:errors="*{active}"></span>
+			<p th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('access')}" th:errors="*{access}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('company')}" th:errors="*{company}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}" class="text-danger"></p>
+			<p th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="text-danger"></p>
 		</div>
 		
 		</section>
@@ -245,11 +265,11 @@
 			<a th:href="@{|/manage|}" style="color:white;">戻る</a>
 		</div>
 		<div>
-			<span th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></span>
+			<p th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></p>
 		</div>
 		
 	</form>
-
+<script type="text/javascript" src="/js/zipsearch.js"></script>
 </div>
 </body>
 </html>
