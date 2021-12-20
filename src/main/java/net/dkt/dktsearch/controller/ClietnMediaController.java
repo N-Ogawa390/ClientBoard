@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
-
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -81,7 +80,6 @@ public class ClietnMediaController {
 				
 			return "client/medias";				
 		}
-		
 		try {
 
 			s3UploadHelper.saveFile(file, client, mediaType);

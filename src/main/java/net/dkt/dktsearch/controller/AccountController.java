@@ -113,7 +113,6 @@ public class AccountController {
 	@Transactional
 	@GetMapping("/tmp")
 	public String tmpUrlClicked(@RequestParam("id") String tmpURL) {
-
 		TmpAccount tmpAccount = accountService.getTmpAccount(tmpURL);
 		
 		String username = tmpAccount.getUsername();

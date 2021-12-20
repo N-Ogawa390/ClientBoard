@@ -14,7 +14,6 @@ import org.springframework.security.web.csrf.MissingCsrfTokenException;
 //タイムアウト時(csrfトークンが存在しなかった場合)の画面遷移を指定
 public class MyAccessDeniedHandler implements AccessDeniedHandler{
 	
-	@Override
 	public void handle(HttpServletRequest request,
 			HttpServletResponse response,
 			AccessDeniedException accessDeniedException

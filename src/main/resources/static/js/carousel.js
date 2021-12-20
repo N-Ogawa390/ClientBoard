@@ -42,7 +42,6 @@ function carousel(root) {
 			
 			figure.children[i].style.transform = `rotateY(${i * theta}deg)`;
 		}
-	
 	}
 	
 	//ナビゲーションにカルーセル回転イベントを追加
