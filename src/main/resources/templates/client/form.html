@@ -73,7 +73,7 @@
 			</div>
 		</div>
 		</section>
-		
+
 		<section class="py-3">
 		<h3 class="py-3">地域</h3>
 		
@@ -86,7 +86,7 @@
 			<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
 			<p id="zipError" class="text-danger"></p>
 		</div>
-		
+
 		<div class="form-group">
 			<label for="prefecture">都道府県 ※必須</label>
 			<select th:field="*{area.areaName}" id="prefecture" class="form-control">
@@ -98,7 +98,7 @@
 				 ></option>
 			</select>
 		</div>
-		
+
 		<div class="form-group">
 			<label for="city">市区町村 ※必須</label>	
 			<input type="text" th:field="*{city}" class="form-control" id="city" placeholder="新宿区">
@@ -109,7 +109,37 @@
 			<label for="address">住所</label >
 			<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="北新宿1-1-1北新宿ビル101">
 		</div>
-		
+		</section>
+
+		<section class="py-3">
+		<h3 class="my-3">プラン情報</h3>
+		<div th:if="*{id} != null" class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<th>プラン名</th>
+						<th>プランタイプ</th>
+						<th>年齢制限</th>
+						<th>料金</th>
+						<th></th>
+					</tr>
+					<tr th:each="plan : *{plans}">
+						<td th:text="${plan.planName}"></td>
+						<td th:text="${plan.planType.PlanTypeName}"></td>
+						<td th:text="${plan.ageGroup}"></td>
+						<td th:text="${plan.price} + '円'"></td>
+						<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
+					</tr>
+				</table>
+				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
+			</div>
+		</div>
+		<div>
+			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
+		</div>
+		<div th:unless="*{id} != null" class="row">
+			<p>※プランを登録するには、1度スクール情報を保存してください</p>
+		</div>
 		</section>
 		
 		<section class="py-3">
@@ -162,37 +192,6 @@
 			<p th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}" class="text-danger"></p>
 			<p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger"></p>
 			<p th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}" class="text-danger"></p>
-		</div>
-		</section>
-		
-		<section class="py-3">
-		<h3 class="my-3">プラン情報</h3>
-		<div th:if="*{id} != null" class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<th>プラン名</th>
-						<th>プランタイプ</th>
-						<th>年齢制限</th>
-						<th>料金</th>
-						<th></th>
-					</tr>
-					<tr th:each="plan : *{plans}">
-						<td th:text="${plan.planName}"></td>
-						<td th:text="${plan.planType.PlanTypeName}"></td>
-						<td th:text="${plan.ageGroup}"></td>
-						<td th:text="${plan.price} + '円'"></td>
-						<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
-					</tr>
-				</table>
-				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
-			</div>
-		</div>
-		<div>
-			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
-		</div>
-		<div th:unless="*{id} != null" class="row">
-			<p>※プランを登録するには、1度スクール情報を保存してください</p>
 		</div>
 		</section>
 		

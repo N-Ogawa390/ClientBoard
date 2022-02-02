@@ -53,6 +53,29 @@
 	</section>
 	
 	<section class="py-3">
+	<h3>プラン情報</h3>
+	<div class="row">
+		<div class="col">
+			<table class="table">
+				<tr>
+					<th>プラン名</th>
+					<th>プランタイプ</th>
+					<th>年齢制限</th>
+					<th>料金</th>
+				</tr>
+				<tr th:each="plan : *{plans}">
+					<td th:text="${plan.planName}"></td>
+					<td th:text="${plan.planType.PlanTypeName}"></td>
+					<td th:text="${plan.ageGroup}"></td>
+					<td th:text="${plan.price} + '円'"></td>
+				</tr>
+			</table>
+			<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
+		</div>
+	</div>
+	</section>
+	
+	<section class="py-3">
 	<h3>レッスン基本情報</h3>
 	<div class="row">
 		<div class="col">
@@ -86,30 +109,7 @@
 		<span th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}"></span>
 	</div>
 	</section>
-	
-	<section class="py-3">
-	<h3>プラン情報</h3>
-	<div class="row">
-		<div class="col">
-			<table class="table">
-				<tr>
-					<th>プラン名</th>
-					<th>プランタイプ</th>
-					<th>年齢制限</th>
-					<th>料金</th>
-				</tr>
-				<tr th:each="plan : *{plans}">
-					<td th:text="${plan.planName}"></td>
-					<td th:text="${plan.planType.PlanTypeName}"></td>
-					<td th:text="${plan.ageGroup}"></td>
-					<td th:text="${plan.price} + '円'"></td>
-				</tr>
-			</table>
-			<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
-		</div>
-	</div>
-	</section>
-	
+		
 	<section th:unless="*{#strings.isEmpty(appeal)}">
 	<h3 style="text-align: center;">スクールからひとこと！</h3>
 	<div class="row">
