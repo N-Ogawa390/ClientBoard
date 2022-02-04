@@ -11,6 +11,7 @@ td, th {
 }
 .schedule-outline p {
 	margin-bottom: 0;
+	line-height: 1;
 }
 .schedule-outline > div:nth-child(6) > div:first-child {
 	color: blue;
@@ -28,10 +29,8 @@ td, th {
     font-size: 0.8rem;
 }
 .schedule-col > div:not(:first-child) > p:first-child {
-    width: 200%;
-    line-height: 200%;
-    transform: scale(0.5);
-    transform-origin: 0 0;
+	height: 2rem;
+    overflow: hidden;
 }
 .schedule-item {
 	margin: 2px;
