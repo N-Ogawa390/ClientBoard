@@ -7,7 +7,7 @@ td, th {
 /************* スケジュール *************/
 .schedule-outline {
 	display: flex;
-	margin: 0 -8px;
+	margin: 0 -10px;
 }
 .schedule-outline p {
 	margin-bottom: 0;
@@ -26,6 +26,12 @@ td, th {
 }
 .schedule-col > div:not(:first-child) {
     font-size: 0.8rem;
+}
+.schedule-col > div:not(:first-child) > p:first-child {
+    width: 200%;
+    line-height: 200%;
+    transform: scale(0.5);
+    transform-origin: 0 0;
 }
 .schedule-item {
 	margin: 2px;
