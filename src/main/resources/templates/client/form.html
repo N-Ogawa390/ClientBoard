@@ -62,11 +62,11 @@
 				<table class="table">
 					<tr>
 						<td>スクール名  ※必須</td>
-						<td><input type="text" th:field="*{clientName}"></td>
+						<td><input type="text" th:field="*{clientName}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>校舎名</td>
-						<td><input type="text" th:field="*{clientSubName}"></td>
+						<td><input type="text" th:field="*{clientSubName}" class="form-control"></td>
 					</tr>
 				</table>
 				<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
@@ -80,7 +80,7 @@
 		<div class="form-group">
 			<label for="zipCode">郵便番号 ※ハイフンなし 必須</label >
 			<div style="align-items: center;">
-				<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111">
+				<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111" class="form-control">
 				<div class="btn btn-primary mx-3" id="zipSearch">郵便番号から住所を入力</div>
 			</div>
 			<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
@@ -274,7 +274,7 @@
 		<div class="row">
 			<div class="col">
 				<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
-				<textarea th:field="*{appeal}" cols="40" rows="5">
+				<textarea th:field="*{appeal}" class="form-control">
 				</textarea>
 				<p>※200文字以内</p>
 			</div>
@@ -288,15 +288,15 @@
 				<table class="table">
 					<tr>
 						<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
-						<td><input type="text" th:field="*{lessonLevels}"></td>
+						<td><input type="text" th:field="*{lessonLevels}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>レッスン時間単位</td>
-						<td><input type="text" th:field="*{duration}"></td>
+						<td><input type="text" th:field="*{duration}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>対応時間帯</td>
-						<td><input type="text" th:field="*{supporteTime}"></td>
+						<td><input type="text" th:field="*{supporteTime}" class="form-control"></td>
 					</tr>
 				</table>
 			</div>
@@ -315,11 +315,11 @@
 				<table class="table">
 					<tr>
 						<td>スクール正式名称</td>
-						<td><input type="text" th:field="*{formalName}"></td>
+						<td><input type="text" th:field="*{formalName}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>サイトURL</td>
-						<td><input type="text" th:field="*{siteURL}"></td>
+						<td><input type="text" th:field="*{siteURL}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>発表会の有無</td>
@@ -332,23 +332,23 @@
 					</tr>
 					<tr>
 						<td>アクセス</td>
-						<td><input type="text" th:field="*{access}"></td>
+						<td><input type="text" th:field="*{access}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>運営会社名</td>
-						<td><input type="text" th:field="*{company}"></td>
+						<td><input type="text" th:field="*{company}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>本社所在地</td>
-						<td><input type="text" th:field="*{headOffice}"></td>
+						<td><input type="text" th:field="*{headOffice}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>設立</td>
-						<td><input type="text" th:field="*{establishment}"></td>
+						<td><input type="text" th:field="*{establishment}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>資本金</td>
-						<td><input type="text" th:field="*{capital}"></td>
+						<td><input type="text" th:field="*{capital}" class="form-control"></td>
 					</tr>
 					<tr>
 						<td>閉店</td>
