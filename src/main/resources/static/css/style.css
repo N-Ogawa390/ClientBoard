@@ -7,6 +7,7 @@ td, th {
 /************* スケジュール *************/
 .schedule-outline {
 	display: flex;
+	margin: 0 -8px;
 }
 .schedule-outline p {
 	margin-bottom: 0;
@@ -28,8 +29,8 @@ td, th {
 }
 .schedule-item {
 	margin: 2px;
-	padding: 2px;
-	border: 2px solid;
+	padding: 1px;
+	border: 1.5px solid;
 	border-radius: 4px;
 	text-align: center;
 }
