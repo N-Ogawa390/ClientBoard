@@ -4,6 +4,36 @@ td, th {
 	font-size: 14px;
 }
 
+/************* スケジュール *************/
+.schedule-outline {
+	display: flex;
+}
+.schedule-outline p {
+	margin-bottom: 0;
+}
+.schedule-outline > div:nth-child(6) > div:first-child {
+	color: blue;
+}
+.schedule-outline > div:nth-child(7) > div:first-child {
+	color: red;
+}
+.schedule-col {
+	flex: 1;
+}
+.schedule-col > div:first-child {
+    border: none;
+}
+.schedule-col > div:not(:first-child) {
+    font-size: 0.8rem;
+}
+.schedule-item {
+	margin: 2px;
+	padding: 2px;
+	border: 2px solid;
+	border-radius: 4px;
+	text-align: center;
+}
+
 /************* サイトトップ画像 *************/
 .cover {
 	background: url(../img/dkt_search_top.png) no-repeat center center;
