@@ -29,15 +29,27 @@ td, th {
     font-size: 0.8rem;
 }
 .schedule-col > div:not(:first-child) > p:first-child {
-	height: 2rem;
+	height: 24px;
     overflow: hidden;
+    font-size: 10px;
+    line-height: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .schedule-item {
 	margin: 2px;
 	padding: 1px;
-	border: 1.5px solid;
 	border-radius: 4px;
 	text-align: center;
+}
+.schedule-item:not(:first-child) {
+	background: #007BFF;
+	color: white;
+}
+.schedule-item > p:nth-child(3) {
+	color: #007BFF;
+	background: white;
 }
 
 /************* サイトトップ画像 *************/

@@ -81,7 +81,7 @@
 			<label for="zipCode">郵便番号 ※ハイフンなし 必須</label >
 			<div style="align-items: center;">
 				<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111" class="form-control">
-				<div class="btn btn-primary mx-3" id="zipSearch">郵便番号から住所を入力</div>
+				<div class="btn btn-primary m-3" id="zipSearch">郵便番号から住所を入力</div>
 			</div>
 			<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
 			<p id="zipError" class="text-danger"></p>
@@ -135,7 +135,7 @@
 			</div>
 		</div>
 		<div>
-			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary my-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
+			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
 		</div>
 		<div th:unless="*{id} != null" class="row">
 			<p>※プランを登録するには、1度スクール情報を保存してください</p>
@@ -152,13 +152,13 @@
 					</div>
 					<div class="schedule-item">
 						<p>ヒップホップ</p>
-						<p>13:00</p>
 						<p>初級</p>
+						<p>13:00</p>
 					</div>
 					<div class="schedule-item">
 						<p>ヒップホップ</p>
-						<p>13:00</p>
 						<p>初級</p>
+						<p>13:00</p>
 					</div>
 				</div>
 				<div class="schedule-col">
@@ -181,12 +181,12 @@
 						<p>水</p>
 					</div>
 					<div class="schedule-item">
-						<p>HIPHOP</p>
+						<p>ヒップホップ</p>
 						<p>13:00</p>
 						<p>初級</p>
 					</div>
 					<div class="schedule-item">
-						<p>HIPHOP</p>
+						<p>ヒップホップ</p>
 						<p>13:00</p>
 						<p>初級</p>
 					</div>
