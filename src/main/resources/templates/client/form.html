@@ -131,11 +131,13 @@
 						<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
 					</tr>
 				</table>
-				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">※プランが登録されていません</div>
 			</div>
 		</div>
 		<div>
-			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加</a>
+			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加・編集</a>
+		</div>
+		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
+			<p>※プランが登録されていません</p>
 		</div>
 		<div th:unless="*{id} != null" class="row">
 			<p>※プランを登録するには、1度スクール情報を保存してください</p>
@@ -252,6 +254,15 @@
 					</div>
 				</div>
 			</div >
+		</div>
+		<div>
+			<a th:href="@{|/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
+		</div>
+		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
+			<p>※スケジュールが登録されていません</p>
+		</div>
+		<div th:unless="*{id} != null" class="row">
+			<p>※スケジュールを登録するには、1度スクール情報を保存してください</p>
 		</div>
 		</section>
 		
