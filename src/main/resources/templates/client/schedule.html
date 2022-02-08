@@ -11,8 +11,46 @@
 </head>
 <body>
 <div layout:fragment="contents" th:object="${client}">
-<p>sample</p>
 
+	<div th:replace="~{client/fragment/title :: title}"></div>
+	
+	<h3>レッスンの追加</h3>
+
+	<form th:action="@{''}" method="post" th:object="${schedule}">
+		<div class="form-group">
+			<label for="genre">ジャンル</label>
+			<input type=text th:field="*{genre}" id="genre" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="level">レッスンのレベル</label>
+			<input type=text th:field="*{level}" id="level" class="form-control">
+		</div>
+		<div name="dayOfWeek" class="form-group">
+			<label for="dayOfWeek">曜日</label>
+			<select id="dayOfWeek" name="dayOfWeek" class="form-control">
+				<option th:value="MONDAY">月曜日</option>
+				<option th:value="TUESDAY">火曜日</option>
+				<option th:value="WEDNESDAY">水曜日</option>
+				<option th:value="THURSDAY">木曜日</option>
+				<option th:value="FRIDAY">金曜日</option>
+				<option th:value="SATURDAY">土曜日</option>
+				<option th:value="SUNDAY">日曜日</option>
+			</select>
+		</div>
+			<div class="form-group">
+			<label for="startTime">レッスン開始時刻</label>
+			<input type="time" th:field="*{startTime}" id="startTime" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="endTime">レッスン開始時刻</label>
+			<input type="time" th:field="*{endTime}" id="endTime" class="form-control">
+		</div>
+		
+		<input type="submit" value="保存" class="btn btn-primary m-3">
+	</form>
+	
+	<h3>登録済みのレッスン</h3>
+	
 <div>
 </div>
 

@@ -104,4 +104,7 @@ public class Client {
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<ClientMedia> clientMedias;
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<Schedule> schedules;
 }
