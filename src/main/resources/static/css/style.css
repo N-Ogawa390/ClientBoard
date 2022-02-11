@@ -1,7 +1,16 @@
 @charset "UTF-8";
 /** ベース **/
-td, th {
-	font-size: 14px;
+.table td, th {
+	font-size: 10px;
+	padding: 2px;
+	text-align: center;
+}
+
+@media screen and (min-width: 600px) {
+	.table td, th {
+		font-size: 14px;
+		padding: 0.8rem;
+	}
 }
 
 /************* スケジュール *************/

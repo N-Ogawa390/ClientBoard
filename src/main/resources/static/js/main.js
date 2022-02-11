@@ -1,9 +1,8 @@
 /**
  * 
  */
- 
-/* スケジュール＞アイテム：文字がコンテンツ幅に収まるようフォントサイズを自動調整する */
 
+/* スケジュール＞アイテム：文字がコンテンツ幅に収まるようフォントサイズを自動調整する */
 window.addEventListener('DOMContentLoaded', () => {
 	if(document.getElementsByClassName('schedule-outline').length) {
 		const scheduleItems = document.getElementsByClassName('schedule-item');
