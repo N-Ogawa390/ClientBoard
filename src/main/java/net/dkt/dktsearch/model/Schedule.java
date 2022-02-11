@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotBlank;
 
 import lombok.Data;
 
@@ -20,15 +21,19 @@ public class Schedule {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
+	@NotBlank(message = "※ジャンルを入力してください")
 	private String genre;
 	
+	@NotBlank(message = "※レッスンのレベルを入力してください")
 	private String level;
 	
-	private DayOfWeek dayOfWeek;
+	private String dayOfWeek;
 	
-	private Time startTime;
+	private String startTime;
 	
-	private Time endTime;
+	private String endTime;
+	
+	private String notes;
 	
 	@ManyToOne
 	private Client client;

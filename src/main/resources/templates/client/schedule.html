@@ -16,41 +16,70 @@
 	
 	<h3>レッスンの追加</h3>
 
-	<form th:action="@{''}" method="post" th:object="${schedule}">
+	<form th:action="@{''}" method="post">
+		<input type="hidden" th:field="*{id}">
 		<div class="form-group">
 			<label for="genre">ジャンル</label>
-			<input type=text th:field="*{genre}" id="genre" class="form-control">
+			<input type=text th:field="${schedule.genre}" id="genre" class="form-control">
 		</div>
 		<div class="form-group">
 			<label for="level">レッスンのレベル</label>
-			<input type=text th:field="*{level}" id="level" class="form-control">
-		</div>
-		<div name="dayOfWeek" class="form-group">
-			<label for="dayOfWeek">曜日</label>
-			<select id="dayOfWeek" name="dayOfWeek" class="form-control">
-				<option th:value="MONDAY">月曜日</option>
-				<option th:value="TUESDAY">火曜日</option>
-				<option th:value="WEDNESDAY">水曜日</option>
-				<option th:value="THURSDAY">木曜日</option>
-				<option th:value="FRIDAY">金曜日</option>
-				<option th:value="SATURDAY">土曜日</option>
-				<option th:value="SUNDAY">日曜日</option>
-			</select>
-		</div>
-			<div class="form-group">
-			<label for="startTime">レッスン開始時刻</label>
-			<input type="time" th:field="*{startTime}" id="startTime" class="form-control">
+			<input type=text th:field="${schedule.level}" id="level" class="form-control">
 		</div>
 		<div class="form-group">
-			<label for="endTime">レッスン開始時刻</label>
-			<input type="time" th:field="*{endTime}" id="endTime" class="form-control">
+			<label for="dayOfWeek">曜日</label>
+			<select id="dayOfWeek" th:field="${schedule.dayOfWeek}" class="form-control">
+				<option th:value="月曜日">月曜日</option>
+				<option th:value="火曜日">火曜日</option>
+				<option th:value="水曜日">水曜日</option>
+				<option th:value="木曜日">木曜日</option>
+				<option th:value="金曜日">金曜日</option>
+				<option th:value="土曜日">土曜日</option>
+				<option th:value="日曜日">日曜日</option>
+			</select>
 		</div>
+		<div class="form-group">
+			<label for="startTime">レッスン開始時刻</label>
+			<input type="time" th:field="${schedule.startTime}" step="900" required name="startTime" id="startTime" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="endTime">レッスン終了時刻</label>
+			<input type="time" th:field="${schedule.endTime}" step="900" required id="endTime" class="form-control">
+		</div>
+		<div class="form-group">
+			<label for="notes">メモ ※任意(20文字まで)</label>
+			<textarea th:field="${schedule.notes}" id="notes" maxlength="20" class="form-control"></textarea>
+		</div>
+		<p th:if="${timeError}" th:text="${timeError}" class="form-text text-danger"></p>
+		<p th:errors="${schedule.genre}" class="form-text text-danger"></p>
+		<p th:errors="${schedule.level}" class="form-text text-danger"></p>
 		
 		<input type="submit" value="保存" class="btn btn-primary m-3">
 	</form>
 	
 	<h3>登録済みのレッスン</h3>
-	
+	<div class"row">
+		<div class="col">
+			<table class="table">
+				<tr>
+					<td>ジャンル</td>
+					<td>レベル</td>
+					<td>曜日</td>
+					<td>開始時刻</td>
+					<td>終了時刻</td>
+					<td>メモ</td>
+				</tr>
+			    <tr th:each="schedule : ${schedules}">
+			    	<td th:text="${schedule.genre}"></td>
+			    	<td th:text="${schedule.level}"></td>
+			    	<td th:text="${schedule.dayOfWeek}"></td>
+			    	<td th:text="${schedule.startTime}"></td>
+			    	<td th:text="${schedule.endTime}"></td>
+			    	<td th:text="${schedule.notes}"></td>
+			    </tr>
+			</table>
+		</div>
+	</div>	
 <div>
 </div>
 

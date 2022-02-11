@@ -1,10 +1,14 @@
 package net.dkt.dktsearch.controller;
 
+import java.sql.Time;
 import java.time.DayOfWeek;
+import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
+import org.omg.CORBA.PRIVATE_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,6 +37,9 @@ public class ScheduleController {
 			Model model
 			) {
 		
+		List<Schedule> schedules = scheduleService.getSchedules(client.getId());
+		model.addAttribute("schedules", schedules);
+		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
 		return "client/schedule";
@@ -42,23 +49,38 @@ public class ScheduleController {
 	public String createSchedule(
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
-			@RequestParam(name = "dayOfWeek") DayOfWeek dayOfWeek,
+			@RequestParam(name = "dayOfWeek") String dayOfWeek,
 			Model model
 			) {
 		
-		System.out.println(schedule.getStartTime().toString());
-//		System.out.println(schedule.getStartTime().getClass().getSimpleName());
-//		System.out.println(schedule.getEndTime().getClass().getSimpleName());
-		
 		if(bindingResult.hasErrors()) {
-			model.addAttribute(client);
-			System.out.println(bindingResult.getFieldError());
+			
+			model.addAttribute("client", client);
+			return "client/schedule";
+		} else if(!checkTime(schedule.getStartTime(), schedule.getEndTime())) {
+			
+			model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
+			model.addAttribute("client", client);
 			return "client/schedule";
 		}
 		
 		schedule.setDayOfWeek(dayOfWeek);
 		schedule.setClient(client);
 		
-		return "redirect:client/" + client.getId() + "schedule";
+		scheduleService.saveSchedule(schedule);
+		
+		return "redirect:/client/" + client.getId() + "/schedule";
+	}
+	
+	boolean checkTime(String startTime, String endTime) {
+		
+		Integer stTime = Integer.parseInt(startTime.replace(":", ""));
+		Integer enTime = Integer.parseInt(endTime.replace(":", ""));
+		
+		if(enTime - stTime > 0) {
+			return true;
+		}
+		
+		return false;
 	}
 }
