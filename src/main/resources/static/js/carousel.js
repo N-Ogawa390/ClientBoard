@@ -49,7 +49,7 @@ function carousel(root) {
 	
 	//imgクリック時のイベント(画像をポップアップ)を追加
 	var images = figure.querySelectorAll('img');
-	var b = document.querySelector('body');
+	var body = document.querySelector('body');
 	
 	images.forEach(function(i){
 		i.addEventListener('click', function(e){
@@ -88,6 +88,6 @@ function carousel(root) {
 				t.parentNode.removeChild(t);
 			});
 		});
-		b.prepend(dispImg);
+		body.prepend(dispImg);
 	};
 };
