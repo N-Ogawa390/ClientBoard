@@ -145,118 +145,94 @@
 		
 		<section>
 		<h3 class="py-3">レッスンスケジュール</h3>
-		<div class="row" style="margin: 0 auto">
-			<div class="schedule-outline">
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>月</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>初級</p>
-						<p>13:00</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>初級</p>
-						<p>13:00</p>
-					</div>
+		<div id="schedule-outline" class="schedule-outline">
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>月</p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>火</p>
-					</div>
-					<div class="schedule-item">
-						<p>スタイルジャズ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>スタイルジャズ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='月曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>水</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>火</p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>木</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='火曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>金</p>
-					</div>
-					<div class="schedule-item">
-						<p>ロック</p>
-						<p>8:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>ロック</p>
-						<p>7:00</p>
-						<p>初級</p>
-					</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>水</p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>土</p>
-					</div>
-					<div class="schedule-item">
-						<p>ジャズヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>ヒップホップ</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='水曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
 				</div>
-				<div class="schedule-col">
-					<div class="schedule-item">
-						<p>日</p>
-					</div>
-					<div class="schedule-item">
-						<p>ロック</p>
-						<p>8:00</p>
-						<p>初級</p>
-					</div>
-					<div class="schedule-item">
-						<p>ロック</p>
-						<p>13:00</p>
-						<p>初級</p>
-					</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>木</p>
 				</div>
-			</div >
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='木曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
+				</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>金</p>
+				</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='金曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
+				</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>土</p>
+				</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='土曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
+				</div>
+			</div>
+			<div class="schedule-col">
+				<div class="schedule-item">
+					<p>日</p>
+				</div>
+				<th:block th:each="schedule : ${schedules}">
+				<div th:if="${schedule.dayOfWeek}=='日曜日'" class="schedule-item">
+					<p th:text="${schedule.genre}"></p >
+					<p th:text="${schedule.level}"></p>
+					<p th:text="${schedule.startTime}"></p>
+				</div>
+			</div>
 		</div>
+
 		<div>
 			<a th:href="@{|/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
 		</div>
+		<div id="outputImg" class="btn btn-primary m-3">
+			画像ダウンロード
+		</div>
+		<a id="getImage" href="" style="display: none"></a>
+		<div id="target" class="project-header-controls"></div>
 		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
 			<p>※スケジュールが登録されていません</p>
 		</div>
@@ -284,7 +260,7 @@
 		<div class="row">
 			<div class="col">
 				<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
-				<textarea th:field="*{appeal}" class="form-control">
+				<textarea th:field="*{appeal}" class="form-control" maxlength="200" rows="6">
 				</textarea>
 				<p>※200文字以内</p>
 			</div>
@@ -389,9 +365,9 @@
 		<div>
 			<p th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></p>
 		</div>
-		
 	</form>
 <script type="text/javascript" src="/js/zipsearch.js"></script>
+<script type="text/javascript" src="/js/html2canvas.min.js"></script>
 </div>
 </body>
 </html>

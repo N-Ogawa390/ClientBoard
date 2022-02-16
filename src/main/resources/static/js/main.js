@@ -2,33 +2,26 @@
  * 
  */
 
-/* スケジュール＞アイテム：文字がコンテンツ幅に収まるようフォントサイズを自動調整する */
+/* スケジュール */
 window.addEventListener('DOMContentLoaded', () => {
 	if(document.getElementsByClassName('schedule-outline').length) {
-		const scheduleItems = document.getElementsByClassName('schedule-item');
-		let texts;
-		let range = new Range();
-		for(let i = 0; i < scheduleItems.length; i++) {
-			texts = scheduleItems[i].children;
-			for(let j = 0; j < texts.length; j++) {
-				range.selectNode(texts[j]);
-				if(range.getClientRects().length > 2) {
-//					console.log(texts[j].textContent);
-//					fitty(texts[j], {
-//						observeMutations: MutationObserverInit
-//					});
-					adjustTextForOneline(texts[j]);
-				}
-			}
-		}
+		
+		const element = document.getElementById("schedule-outline");
+		const downloadLink = document.getElementById("getImage");
+		
+		$("#outputImg").on('click', function() {
+			html2canvas(element, {
+				windowWidth: 1200,
+				scale: 2,
+				backgroundColor: null
+			}).then(canvas => {
+				downloadLink.setAttribute("href", canvas.toDataURL());
+				downloadLink.setAttribute("download", "sample.png");
+			    downloadLink.click();
+			});			
+		})
 	}
 })
-
-function adjustTextForOneline (textNode) {
-//	let size = window.getComputedStyle(textNode).fontSize.split('px')[0];
-//	size = size - 12;
-//	textNode.style.zoom = '0.5';
-}
 
 /* 画像フェードイン */
 $(function(){
