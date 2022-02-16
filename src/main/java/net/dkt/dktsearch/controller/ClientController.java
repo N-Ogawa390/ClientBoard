@@ -32,6 +32,7 @@ import net.dkt.dktsearch.model.Genre;
 import net.dkt.dktsearch.model.MediaFormat;
 import net.dkt.dktsearch.model.Plan;
 import net.dkt.dktsearch.model.PlanType;
+import net.dkt.dktsearch.model.Schedule;
 import net.dkt.dktsearch.service.AccountService;
 import net.dkt.dktsearch.service.AreaService;
 import net.dkt.dktsearch.service.ClientMediaService;
@@ -39,6 +40,7 @@ import net.dkt.dktsearch.service.ClientService;
 import net.dkt.dktsearch.service.GenreService;
 import net.dkt.dktsearch.service.PlanService;
 import net.dkt.dktsearch.service.PlanTypeService;
+import net.dkt.dktsearch.service.ScheduleService;
 
 /*
 //クライアント詳細画面表示
@@ -90,6 +92,9 @@ public class ClientController {
 	
 	@Autowired
 	private ClientMediaService clientMediaService;
+	
+	@Autowired
+	private ScheduleService scheduleService;
 	
 	@GetMapping("")
 	public String client(Model model) {
@@ -160,6 +165,8 @@ public class ClientController {
 		
 		clientService.checkClientOwner(client, model);
 		
+		List<Schedule> schedules = scheduleService.getSchedules(client.getId());
+		model.addAttribute("schedules", schedules);
 		model.addAttribute("client", client);
 		
 		//ジャンル情報
