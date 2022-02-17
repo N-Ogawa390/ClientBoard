@@ -42,7 +42,7 @@ public class ScheduleController {
 		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
-		return "client/schedule";
+		return "client/schedule/form";
 	}
 	
 	@PostMapping("/{clientId}/schedule")
@@ -56,12 +56,12 @@ public class ScheduleController {
 		if(bindingResult.hasErrors()) {
 			
 			model.addAttribute("client", client);
-			return "client/schedule";
+			return "client/schedule/form";
 		} else if(!checkTime(schedule.getStartTime(), schedule.getEndTime())) {
 			
 			model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
 			model.addAttribute("client", client);
-			return "client/schedule";
+			return "client/schedule/form";
 		}
 		
 		schedule.setDayOfWeek(dayOfWeek);
@@ -69,7 +69,7 @@ public class ScheduleController {
 		
 		scheduleService.saveSchedule(schedule);
 		
-		return "redirect:/client/" + client.getId() + "/schedule";
+		return "redirect:/client/" + client.getId() + "/schedule/form";
 	}
 	
 	boolean checkTime(String startTime, String endTime) {
