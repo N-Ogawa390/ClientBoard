@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,12 +29,14 @@ public class PlanService {
 	private PlanRepository planRepository;
 	
 	//プランをsave
+	@Transactional
 	public Plan savePlan(Plan plan) {
 		
 		return planRepository.save(plan);
 	}
 	
 	//プランを削除
+	@Transactional
 	public void deletePlan(Plan plan) {
 		
 		planRepository.delete(plan);

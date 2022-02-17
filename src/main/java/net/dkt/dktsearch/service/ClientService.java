@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import javax.swing.JFrame;
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -75,12 +76,14 @@ public class ClientService {
 	}
 
 	//クライアントを作成・更新
+	@Transactional
 	public Client saveClient(Client client) {
 		
 		return clientRepository.save(client);
 	}
 	
 	//クライアントを削除
+	@Transactional
 	public void deleteClient(Client client) {
 		
 		clientRepository.delete(client);
