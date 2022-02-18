@@ -37,4 +37,7 @@ public class Schedule {
 	
 	@ManyToOne
 	private Client client;
+	
+	@ManyToOne
+	private Floor floor;
 }

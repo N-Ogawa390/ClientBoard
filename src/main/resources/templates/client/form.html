@@ -144,6 +144,31 @@
 		</section>
 		
 		<section>
+		<h3 class="py-3">フロア</h3>
+		<p>※１つスタジオに複数のフロアがある場合はフロアを登録してください</p>
+		<div th:unless="${#lists.isEmpty(client.floors)}" class="row">
+			<div class="col">
+				<table class="table">
+					<tr>
+						<th>フロア名</th>
+					</tr>
+					<tr th:each="floor : *{floors}">
+						<td th:text="${floor.floorName}"></td>
+						<td><a th:href="@{|/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+		<div th:if="${#lists.isEmpty(client.floors)}" class="my-3">
+			<p>※フロアが登録されていません</p>
+		</div>
+		<div>
+			<a th:href="@{|/client/*{id}/floor|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからフロアを追加してください。')">フロアの追加・編集</a>
+		</div>
+		<div th:unless="*{id} != null" class="row">
+			<p>※フロアを登録するには、1度スクール情報を保存してください</p>
+		</div>
+				
 		<h3 class="py-3">レッスンスケジュール</h3>
 		<div id="schedule-outline" class="schedule-outline">
 			<div class="schedule-col">

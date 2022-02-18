@@ -28,6 +28,7 @@ import net.dkt.dktsearch.model.Account;
 import net.dkt.dktsearch.model.Area;
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.ClientMedia;
+import net.dkt.dktsearch.model.Floor;
 import net.dkt.dktsearch.model.Genre;
 import net.dkt.dktsearch.model.MediaFormat;
 import net.dkt.dktsearch.model.Plan;
@@ -173,6 +174,10 @@ public class ClientController {
 		List<Genre> genres = client.getGenres();	//クライアントに紐づくジャンルオブジェクトのリストを取得
 		List<String> genreNamesWithClient = genreService.getGenreNamesWithClient(genres);	//ジャンル名のリストに変換
 		model.addAttribute("genreNamesWithClient", genreNamesWithClient);
+		
+		//フロア情報
+		List<Floor> floors = client.getFloors();
+		model.addAttribute("floors", floors);
 		
 		//画像表示
 		List<MediaFormat> byteImages = s3DownloadHelper.getImage(client);

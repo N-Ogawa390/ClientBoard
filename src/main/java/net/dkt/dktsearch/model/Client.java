@@ -107,4 +107,7 @@ public class Client {
 	
 	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
 	private List<Schedule> schedules;
+	
+	@OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+	private List<Floor> floors;
 }
