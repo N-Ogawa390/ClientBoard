@@ -92,7 +92,6 @@ public class ScheduleController {
 	public String editSchedule(
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
-			@PathVariable("scheduleId") Integer scheduleId,
 			@RequestParam(name = "dayOfWeek") String dayOfWeek,
 			Model model
 			) {
