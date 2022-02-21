@@ -42,6 +42,7 @@ import net.dkt.dktsearch.service.GenreService;
 import net.dkt.dktsearch.service.PlanService;
 import net.dkt.dktsearch.service.PlanTypeService;
 import net.dkt.dktsearch.service.ScheduleService;
+import net.dkt.dktsearch.type.DayOfWeek;
 
 /*
 //クライアント詳細画面表示
@@ -169,6 +170,9 @@ public class ClientController {
 		List<Schedule> schedules = scheduleService.getSchedules(client.getId());
 		model.addAttribute("schedules", schedules);
 		model.addAttribute("client", client);
+		
+		//曜日
+		model.addAttribute("dayOfWeek", DayOfWeek.values());
 		
 		//ジャンル情報
 		List<Genre> genres = client.getGenres();	//クライアントに紐づくジャンルオブジェクトのリストを取得
