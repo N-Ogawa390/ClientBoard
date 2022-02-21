@@ -27,9 +27,17 @@
 			<label for="level">レッスンのレベル</label>
 			<input type="text" th:field="${schedule.level}" id="level" class="form-control">
 		</div>
-		<div class="form-group">
+		<div th:unless="*{#lists.isEmpty(floors)}" class="form-group">
 			<label for="floor">フロア</label>
-			<input type="text" th:field="${schedule.floor}" id="floor" class="form-control">
+			<select name="floorName" id="floor" class="form-control">
+				<option>選択してください</option>
+				<option
+					th:each="floor : *{floors}"
+					th:value="${floor.floorName}"
+					th:text="${floor.floorName}"
+					th:selected="${schedule.floor}"
+				>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="dayOfWeek">曜日</label>

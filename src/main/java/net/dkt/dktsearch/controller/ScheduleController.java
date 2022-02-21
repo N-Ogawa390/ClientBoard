@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.Schedule;
+import net.dkt.dktsearch.service.FloorService;
 import net.dkt.dktsearch.service.ScheduleService;
 
 @Controller
@@ -32,6 +33,10 @@ public class ScheduleController {
 	@Autowired
 	private ScheduleService scheduleService;
 	
+	@Autowired
+	private FloorService floorService;
+	
+	//スケジュール作成画面表示
 	@GetMapping("/{clientId}/schedule")
 	public String schedule(
 			@PathVariable("clientId") Client client,
@@ -47,11 +52,13 @@ public class ScheduleController {
 		return "client/schedule/form";
 	}
 	
+	//スケジュール作成
 	@PostMapping("/{clientId}/schedule")
 	public String createSchedule(
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
 			@RequestParam(name = "dayOfWeek") String dayOfWeek,
+			@RequestParam(name = "floorName", required = false) String floorName,
 			Model model
 			) {
 		
@@ -66,12 +73,13 @@ public class ScheduleController {
 			return "client/schedule/form";
 		}
 		
+		schedule.setFloor(floorService.getFloorByBloorName(floorName));
 		schedule.setDayOfWeek(dayOfWeek);
 		schedule.setClient(client);
 		
 		scheduleService.saveSchedule(schedule);
 		
-		return "redirect:/client/" + client.getId() + "/schedule/form";
+		return "redirect:/client/" + client.getId() + "/schedule";
 	}
 	
 	//スケジュール編集画面表示
@@ -80,6 +88,8 @@ public class ScheduleController {
 			@PathVariable("clientId") Client client,
 			@PathVariable("scheduleId") Schedule schedule,
 			Model model) {
+		
+//		System.out.println(schedule.getFloor().getFloorName());
 		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
@@ -93,6 +103,7 @@ public class ScheduleController {
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
 			@RequestParam(name = "dayOfWeek") String dayOfWeek,
+			@RequestParam(name = "floorName", required = false) String floorName,
 			Model model
 			) {
 		
@@ -109,6 +120,7 @@ public class ScheduleController {
 			return "client/schedule/edit";
 		}
 		
+		schedule.setFloor(floorService.getFloorByBloorName(floorName));
 		schedule.setDayOfWeek(dayOfWeek);
 		schedule.setClient(client);
 		

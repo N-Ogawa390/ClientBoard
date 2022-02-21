@@ -6,5 +6,6 @@ import net.dkt.dktsearch.model.Floor;
 import net.dkt.dktsearch.model.Genre;
 
 public interface FloorRepository extends JpaRepository<Floor, Integer> {
-
+	
+	Floor findByFloorName(String floorName);
 }
