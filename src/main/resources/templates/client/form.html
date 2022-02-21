@@ -170,85 +170,41 @@
 		</div>
 				
 		<h3 class="py-3">レッスンスケジュール</h3>
-		<div id="schedule-outline" class="schedule-outline">
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>月</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='月曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
-				</div>
-			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>火</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='火曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
+		<th:block th:if="${#lists.isEmpty(client.floors)}">
+			<div th:if="!${#lists.isEmpty(client.schedules)}" class="schedule">
+				<div id="schedule-outline" class="schedule-outline">
+					<div th:each="dow : ${dayOfWeek}" class="schedule-col">
+						<div class="schedule-item">
+							<p th:text="${dow.alias}"></p> 
+						</div>
+						<th:block th:each="schedule : ${client.schedules}">
+						<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
+							<p th:text="${schedule.genre}"></p>
+							<p th:text="${schedule.level}"></p>
+							<p th:text="${schedule.startTime}"></p>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>水</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='水曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
-				</div>
-			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>木</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='木曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
+		</th:block>
+		<th:block th:unless="${#lists.isEmpty(client.floors)}" th:each="flr: ${client.floors}">
+			<div th:if="!${#lists.isEmpty(flr.schedules)}" class="schedule">
+				<h4 th:text="${flr.floorName}"></h4>
+				<div id="schedule-outline" class="schedule-outline">
+					<div th:each="dow : ${dayOfWeek}" class="schedule-col">
+						<div class="schedule-item">
+							<p th:text="${dow.alias}"></p> 
+						</div>
+						<th:block th:each="schedule : ${flr.schedules}">
+						<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
+							<p th:text="${schedule.genre}"></p>
+							<p th:text="${schedule.level}"></p>
+							<p th:text="${schedule.startTime}"></p>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>金</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='金曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
-				</div>
-			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>土</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='土曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
-				</div>
-			</div>
-			<div class="schedule-col">
-				<div class="schedule-item">
-					<p>日</p>
-				</div>
-				<th:block th:each="schedule : ${schedules}">
-				<div th:if="${schedule.dayOfWeek}=='日曜日'" class="schedule-item">
-					<p th:text="${schedule.genre}"></p >
-					<p th:text="${schedule.level}"></p>
-					<p th:text="${schedule.startTime}"></p>
-				</div>
-			</div>
-		</div>
+		</th:block>
 
 		<div>
 			<a th:href="@{|/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
