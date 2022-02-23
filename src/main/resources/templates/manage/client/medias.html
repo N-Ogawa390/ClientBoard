@@ -12,13 +12,13 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-	<div th:replace="~{client/fragment/title :: title}"></div>
+	<div th:replace="~{manage/client/fragment/title :: title}"></div>
 	
 	<div class="school-top-image">
 		<h3>トップ画像</h3>
-		<div th:replace="~{client/fragment/top-image :: top-image}" class="row"></div>
+		<div th:replace="~{manage/client/fragment/top-image :: top-image}" class="row"></div>
 		
-		<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
+		<form th:action="@{|/manage/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
 			<input type="hidden" name="mediaType" value="t">
 			
 			<div class="option">
@@ -56,17 +56,17 @@
 						</div>
 						<ul class="list-unstyled">
 							<li th:if="${subImg.clientMedia.priority != 1}" class="img-nav-item">
-								<a th:href="@{/client/{id}/medias/{priority}/raise(id=*{id}, priority=${subImg.clientMedia.priority})}">
+								<a th:href="@{/manage/client/{id}/medias/{priority}/raise(id=*{id}, priority=${subImg.clientMedia.priority})}">
 									<span class="sm-small">▲優先度を上げる</span>
 								</a>
 							</li>
 							<li th:if="${subImg.clientMedia.priority < #lists.size(subImages)}" class="img-nav-item">
-								<a th:href="@{/client/{id}/medias/{priority}/lower(id=*{id}, priority=${subImg.clientMedia.priority})}">
+								<a th:href="@{/manage/client/{id}/medias/{priority}/lower(id=*{id}, priority=${subImg.clientMedia.priority})}">
 									<span class="sm-middle">▼優先度を下げる</span>
 								</a>
 							</li>
 							<li class="img-nav-item">
-								<a th:href="@{/client/{id}/medias/delete/{mediaId}(id=*{id}, mediaId=${subImg.clientMedia.id})}">
+								<a th:href="@{/manage/client/{id}/medias/delete/{mediaId}(id=*{id}, mediaId=${subImg.clientMedia.id})}">
 									<span class="text-danger">削除</span>
 								</a>
 							</li>
@@ -83,7 +83,7 @@
 		</div>
 	</div>
 	
-	<form th:action="@{|/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
+	<form th:action="@{|/manage/client/*{id}/upload|}" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="mediaType" value="s">
 		
 		<div class="row">
@@ -110,7 +110,7 @@
 	</form>
 	
 	<div class="btn btn-primary m-3">
-		<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>
+		<a th:href="@{|/manage/client/${client.id}/edit|}" style="color:white;">戻る</a>
 	</div>
 	
 </div>

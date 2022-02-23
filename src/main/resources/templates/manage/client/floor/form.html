@@ -11,7 +11,7 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 	
-	<div th:replace="~{client/fragment/title :: title}"></div>
+	<div th:replace="~{manage/client/fragment/title :: title}"></div>
 	
 	<h3>フロアの追加</h3>
 
@@ -36,8 +36,8 @@
 				</tr>
 			    <tr th:each="floor : *{floors}">
 			    	<td th:text="${floor.floorName}"></td>
-			    	<td><a th:href="@{|/client/*{id}/floor/${floor.id}/edit|}">編集</td>
-			    	<td><a th:href="@{|/client/*{id}/floor/${floor.id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="text-danger">削除</a></td>
+			    	<td><a th:href="@{|/manage/client/*{id}/floor/${floor.id}/edit|}">編集</td>
+			    	<td><a th:href="@{|/manage/client/*{id}/floor/${floor.id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="text-danger">削除</a></td>
 			   </tr>
 			</table>
 		</div>

@@ -13,11 +13,11 @@
 
 	<div class="school-top-image">
 
-		<div th:replace="~{client/fragment/title :: title}"></div>
-		<div th:replace="~{client/fragment/top-image :: top-image}"></div>
+		<div th:replace="~{manage/client/fragment/title :: title}"></div>
+		<div th:replace="~{manage/client/fragment/top-image :: top-image}"></div>
 		
 		<div th:if="*{id} != null" class="option">
-			<p><a th:href="@{|/client/*{id}/medias|}">トップ画像を編集する</a></p>
+			<p><a th:href="@{|/manage/client/*{id}/medias|}">トップ画像を編集する</a></p>
 		</div>
 		<div th:unless="*{id} != null">
 			<p>※画像を登録するには、1度スクール情報を保存してください</p>
@@ -42,7 +42,7 @@
 		
 		<div class="option">
 			<div th:if="*{id} != null">
-				<p><a th:href="@{|/client/*{id}/medias|}">サブ画像を編集する</a></p>
+				<p><a th:href="@{|/manage/client/*{id}/medias|}">サブ画像を編集する</a></p>
 			</div>
 			<div th:unless="*{id} != null">
 				<p>※画像を登録するには、1度スクール情報を保存してください</p>
@@ -127,13 +127,13 @@
 						<td th:text="${plan.planType.PlanTypeName}"></td>
 						<td th:text="${plan.ageGroup}"></td>
 						<td th:text="${plan.price} + '円'"></td>
-						<td><a th:href="@{|/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
+						<td><a th:href="@{|/manage/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
 					</tr>
 				</table>
 			</div>
 		</div>
 		<div>
-			<a th:href="@{|/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加・編集</a>
+			<a th:href="@{|/manage/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加・編集</a>
 		</div>
 		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
 			<p>※プランが登録されていません</p>
@@ -154,7 +154,7 @@
 					</tr>
 					<tr th:each="floor : *{floors}">
 						<td th:text="${floor.floorName}"></td>
-						<td><a th:href="@{|/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
+						<td><a th:href="@{|/manage/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
 					</tr>
 				</table>
 			</div>
@@ -163,7 +163,7 @@
 			<p>※フロアが登録されていません</p>
 		</div>
 		<div>
-			<a th:href="@{|/client/*{id}/floor|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからフロアを追加してください。')">フロアの追加・編集</a>
+			<a th:href="@{|/manage/client/*{id}/floor|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからフロアを追加してください。')">フロアの追加・編集</a>
 		</div>
 		<div th:unless="*{id} != null" class="row">
 			<p>※フロアを登録するには、1度スクール情報を保存してください</p>
@@ -207,7 +207,7 @@
 		</th:block>
 
 		<div>
-			<a th:href="@{|/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
+			<a th:href="@{|/manage/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
 		</div>
 		<div id="outputImg" class="btn btn-primary m-3">
 			画像ダウンロード
@@ -344,7 +344,7 @@
 			<a th:href="@{|/manage|}" style="color:white;">戻る</a>
 		</div>
 		<div>
-			<p th:if="*{id}"><a th:href="@{|/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></p>
+			<p th:if="*{id}"><a th:href="@{|/manage/client/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">スクールを削除</a></p>
 		</div>
 	</form>
 <script type="text/javascript" src="/js/zipsearch.js"></script>

@@ -11,6 +11,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import net.dkt.dktsearch.model.Client;
@@ -21,6 +22,7 @@ import net.dkt.dktsearch.service.PlanService;
 import net.dkt.dktsearch.service.PlanTypeService;
 
 @Controller
+@RequestMapping("/manage/client")
 public class PlanController {
 	
 	@Autowired
@@ -33,7 +35,7 @@ public class PlanController {
 	private PlanTypeService planTypeService;
 	
 	//クライアントに紐づくプラン作成画面表示
-	@GetMapping("/client/{clientId}/plan/create")
+	@GetMapping("/{clientId}/plan/create")
 	public String plan(
 			@PathVariable("clientId") Client client,
 			Plan plan,
@@ -46,11 +48,11 @@ public class PlanController {
 		
 		model.addAttribute("planTypeForSelected", null);	//編集時selected用フィールドの初期化(新規作成時は意味はない)
 		
-		return "client/plan/form";
+		return "manage/client/plan/form";
 	}
 	
 	//クライアントに紐づくプラン作成
-	@PostMapping("/client/{clientId}/plan/create")
+	@PostMapping("/{clientId}/plan/create")
 	public String createPlan(
 			@Valid Plan plan, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
@@ -61,7 +63,7 @@ public class PlanController {
 		if (bindingResult.hasErrors()) {
 			
 			model.addAttribute("client", client);	//クライアント名呼び出しのため
-			return "client/plan/form";
+			return "manage/client/plan/form";
 		}
 		
 		//プランタイプ(クラス・チケット・フリー等)を作成し、プランをセット
@@ -83,11 +85,11 @@ public class PlanController {
 		
 		clientService.saveClient(client);
 		
-		return "redirect:/client/" + client.getId() + "/edit";
+		return "redirect:/manage/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアントに紐づくプラン編集画面表示
-	@GetMapping("/client/{clientId}/plan/{planId}/edit")
+	@GetMapping("/{clientId}/plan/{planId}/edit")
 	public String editPlanWithClientGet(
 			@PathVariable("clientId") Client client,
 			@PathVariable("planId") Plan plan,
@@ -99,11 +101,11 @@ public class PlanController {
 		model.addAttribute("plan", plan);
 		model.addAttribute("planTypeForSelected", plan.getPlanType().getPlanTypeName());	//プランタイプselected用フィールド
 		
-		return "client/plan/form";
+		return "manage/client/plan/form";
 	}
 	
 	//クライアントに紐づくプラン編集
-	@PostMapping("/client/{clientId}/plan/{planId}/edit")
+	@PostMapping("/{clientId}/plan/{planId}/edit")
 	public String editPlanWithClientPost(
 			@RequestParam(name="planTypeName") String planTypeName,
 			@PathVariable("clientId") Client client,
@@ -115,7 +117,7 @@ public class PlanController {
 			
 			model.addAttribute("client", client);
 			
-			return "client/plan/form";
+			return "manage/client/plan/form";
 		}
 		
 		PlanType planType = planTypeService.getPlanTypeFromPlanId(plan.getId());
@@ -130,11 +132,11 @@ public class PlanController {
 		
 		clientService.saveClient(client);
 		
-		return "redirect:/client/" + client.getId() + "/edit";
+		return "redirect:/manage/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアントに紐づくプラン削除
-	@GetMapping("/client/{clientId}/plan/{planId}/delete")
+	@GetMapping("/{clientId}/plan/{planId}/delete")
 	public String deletePlanWithClient(@PathVariable("planId") Plan plan,
 			@PathVariable("clientId") Client client,	//checkClientOwnerのため
 			Model model	//checkClientOwnerのため

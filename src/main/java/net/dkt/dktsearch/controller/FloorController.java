@@ -17,7 +17,7 @@ import net.dkt.dktsearch.model.Schedule;
 import net.dkt.dktsearch.service.FloorService;
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/manage/client")
 public class FloorController {
 	
 	@Autowired
@@ -33,7 +33,7 @@ public class FloorController {
 		model.addAttribute("floor", floor);
 		model.addAttribute("client", client);
 		
-		return "client/floor/form";
+		return "manage/client/floor/form";
 	}
 	
 	//フロア作成
@@ -45,7 +45,7 @@ public class FloorController {
 		floor.setClient(client);
 		floorService.saveFloor(floor);
 		
-		return "redirect:/client/{clientId}/floor";
+		return "redirect:/manage/client/{clientId}/floor";
 	}
 	
 	//フロア編集画面表示
@@ -58,7 +58,7 @@ public class FloorController {
 		model.addAttribute("client", client);
 		model.addAttribute("floor", floor);
 		
-		return "/client/floor/edit";
+		return "manage/client/floor/edit";
 	}
 	
 	//フロア編集
@@ -73,13 +73,13 @@ public class FloorController {
 			model.addAttribute("client", client);
 			model.addAttribute("Floor", floor);
 			
-			return "client/schedule/edit";
+			return "manage/client/schedule/edit";
 		}
 		
 		floor.setClient(client);
 		floorService.saveFloor(floor);
 		
-		return "redirect:/client/{clientId}/floor";
+		return "redirect:/manage/client/{clientId}/floor";
 	}
 	
 	//フロア削除
@@ -89,6 +89,6 @@ public class FloorController {
 		
 		floorService.deleteFloor(floor.getId());
 		
-		return "redirect:/client/{clientId}/floor";
+		return "redirect:/manage/client/{clientId}/floor";
 	}
 }

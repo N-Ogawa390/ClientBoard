@@ -32,12 +32,12 @@
 			<tr th:each="client : *{clients}">
 				<td th:text="${client.clientName}"></td>
 				<td><a th:href="@{|/client/${client.id}|}">詳細</a></td>
-				<td><a th:href="@{|/client/${client.id}/edit|}">編集する</a></td>
+				<td><a th:href="@{|/manage/client/${client.id}/edit|}">編集する</a></td>
 			</tr>
 			</tbody>
 		</table>
 		<div th:if="${#lists.isEmpty(currentAccount.clients)}" class="my-3">※スクール情報が登録されていません</div>
-		<a href="/client/create" class="btn btn-primary">新規登録</a>
+		<a href="/manage/client/create" class="btn btn-primary">新規登録</a>
 	</div>
 </div>
 </section>

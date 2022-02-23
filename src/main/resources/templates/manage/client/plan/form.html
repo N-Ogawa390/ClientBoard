@@ -76,10 +76,10 @@
 		
 		<input type="submit" value="登録" class="btn btn-primary m-3">
 		<div class="btn btn-primary m-3">
-			<a th:href="@{|/client/${client.id}/edit|}" style="color:white;">戻る</a>
+			<a th:href="@{|/manage/client/${client.id}/edit|}" style="color:white;">戻る</a>
 		</div>
 		<div>
-			<span th:if="*{id}"><a th:href="@{|/client/${client.id}/plan/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">プランを削除</a></span>
+			<span th:if="*{id}"><a th:href="@{|/manage/client/${client.id}/plan/*{id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="btn btn-danger m-3 mt-5">プランを削除</a></span>
 		</div>
 	</form>
 

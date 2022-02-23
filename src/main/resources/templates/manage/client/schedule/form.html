@@ -12,7 +12,7 @@
 <body>
 <div layout:fragment="contents" th:object="${client}">
 
-	<div th:replace="~{client/fragment/title :: title}"></div>
+	<div th:replace="~{manage/client/fragment/title :: title}"></div>
 	
 	<h3>レッスンの追加</h3>
 
@@ -91,8 +91,8 @@
 			    	<td th:text="${schedule.startTime}"></td>
 			    	<td th:text="${schedule.endTime}"></td>
 			    	<td th:text="${schedule.notes}"></td>
-			    	<td><a th:href="@{|/client/*{id}/schedule/${schedule.id}/edit|}">編集</td>
-			    	<td><a th:href="@{|/client/*{id}/schedule/${schedule.id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="text-danger">削除</a></td>
+			    	<td><a th:href="@{|/manage/client/*{id}/schedule/${schedule.id}/edit|}">編集</td>
+			    	<td><a th:href="@{|/manage/client/*{id}/schedule/${schedule.id}/delete|}" onclick="return confirm('本当に削除してよろしいですか？')" class="text-danger">削除</a></td>
 			   </tr>
 			</table>
 		</div>

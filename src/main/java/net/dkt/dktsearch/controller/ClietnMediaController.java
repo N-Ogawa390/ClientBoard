@@ -26,7 +26,7 @@ import net.dkt.dktsearch.model.MediaFormat;
 import net.dkt.dktsearch.service.ClientMediaService;
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/manage/client")
 public class ClietnMediaController {
 	
 	@Autowired
@@ -49,7 +49,7 @@ public class ClietnMediaController {
 		model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
 		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
-		return "client/medias";
+		return "manage/client/medias";
 	}
 	
 	//画像の追加
@@ -62,7 +62,6 @@ public class ClietnMediaController {
 			Model model) {
 		
 		if(file.getSize() >= 1000000) {
-			System.out.println("ohmy");
 			if(mediaType.equals("t")) {
 				
 				model.addAttribute("mediaUploadTopMaxSizeError", "※ファイルサイズが大きすぎます（最大10MB）");
@@ -78,7 +77,7 @@ public class ClietnMediaController {
 			model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
 			model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 				
-			return "client/medias";				
+			return "manage/client/medias";				
 		}
 		try {
 
@@ -97,10 +96,10 @@ public class ClietnMediaController {
 			
 			model.addAttribute("mediaUploadMaxNumError", e.getMessage());	//エラーメッセージを表示
 			
-			return "client/medias";
+			return "manage/client/medias";
 		}
 		
-		return "redirect:/client/{clientId}/medias";
+		return "redirect:/manage/client/{clientId}/medias";
 	}
 	
 	//画像の優先度を上げる・下げる
@@ -119,7 +118,7 @@ public class ClietnMediaController {
 			
 		}
 		
-		return "redirect:/client/{clientId}/medias";
+		return "redirect:/manage/client/{clientId}/medias";
 	}
 	
 	//クライアント画像削除
@@ -145,6 +144,6 @@ public class ClietnMediaController {
 		model.addAttribute("topImages", clientMediaService.getTopImage(byteImages));
 		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
-		return "redirect:/client/{clientId}/medias";
+		return "redirect:/manage/client/{clientId}/medias";
 	}
 }

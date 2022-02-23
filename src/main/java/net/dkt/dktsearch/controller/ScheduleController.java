@@ -27,7 +27,7 @@ import net.dkt.dktsearch.service.FloorService;
 import net.dkt.dktsearch.service.ScheduleService;
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/manage/client")
 public class ScheduleController {
 	
 	@Autowired
@@ -49,7 +49,7 @@ public class ScheduleController {
 		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
-		return "client/schedule/form";
+		return "manage/client/schedule/form";
 	}
 	
 	//スケジュール作成
@@ -65,12 +65,12 @@ public class ScheduleController {
 		if(bindingResult.hasErrors()) {
 			
 			model.addAttribute("client", client);
-			return "client/schedule/form";
+			return "manage/client/schedule/form";
 		} else if(!checkTime(schedule.getStartTime(), schedule.getEndTime())) {
 			
 			model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
 			model.addAttribute("client", client);
-			return "client/schedule/form";
+			return "manage/client/schedule/form";
 		}
 		
 		schedule.setFloor(floorService.getFloorByBloorName(floorName));
@@ -79,7 +79,7 @@ public class ScheduleController {
 		
 		scheduleService.saveSchedule(schedule);
 		
-		return "redirect:/client/" + client.getId() + "/schedule";
+		return "redirect:/manage/client/" + client.getId() + "/schedule";
 	}
 	
 	//スケジュール編集画面表示
@@ -94,7 +94,7 @@ public class ScheduleController {
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
 		
-		return "client/schedule/edit";
+		return "manage/client/schedule/edit";
 	}
 	
 	//スケジュール編集
@@ -111,13 +111,13 @@ public class ScheduleController {
 			
 			model.addAttribute("client", client);
 			model.addAttribute("schedule", schedule);
-			return "client/schedule/edit";
+			return "manage/client/schedule/edit";
 		} else if(!checkTime(schedule.getStartTime(), schedule.getEndTime())) {
 			
 			model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
 			model.addAttribute("client", client);
 			model.addAttribute("schedule", schedule);
-			return "client/schedule/edit";
+			return "manage/client/schedule/edit";
 		}
 		
 		schedule.setFloor(floorService.getFloorByBloorName(floorName));
@@ -126,7 +126,7 @@ public class ScheduleController {
 		
 		scheduleService.saveSchedule(schedule);
 		
-		return "redirect:/client/{clientId}/schedule";
+		return "redirect:/manage/client/{clientId}/schedule";
 	}
 	
 	//スケジュール削除
@@ -135,7 +135,7 @@ public class ScheduleController {
 			@PathVariable("scheduleId") Integer scheduleId) {
 		
 		scheduleService.deleteSchedule(scheduleId);
-		return "redirect:/client/{clientId}/schedule";
+		return "redirect:/manage/client/{clientId}/schedule";
 	}
 	
 	//レッスン開始時刻が終了時刻より後になっている場合はエラー

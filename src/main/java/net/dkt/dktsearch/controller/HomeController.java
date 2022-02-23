@@ -53,7 +53,7 @@ public class HomeController {
 	@GetMapping("/manage")
 	public String manage() {
 		
-		return "client/manage";
+		return "manage/client/manage";
 	}
 	
 	//管理者画面表示

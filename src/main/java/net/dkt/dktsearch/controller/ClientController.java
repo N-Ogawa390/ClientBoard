@@ -74,7 +74,7 @@ import net.dkt.dktsearch.type.DayOfWeek;
 */
 
 @Controller
-@RequestMapping("/client")
+@RequestMapping("/manage/client")
 public class ClientController {
 	
 	@Autowired
@@ -101,7 +101,7 @@ public class ClientController {
 	@GetMapping("")
 	public String client(Model model) {
 		model.addAttribute("clients", clientService.getClientAll());
-		return "client/index";
+		return "manage/client/index";
 	}
 	
 	//クライアント詳細画面表示
@@ -125,7 +125,7 @@ public class ClientController {
 		Area area = areaService.createDefaultArea();	//地域のデフォルト値をセット
 		client.setArea(area);
 		
-		return "client/form";
+		return "manage/client/form";
 	}
 	
 	//クライアント作成
@@ -141,7 +141,7 @@ public class ClientController {
 			Area area = areaService.createDefaultArea();	//地域のデフォルト値をセット
 			client.setArea(area);
 			
-			return "client/form";
+			return "manage/client/form";
 		}
 		
 		Area area = new Area();
@@ -158,7 +158,7 @@ public class ClientController {
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
-		return "redirect:/client/" + client.getId() + "/edit";
+		return "redirect:/manage/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアント編集画面表示
@@ -189,7 +189,7 @@ public class ClientController {
 		model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
 		model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 		
-		return "client/form";
+		return "manage/client/form";
 	}
 	
 	//クライアント編集
@@ -214,7 +214,7 @@ public class ClientController {
 			model.addAttribute("topImage", clientMediaService.getTopImage(byteImages));
 			model.addAttribute("subImages", clientMediaService.getSubImage(byteImages));
 			
-			return "client/form";
+			return "manage/client/form";
 		}
 		
 		Area area = clientService.getClientById(clientId).getArea();
@@ -237,7 +237,7 @@ public class ClientController {
 			genreService.saveGenresWithClient(client, genreNames);	//ダンスジャンルをクライアントに紐づけて再登録
 		}
 		
-		return "redirect:/client/" + client.getId() + "/edit";
+		return "redirect:/manage/client/" + client.getId() + "/edit";
 	}
 	
 	//クライアント削除
