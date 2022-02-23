@@ -55,287 +55,311 @@
 		<input type="hidden" th:field="*{id}">
 		
 		<section class="py-3">
-		<h3 class="py-3">スクール名</h3>
-		<div class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<td>スクール名  ※必須</td>
-						<td><input type="text" th:field="*{clientName}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>校舎名</td>
-						<td><input type="text" th:field="*{clientSubName}" class="form-control"></td>
-					</tr>
-				</table>
-				<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
+			<div class="container">
+				<h3 class="py-3">スクール名</h3>
+				<div class="row">
+					<div class="col">
+						<table class="table">
+							<tr>
+								<td>スクール名  ※必須</td>
+								<td><input type="text" th:field="*{clientName}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>校舎名</td>
+								<td><input type="text" th:field="*{clientSubName}" class="form-control"></td>
+							</tr>
+						</table>
+						<p th:if="${#fields.hasErrors('clientName')}" th:errors="*{clientName}" class="form-text text-danger"></p>	
+					</div>
+				</div>
 			</div>
-		</div>
 		</section>
 
 		<section class="py-3">
-		<h3 class="py-3">地域</h3>
-		
-		<div class="form-group">
-			<label for="zipCode">郵便番号 ※ハイフンなし 必須</label >
-			<div style="align-items: center;">
-				<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111" class="form-control">
-				<div class="btn btn-primary m-3" id="zipSearch">郵便番号から住所を入力</div>
-			</div>
-			<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
-			<p id="zipError" class="text-danger"></p>
-		</div>
-
-		<div class="form-group">
-			<label for="prefecture">都道府県 ※必須</label>
-			<select th:field="*{area.areaName}" id="prefecture" class="form-control">
-				<option
-				 th:each="a : ${areaNameList}"
-				 th:value="${a}"
-				 th:text="${a}"
-				 th:selected="${a} == *{area.areaName}"
-				 ></option>
-			</select>
-		</div>
-
-		<div class="form-group">
-			<label for="city">市区町村 ※必須</label>	
-			<input type="text" th:field="*{city}" class="form-control" id="city" placeholder="新宿区">
-			<p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
-		</div>
-		
-		<div class="form-group">
-			<label for="address">住所</label >
-			<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="北新宿1-1-1北新宿ビル101">
-		</div>
-		</section>
-
-		<section class="py-3">
-		<h3 class="my-3">プラン情報</h3>
-		<div th:if="*{id} != null" class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<th>プラン名</th>
-						<th>プランタイプ</th>
-						<th>年齢制限</th>
-						<th>料金</th>
-						<th></th>
-					</tr>
-					<tr th:each="plan : *{plans}">
-						<td th:text="${plan.planName}"></td>
-						<td th:text="${plan.planType.PlanTypeName}"></td>
-						<td th:text="${plan.ageGroup}"></td>
-						<td th:text="${plan.price} + '円'"></td>
-						<td><a th:href="@{|/manage/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div>
-			<a th:href="@{|/manage/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加・編集</a>
-		</div>
-		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
-			<p>※プランが登録されていません</p>
-		</div>
-		<div th:unless="*{id} != null" class="row">
-			<p>※プランを登録するには、1度スクール情報を保存してください</p>
-		</div>
-		</section>
-		
-		<section>
-		<h3 class="py-3">フロア</h3>
-		<p>※１つスタジオに複数のフロアがある場合はフロアを登録してください</p>
-		<div th:unless="${#lists.isEmpty(client.floors)}" class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<th>フロア名</th>
-					</tr>
-					<tr th:each="floor : *{floors}">
-						<td th:text="${floor.floorName}"></td>
-						<td><a th:href="@{|/manage/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
-					</tr>
-				</table>
-			</div>
-		</div>
-		<div th:if="${#lists.isEmpty(client.floors)}" class="my-3">
-			<p>※フロアが登録されていません</p>
-		</div>
-		<div>
-			<a th:href="@{|/manage/client/*{id}/floor|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからフロアを追加してください。')">フロアの追加・編集</a>
-		</div>
-		<div th:unless="*{id} != null" class="row">
-			<p>※フロアを登録するには、1度スクール情報を保存してください</p>
-		</div>
+			<div class="container">
+				<h3 class="py-3">地域</h3>
 				
-		<h3 class="py-3">レッスンスケジュール</h3>
-		<th:block th:if="${#lists.isEmpty(client.floors)}">
-			<div th:if="!${#lists.isEmpty(client.schedules)}" class="schedule">
-				<div id="schedule-outline" class="schedule-outline">
-					<div th:each="dow : ${dayOfWeek}" class="schedule-col">
-						<div class="schedule-item">
-							<p th:text="${dow.alias}"></p> 
-						</div>
-						<th:block th:each="schedule : ${client.schedules}">
-						<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
-							<p th:text="${schedule.genre}"></p>
-							<p th:text="${schedule.level}"></p>
-							<p th:text="${schedule.startTime}"></p>
-						</div>
+				<div class="form-group">
+					<label for="zipCode">郵便番号 ※ハイフンなし 必須</label >
+					<div style="align-items: center;">
+						<input th:field="*{zipCode}" type="text" id="zipCode" placeholder="1111111" class="form-control">
+						<div class="btn btn-primary m-3" id="zipSearch">郵便番号から住所を入力</div>
 					</div>
+					<p class="text-danger" th:if="${#fields.hasErrors('zipCode')}" th:errors="*{zipCode}"></p>
+					<p id="zipError" class="text-danger"></p>
 				</div>
-			</div>
-		</th:block>
-		<th:block th:unless="${#lists.isEmpty(client.floors)}" th:each="flr: ${client.floors}">
-			<div th:if="!${#lists.isEmpty(flr.schedules)}" class="schedule">
-				<h4 th:text="${flr.floorName}"></h4>
-				<div id="schedule-outline" class="schedule-outline">
-					<div th:each="dow : ${dayOfWeek}" class="schedule-col">
-						<div class="schedule-item">
-							<p th:text="${dow.alias}"></p> 
-						</div>
-						<th:block th:each="schedule : ${flr.schedules}">
-						<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
-							<p th:text="${schedule.genre}"></p>
-							<p th:text="${schedule.level}"></p>
-							<p th:text="${schedule.startTime}"></p>
-						</div>
-					</div>
-				</div>
-			</div>
-		</th:block>
-
-		<div>
-			<a th:href="@{|/manage/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
-		</div>
-		<div id="outputImg" class="btn btn-primary m-3">
-			画像ダウンロード
-		</div>
-		<a id="getImage" href="" style="display: none"></a>
-		<div id="target" class="project-header-controls"></div>
-		<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
-			<p>※スケジュールが登録されていません</p>
-		</div>
-		<div th:unless="*{id} != null" class="row">
-			<p>※スケジュールを登録するには、1度スクール情報を保存してください</p>
-		</div>
-		</section>
 		
-		<section class="py-3">
-		<h3 class="py-3">ダンスジャンル</h3>
-		<div class="row">
-			<div th:each="b : ${genreNameList}" class="col-md-4 col-sm-6">
-				<input type="checkbox"
-				th:text="${b}"
-				name="genreNames"
-				th:value="${b}"
-				th:checked="${#lists.contains(genreNamesWithClient, b)}"
-				>
+				<div class="form-group">
+					<label for="prefecture">都道府県 ※必須</label>
+					<select th:field="*{area.areaName}" id="prefecture" class="form-control">
+						<option
+						 th:each="a : ${areaNameList}"
+						 th:value="${a}"
+						 th:text="${a}"
+						 th:selected="${a} == *{area.areaName}"
+						 ></option>
+					</select>
+				</div>
+		
+				<div class="form-group">
+					<label for="city">市区町村 ※必須</label>	
+					<input type="text" th:field="*{city}" class="form-control" id="city" placeholder="新宿区">
+					<p class="text-danger" th:if="${#fields.hasErrors('city')}" th:errors="*{city}"></p>
+				</div>
+				
+				<div class="form-group">
+					<label for="address">住所</label >
+					<input type="text" th:field="*{address}" class="form-control" id="address" placeholder="北新宿1-1-1北新宿ビル101">
+				</div>
 			</div>
-		</div>
+		</section>
+
+		<section class="py-3">
+			<div class="container">
+				<h3 class="my-3">プラン情報</h3>
+				<div th:if="*{id} != null" class="row">
+					<div class="col">
+						<table class="table">
+							<tr>
+								<th>プラン名</th>
+								<th>プランタイプ</th>
+								<th>年齢制限</th>
+								<th>料金</th>
+								<th></th>
+							</tr>
+							<tr th:each="plan : *{plans}">
+								<td th:text="${plan.planName}"></td>
+								<td th:text="${plan.planType.PlanTypeName}"></td>
+								<td th:text="${plan.ageGroup}"></td>
+								<td th:text="${plan.price} + '円'"></td>
+								<td><a th:href="@{|/manage/client/*{id}/plan/${plan.id}/edit|}">編集</a></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div>
+					<a th:href="@{|/manage/client/*{id}/plan/create|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">プランの追加・編集</a>
+				</div>
+				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
+					<p>※プランが登録されていません</p>
+				</div>
+				<div th:unless="*{id} != null" class="row">
+					<p>※プランを登録するには、1度スクール情報を保存してください</p>
+				</div>
+			</div>
 		</section>
 		
 		<section>
-		<h3 class="py-3">ユーザへのアピール</h3>
-		<div class="row">
-			<div class="col">
-				<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
-				<textarea th:field="*{appeal}" class="form-control" maxlength="200" rows="6">
-				</textarea>
-				<p>※200文字以内</p>
+			<div class="container">
+				<h3 class="py-3">フロア</h3>
+				<p>※１つスタジオに複数のフロアがある場合はフロアを登録してください</p>
+				<div th:unless="${#lists.isEmpty(client.floors)}" class="row">
+					<div class="col">
+						<table class="table">
+							<tr>
+								<th>フロア名</th>
+							</tr>
+							<tr th:each="floor : *{floors}">
+								<td th:text="${floor.floorName}"></td>
+								<td><a th:href="@{|/manage/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div th:if="${#lists.isEmpty(client.floors)}" class="my-3">
+					<p>※フロアが登録されていません</p>
+				</div>
+				<div>
+					<a th:href="@{|/manage/client/*{id}/floor|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからフロアを追加してください。')">フロアの追加・編集</a>
+				</div>
+				<div th:unless="*{id} != null" class="row">
+					<p>※フロアを登録するには、1度スクール情報を保存してください</p>
+				</div>
 			</div>
-		</div>
+					
+			<div class="container">
+				<h3 class="py-3">レッスンスケジュール</h3>
+				<th:block th:if="${#lists.isEmpty(client.floors)}">
+					<div th:if="!${#lists.isEmpty(client.schedules)}" class="schedule">
+						<div id="schedule-outline" class="schedule-outline">
+							<div th:each="dow : ${dayOfWeek}" class="schedule-col">
+								<div class="schedule-item">
+									<p th:text="${dow.alias}"></p> 
+								</div>
+								<th:block th:each="schedule : ${client.schedules}">
+								<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
+									<p th:text="${schedule.genre}"></p>
+									<p th:text="${schedule.level}"></p>
+									<p th:text="${schedule.startTime}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+				<th:block th:unless="${#lists.isEmpty(client.floors)}" th:each="flr: ${client.floors}">
+					<div th:if="!${#lists.isEmpty(flr.schedules)}" class="schedule">
+						<h4 th:text="${flr.floorName}"></h4>
+						<div id="schedule-outline" class="schedule-outline">
+							<div th:each="dow : ${dayOfWeek}" class="schedule-col">
+								<div class="schedule-item">
+									<p th:text="${dow.alias}"></p> 
+								</div>
+								<th:block th:each="schedule : ${flr.schedules}">
+								<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
+									<p th:text="${schedule.genre}"></p>
+									<p th:text="${schedule.level}"></p>
+									<p th:text="${schedule.startTime}"></p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</th:block>
+		
+				<div>
+					<a th:href="@{|/manage/client/*{id}/schedule|}" class="btn btn-primary m-3" onclick="return confirm('編集情報が破棄されますがよろしいですか？スクール情報が未保存の場合は一度情報を保存してからプランを追加してください。')">スケジュールの追加・編集</a>
+				</div>
+				<div id="outputImg" class="btn btn-primary m-3">
+					画像ダウンロード
+				</div>
+				<a id="getImage" href="" style="display: none"></a>
+				<div id="target" class="project-header-controls"></div>
+				<div th:if="${#lists.isEmpty(client.plans)}" class="my-3">
+					<p>※スケジュールが登録されていません</p>
+				</div>
+				<div th:unless="*{id} != null" class="row">
+					<p>※スケジュールを登録するには、1度スクール情報を保存してください</p>
+				</div>
+			</div>
 		</section>
 		
 		<section class="py-3">
-		<h3 class="my-3">レッスン基本情報</h3>
-		<div class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
-						<td><input type="text" th:field="*{lessonLevels}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>レッスン時間単位</td>
-						<td><input type="text" th:field="*{duration}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>対応時間帯</td>
-						<td><input type="text" th:field="*{supporteTime}" class="form-control"></td>
-					</tr>
-				</table>
+			<div class="container">
+				<h3 class="py-3">ダンスジャンル</h3>
+				<div class="row">
+					<div th:each="b : ${genreNameList}" class="form-check col-12 col-sm-6">
+						<input type="checkbox"
+							th:id="${b}"
+							name="genreNames"
+							th:value="${b}"
+							th:checked="${#lists.contains(genreNamesWithClient, b)}"
+							class="form-check-input"
+						>
+						<label th:text="${b}" th:for="${b}" class="form-chack-label"></label>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div>
-			<p th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}" class="text-danger"></p>
-		</div>
+		</section>
+		
+		<section>
+			<div class="container">
+				<h3 class="py-3">ユーザへのアピール</h3>
+				<div class="row">
+					<div class="col">
+						<p>ここで記載した内容がスクールの概要としてユーザに表示されます。</p>
+						<textarea th:field="*{appeal}" class="form-control" maxlength="200" rows="6">
+						</textarea>
+						<p>※200文字以内</p>
+					</div>
+				</div>
+			</div>
 		</section>
 		
 		<section class="py-3">
-		<h3 class="py-3">スクール基本情報</h3>
-		<div class="row">
-			<div class="col">
-				<table class="table">
-					<tr>
-						<td>スクール正式名称</td>
-						<td><input type="text" th:field="*{formalName}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>サイトURL</td>
-						<td><input type="text" th:field="*{siteURL}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>発表会の有無</td>
-						<td>
-							<select th:field="*{presentation}">
-								<option th:value="有" th:text="有"></option>
-								<option th:value="無" th:text="無"></option>
-							</select>
-						</td>
-					</tr>
-					<tr>
-						<td>アクセス</td>
-						<td><input type="text" th:field="*{access}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>運営会社名</td>
-						<td><input type="text" th:field="*{company}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>本社所在地</td>
-						<td><input type="text" th:field="*{headOffice}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>設立</td>
-						<td><input type="text" th:field="*{establishment}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>資本金</td>
-						<td><input type="text" th:field="*{capital}" class="form-control"></td>
-					</tr>
-					<tr>
-						<td>閉店</td>
-						<td><input type="checkbox" th:field="*{active}"></td>
-					</tr>
-				</table>
+			<div class="container">
+				<h3 class="my-3">レッスン基本情報</h3>
+				<div class="row">
+					<div class="col">
+						<table class="table">
+							<tr>
+								<td>取り扱い難易度表記 (例：入門,初級,中級)</td>
+								<td><input type="text" th:field="*{lessonLevels}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>レッスン時間単位</td>
+								<td><input type="text" th:field="*{duration}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>対応時間帯</td>
+								<td><input type="text" th:field="*{supporteTime}" class="form-control"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				<div>
+					<p th:if="${#fields.hasErrors('lessonLevels')}" th:errors="*{lessonLevels}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('duration')}" th:errors="*{duration}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('supporteTime')}" th:errors="*{supporteTime}" class="text-danger"></p>
+				</div>
 			</div>
-		</div>
+		</section>
 		
-		<div>
-			<p th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('access')}" th:errors="*{access}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('company')}" th:errors="*{company}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}" class="text-danger"></p>
-			<p th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="text-danger"></p>
-		</div>
+		<section class="py-3">
+			<div class="container">
+				<h3 class="py-3">スクール基本情報</h3>
+				<div class="row">
+					<div class="col">
+						<table class="table">
+							<tr>
+								<td>スクール正式名称</td>
+								<td><input type="text" th:field="*{formalName}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>サイトURL</td>
+								<td><input type="text" th:field="*{siteURL}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>発表会の有無</td>
+								<td>
+									<select th:field="*{presentation}" class="form-control">
+										<option th:value="無" th:text="無"></option>
+										<option th:value="有" th:text="有"></option>
+									</select>
+								</td>
+							</tr>
+							<tr>
+								<td>アクセス</td>
+								<td><input type="text" th:field="*{access}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>運営会社名</td>
+								<td><input type="text" th:field="*{company}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>本社所在地</td>
+								<td><input type="text" th:field="*{headOffice}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>設立</td>
+								<td><input type="text" th:field="*{establishment}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>資本金</td>
+								<td><input type="text" th:field="*{capital}" class="form-control"></td>
+							</tr>
+							<tr>
+								<td>閉店</td>
+								<td>
+									<div class="form-check">
+										<input type="checkbox" th:field="*{active}" class="form-check-input">
+									</div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+				
+				<div>
+					<p th:if="${#fields.hasErrors('formalName')}" th:errors="*{formalName}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('presentation')}" th:errors="*{presentation}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('appeal')}" th:errors="*{appeal}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('access')}" th:errors="*{access}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('company')}" th:errors="*{company}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('headOffice')}" th:errors="*{headOffice}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('establishment')}" th:errors="*{establishment}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}" class="text-danger"></p>
+					<p th:if="${#fields.hasErrors('active')}" th:errors="*{active}" class="text-danger"></p>
+				</div>
+			</div>
 		
 		</section>
 		
