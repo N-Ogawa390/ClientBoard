@@ -69,6 +69,17 @@
 	    </ul>
 	</div>
 </nav>
+<div class="m-2">
+	<p>
+		<th:block th:each="bc, bcStat : ${breadCrumb}">
+			<a th:unless="${bcStat.count}==${#maps.size(breadCrumb)}" th:href="${bc.getValue()}">
+				<span th:text="${bc.getKey()}"></span>
+			</a>
+			<span th:if="${bcStat.count}==${#maps.size(breadCrumb)}" th:text="${bc.getKey()}"></span>
+			<span th:unless="${bcStat.count}==${#maps.size(breadCrumb)}">＞</span>
+		</th:block>
+	</p>
+</div >
 
 </header>
 

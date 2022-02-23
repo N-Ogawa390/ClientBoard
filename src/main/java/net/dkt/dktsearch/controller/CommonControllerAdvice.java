@@ -2,12 +2,17 @@ package net.dkt.dktsearch.controller;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -63,6 +68,66 @@ public class CommonControllerAdvice {
 			
 			model.addAttribute("currentAccount", currentAccount);
 		}
+	}
+	
+	//パンくずリスト
+	@ModelAttribute("breadCrumb")
+	public Map<String, String> breadCrumb(HttpServletRequest request) {
+		
+		String currentURI = request.getRequestURI();
+		
+		Map<String, String> breadCrumb = new LinkedHashMap();
+		breadCrumb.put("ホーム", "/");
+		
+		if(currentURI.contains("manage")) {
+			
+			breadCrumb.put("管理画面", "/manage");
+			
+			String regex = "/manage/client/[0-9]+";
+			Pattern p = Pattern.compile(regex);
+			Matcher m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("スクール情報", m.group() + "/edit");
+			}
+			
+			regex = "/manage/client/[0-9]+/medias";
+			p = Pattern.compile(regex);
+			m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("画像", m.group());
+			}
+			
+			regex = "/manage/client/[0-9]+/plan";
+			p = Pattern.compile(regex);
+			m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("プラン情報", m.group());
+			}
+			
+			regex = "/manage/client/[0-9]+/schedule";
+			p = Pattern.compile(regex);
+			m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("スケジュール情報", m.group());
+			}
+			
+			regex = "/manage/client/[0-9]+/floor";
+			p = Pattern.compile(regex);
+			m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("フロア情報", m.group());
+			}			
+		} else {
+			
+			String regex = "/client/[0-9]";
+			Pattern p = Pattern.compile(regex);
+			Matcher m = p.matcher(currentURI);
+			if(m.find()) {
+				breadCrumb.put("スクール情報", m.group());
+			}
+		}
+		
+		return breadCrumb;
 	}
 	
 	//チェックボックスデータ登録に使用するエリア名格納用リスト
