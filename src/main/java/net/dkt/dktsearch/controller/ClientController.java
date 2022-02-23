@@ -74,7 +74,6 @@ import net.dkt.dktsearch.type.DayOfWeek;
 */
 
 @Controller
-@RequestMapping("/manage/client")
 public class ClientController {
 	
 	@Autowired
@@ -101,11 +100,11 @@ public class ClientController {
 	@GetMapping("")
 	public String client(Model model) {
 		model.addAttribute("clients", clientService.getClientAll());
-		return "manage/client/index";
+		return "index";
 	}
 	
 	//クライアント詳細画面表示
-	@GetMapping("/{clientId}")
+	@GetMapping("/client/{clientId}")
 	public String showClient(@PathVariable("clientId") Client client, Model model) {
 
 		//画像表示
@@ -119,7 +118,7 @@ public class ClientController {
 	}
 
 	//クライアント作成画面表示
-	@GetMapping("/create")
+	@GetMapping("/manage/client/create")
 	public String createClient(Client client, Model model) {
 		
 		Area area = areaService.createDefaultArea();	//地域のデフォルト値をセット
@@ -129,7 +128,7 @@ public class ClientController {
 	}
 	
 	//クライアント作成
-	@PostMapping("/create")
+	@PostMapping("/manage/client/create")
 	public String createClient(
 			@Valid Client client, BindingResult bindingResult,
 			@RequestParam(required = false) String[] genreNames,
@@ -162,7 +161,7 @@ public class ClientController {
 	}
 	
 	//クライアント編集画面表示
-	@GetMapping("/{clientId}/edit")
+	@GetMapping("/manage/client/{clientId}/edit")
 	public String editClient(@PathVariable("clientId") Client client, Model model) {
 		
 		clientService.checkClientOwner(client, model);
@@ -193,7 +192,7 @@ public class ClientController {
 	}
 	
 	//クライアント編集
-	@PostMapping("/{clientId}/edit")
+	@PostMapping("/manage/client/{clientId}/edit")
 	public String editClient(
 			@Valid Client client, BindingResult bindingResult,
 			String[] genreNames,
@@ -241,7 +240,7 @@ public class ClientController {
 	}
 	
 	//クライアント削除
-	@GetMapping("/{clientId}/delete")
+	@GetMapping("/manage/client/{clientId}/delete")
 	public String deleteClient(@PathVariable("clientId") Client client) {
 		
 		clientService.deleteClient(client);
