@@ -14,8 +14,6 @@
 <!-- 個別コンテンツここから -->
 <div layout:fragment="contents">
 
-
-
 <section th:if="${targetClients} != null" class="py-3">
 <div class="row">
 	<div class="col">
@@ -29,7 +27,7 @@
 <div class="col-12 col-sm-6 container fadein-scroll">
 	
 	<div class="bg-light blogcard-outline">
-	<a th:href="@{|/client/${client.id}|}" class="blogcard-link-child"></a>
+	<a th:href="@{|/client/${client.id}|}" class="blogcard-link-child" target="_blank" rel="noopener noreferrer"></a>
 		<div class="blogcard-photo">
 			<img th:if="${topImagesWithClientId.get(client.id)} != null"
 				th:src="${'data:image/png;base64,' + topImagesWithClientId.get(client.id).base64}"
