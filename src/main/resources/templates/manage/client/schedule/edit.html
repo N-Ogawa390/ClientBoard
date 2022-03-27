@@ -20,8 +20,15 @@
 		<input type="hidden" th:field="${schedule.id}">
 		
 		<div class="form-group">
-			<label for="genre">ジャンル</label>
-			<input type="text" th:field="${schedule.genre}" id="genre" class="form-control">
+			<label for="genreName">ジャンル</label>
+			<select name="genreName" id="genreName" class="form-control">
+				<option>選択してください</option>
+				<option
+					th:each="genre : *{genres}"
+					th:value="${genre.genreName}"
+					th:text="${genre.genreName}"
+				>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="level">レッスンのレベル</label>
@@ -31,11 +38,16 @@
 			<label for="floor">フロア</label>
 			<select name="floorName" id="floor" class="form-control">
 				<option>選択してください</option>
-				<option
+				<option th:unless="${schedule.floor} == null"
 					th:each="floor : *{floors}"
 					th:value="${floor.floorName}"
 					th:text="${floor.floorName}"
-					th:selected="${schedule.floor}"
+					th:selected="${floor.floorName} == ${schedule.floor.floorName}"
+				>
+				<option th:if="${schedule.floor} == null"
+					th:each="floor : *{floors}"
+					th:value="${floor.floorName}"
+					th:text="${floor.floorName}"
 				>
 			</select>
 		</div>
@@ -64,7 +76,7 @@
 			<textarea th:field="${schedule.notes}" id="notes" maxlength="20" class="form-control"></textarea>
 		</div>
 		<p th:if="${timeError}" th:text="${timeError}" class="form-text text-danger"></p>
-		<p th:errors="${schedule.genre}" class="form-text text-danger"></p>
+		<p th:errors="${schedule.genreName}" class="form-text text-danger"></p>
 		<p th:errors="${schedule.level}" class="form-text text-danger"></p>
 		
 		<input type="submit" value="保存" class="btn btn-primary m-3">

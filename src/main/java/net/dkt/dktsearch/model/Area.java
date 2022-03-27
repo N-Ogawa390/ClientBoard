@@ -20,5 +20,4 @@ public class Area {
 	
 	@OneToOne
 	private Client client;
-
 }

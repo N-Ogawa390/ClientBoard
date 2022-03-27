@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonCreator.Mode;
 import net.dkt.dktsearch.model.Client;
 import net.dkt.dktsearch.model.Schedule;
 import net.dkt.dktsearch.service.FloorService;
+import net.dkt.dktsearch.service.GenreService;
 import net.dkt.dktsearch.service.ScheduleService;
 
 @Controller
@@ -32,6 +33,9 @@ public class ScheduleController {
 	
 	@Autowired
 	private ScheduleService scheduleService;
+	
+	@Autowired
+	private GenreService genreService;
 	
 	@Autowired
 	private FloorService floorService;
@@ -44,9 +48,6 @@ public class ScheduleController {
 			Model model
 			) {
 		
-		List<Schedule> schedules = scheduleService.getSchedules(client.getId());
-		model.addAttribute("schedules", schedules);
-		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
 		return "manage/client/schedule/form";
@@ -58,11 +59,16 @@ public class ScheduleController {
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
 			@RequestParam(name = "dayOfWeek") String dayOfWeek,
+			@RequestParam(name = "genreName", required = false) String genreName,
 			@RequestParam(name = "floorName", required = false) String floorName,
 			Model model
 			) {
 		
 		if(bindingResult.hasErrors()) {
+			
+			model.addAttribute("client", client);
+			return "manage/client/schedule/form";
+		} else if(genreName == "") {
 			
 			model.addAttribute("client", client);
 			return "manage/client/schedule/form";
@@ -73,7 +79,8 @@ public class ScheduleController {
 			return "manage/client/schedule/form";
 		}
 		
-		schedule.setFloor(floorService.getFloorByBloorName(floorName));
+		schedule.setGenreName(genreName);
+		schedule.setFloor(floorService.getFloorByFloorName(floorName));
 		schedule.setDayOfWeek(dayOfWeek);
 		schedule.setClient(client);
 		
@@ -89,8 +96,6 @@ public class ScheduleController {
 			@PathVariable("scheduleId") Schedule schedule,
 			Model model) {
 		
-//		System.out.println(schedule.getFloor().getFloorName());
-		
 		model.addAttribute("client", client);
 		model.addAttribute("schedule", schedule);
 		
@@ -103,24 +108,32 @@ public class ScheduleController {
 			@Valid Schedule schedule, BindingResult bindingResult,
 			@PathVariable("clientId") Client client,
 			@RequestParam(name = "dayOfWeek") String dayOfWeek,
+			@RequestParam(name = "genreName", required = false) String genreName,
 			@RequestParam(name = "floorName", required = false) String floorName,
 			Model model
 			) {
 		
-		if(bindingResult.hasErrors()) {
+		boolean bindingResultHasError = bindingResult.hasErrors();
+		boolean checkTimeHasError = !checkTime(schedule.getStartTime(), schedule.getEndTime());
+		
+		if(bindingResultHasError || checkTimeHasError) {
 			
-			model.addAttribute("client", client);
-			model.addAttribute("schedule", schedule);
-			return "manage/client/schedule/edit";
-		} else if(!checkTime(schedule.getStartTime(), schedule.getEndTime())) {
+			System.out.println("error");
 			
-			model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
+			if(checkTimeHasError) {
+				model.addAttribute("timeError", "※終了時刻は開始時刻より後に設定してください");
+			}
+			
+			schedule.setGenreName(genreName);
+			schedule.setFloor(floorService.getFloorByFloorName(floorName));
+			
 			model.addAttribute("client", client);
 			model.addAttribute("schedule", schedule);
 			return "manage/client/schedule/edit";
 		}
 		
-		schedule.setFloor(floorService.getFloorByBloorName(floorName));
+		schedule.setGenreName(genreName);
+		schedule.setFloor(floorService.getFloorByFloorName(floorName));
 		schedule.setDayOfWeek(dayOfWeek);
 		schedule.setClient(client);
 		

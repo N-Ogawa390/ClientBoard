@@ -158,10 +158,11 @@
 						<table class="table">
 							<tr>
 								<th>フロア名</th>
+								<th></th>
 							</tr>
 							<tr th:each="floor : *{floors}">
 								<td th:text="${floor.floorName}"></td>
-								<td><a th:href="@{|/manage/client/*{id}/plan/${floor.id}/edit|}">編集</a></td>
+								<td><a th:href="@{|/manage/client/*{id}/floor/${floor.id}/edit|}">編集</a></td>
 							</tr>
 						</table>
 					</div>
@@ -181,14 +182,14 @@
 				<h3 class="py-3">レッスンスケジュール</h3>
 				<th:block th:if="${#lists.isEmpty(client.floors)}">
 					<div th:if="!${#lists.isEmpty(client.schedules)}" class="schedule">
-						<div id="schedule-outline" class="schedule-outline">
+						<div class="schedule-outline">
 							<div th:each="dow : ${dayOfWeek}" class="schedule-col">
 								<div class="schedule-item">
 									<p th:text="${dow.alias}"></p> 
 								</div>
 								<th:block th:each="schedule : ${client.schedules}">
 								<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
-									<p th:text="${schedule.genre}"></p>
+									<p th:text="${schedule.genreName}"></p>
 									<p th:text="${schedule.level}"></p>
 									<p th:text="${schedule.startTime}"></p>
 								</div>
@@ -199,14 +200,14 @@
 				<th:block th:unless="${#lists.isEmpty(client.floors)}" th:each="flr: ${client.floors}">
 					<div th:if="!${#lists.isEmpty(flr.schedules)}" class="schedule">
 						<h4 th:text="${flr.floorName}"></h4>
-						<div id="schedule-outline" class="schedule-outline">
+						<div class="schedule-outline">
 							<div th:each="dow : ${dayOfWeek}" class="schedule-col">
 								<div class="schedule-item">
 									<p th:text="${dow.alias}"></p> 
 								</div>
 								<th:block th:each="schedule : ${flr.schedules}">
 								<div th:if="${schedule.dayOfWeek}==${dow.name}" class="schedule-item">
-									<p th:text="${schedule.genre}"></p>
+									<p th:text="${schedule.genreName}"></p>
 									<p th:text="${schedule.level}"></p>
 									<p th:text="${schedule.startTime}"></p>
 								</div>

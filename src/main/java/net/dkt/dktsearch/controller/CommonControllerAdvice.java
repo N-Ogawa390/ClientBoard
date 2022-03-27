@@ -77,7 +77,7 @@ public class CommonControllerAdvice {
 		String currentURI = request.getRequestURI();
 		
 		Map<String, String> breadCrumb = new LinkedHashMap();
-		breadCrumb.put("ホーム", "/");
+		breadCrumb.put("HOME", "/");
 		
 		if(currentURI.contains("manage")) {
 			

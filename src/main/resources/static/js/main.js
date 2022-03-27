@@ -2,23 +2,45 @@
  * 
  */
 
-/* スケジュール */
+/* スケジュール画像ダウンロード */
 window.addEventListener('DOMContentLoaded', () => {
-	if(document.getElementsByClassName('schedule-outline').length) {
+	
+	const scheduleOutline = document.getElementsByClassName('schedule-outline')
+	
+	if(scheduleOutline.length) {
 		
-		const element = document.getElementById("schedule-outline");
 		const downloadLink = document.getElementById("getImage");
 		
 		$("#outputImg").on('click', function() {
-			html2canvas(element, {
-				windowWidth: 1200,
-				scale: 2,
-				backgroundColor: null
-			}).then(canvas => {
-				downloadLink.setAttribute("href", canvas.toDataURL());
-				downloadLink.setAttribute("download", "sample.png");
-			    downloadLink.click();
-			});			
+			
+			for(let i = 0; i < scheduleOutline.length; i++) {
+				
+				const today = new Date();
+				let floorName = scheduleOutline[i].parentNode.getElementsByTagName('h4');
+				if(floorName.length > 0) {
+					
+					floorName = floorName[0].textContent + "_";
+				} else {
+					
+					floorName = "";
+				}
+				
+				html2canvas(scheduleOutline[i], {
+					windowWidth: 1200,
+					scale: 2,
+					backgroundColor: null
+				}).then(canvas => {
+					downloadLink.setAttribute("href", canvas.toDataURL());
+					downloadLink.setAttribute("download", 
+						floorName + 
+						today.getFullYear() + "_" + 
+						(today.getMonth() + 1) + "_" + 
+						today.getDate() +
+						".png"
+					);
+				    downloadLink.click();
+				});			
+			}
 		})
 	}
 })

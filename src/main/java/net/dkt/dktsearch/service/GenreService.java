@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import net.dkt.dktsearch.model.Client;
+import net.dkt.dktsearch.model.Floor;
 import net.dkt.dktsearch.model.Genre;
 import net.dkt.dktsearch.model.GenreCategory;
 import net.dkt.dktsearch.repository.GenreCategoryRepository;

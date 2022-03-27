@@ -19,8 +19,15 @@
 	<form th:action="@{''}" method="post">
 		<input type="hidden" th:field="*{id}">
 		<div class="form-group">
-			<label for="genre">ジャンル</label>
-			<input type="text" th:field="${schedule.genre}" id="genre" class="form-control">
+			<label for="genreName">ジャンル</label>
+			<select name="genreName" id="genreName" class="form-control">
+				<option>選択してください</option>
+				<option
+					th:each="genre : *{genres}"
+					th:value="${genre.genreName}"
+					th:text="${genre.genreName}"
+				>
+			</select>
 		</div>
 		<div class="form-group">
 			<label for="level">レッスンのレベル</label>
@@ -62,7 +69,7 @@
 			<textarea th:field="${schedule.notes}" id="notes" maxlength="20" class="form-control"></textarea>
 		</div>
 		<p th:if="${timeError}" th:text="${timeError}" class="form-text text-danger"></p>
-		<p th:errors="${schedule.genre}" class="form-text text-danger"></p>
+		<p th:errors="${schedule.genreName}" class="form-text text-danger"></p>
 		<p th:errors="${schedule.level}" class="form-text text-danger"></p>
 		
 		<input type="submit" value="保存" class="btn btn-primary m-3">
@@ -83,8 +90,8 @@
 					<td></td>
 					<td></td>
 				</tr>
-			    <tr th:each="schedule : ${schedules}">
-			    	<td th:text="${schedule.genre}"></td>
+			    <tr th:each="schedule : ${client.schedules}">
+			    	<td th:text="${schedule.genreName}"></td>
 			    	<td th:text="${schedule.level}"></td>
 			    	<td th:unless="*{#lists.isEmpty(floors)}"><span th:if="${schedule.floor}" th:text="${schedule.floor.floorName}"></span></td>
 			    	<td th:text="${schedule.dayOfWeek}"></td>

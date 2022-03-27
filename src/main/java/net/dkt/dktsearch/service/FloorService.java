@@ -26,7 +26,7 @@ public class FloorService {
 		floorRepository.deleteById(floorId);
 	}
 	
-	public Floor getFloorByBloorName(String floorName) {
+	public Floor getFloorByFloorName(String floorName) {
 		
 		return floorRepository.findByFloorName(floorName);
 	}
